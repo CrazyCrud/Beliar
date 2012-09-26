@@ -8,6 +8,8 @@ import com.jme3.renderer.Camera;
 import com.jme3.renderer.ViewPort;
 import com.jme3.scene.Node;
 
+
+//HIER KOMMT DER TESTCOMITTT!!!!!
 public class GameContainer {
 	//GAMETICKER in seconds
 	public final static int UPDATE_PERIOD = 15;
