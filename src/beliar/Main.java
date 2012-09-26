@@ -49,6 +49,7 @@ public class Main extends SimpleApplication{
     public void simpleInitApp(){
         initGame();
         initScreen();
+        initCursor();
         initStates();  
     }
     
@@ -64,30 +65,20 @@ public class Main extends SimpleApplication{
         screenManager.initialize(stateManager, this);
     }
     
-    private void initStates(){ 
-       mainMenuState = new MainMenuState(stateManager, this);
-       gameState = new GameState(stateManager, this);
-       pauseState = new PauseState(stateManager, this);
-       //pauseState = new PauseState(this);
-       //inPauseInputs = new InPauseInputs(stateManager, this);
-       stateManager.attach(mainMenuState);
-       stateManager.attach(gameState);
-       stateManager.attach(pauseState);
-       mainMenuState.setEnabled(true);
-       gameState.setEnabled(false);
-       pauseState.setEnabled(false);
+    private void initCursor(){
+        // inputManager.setCursorVisible(true); 
     }
     
-    private void initInput(){
-        niftyDisplay = new NiftyJmeDisplay(assetManager, inputManager, audioRenderer, viewPort);
-        nifty = niftyDisplay.getNifty();
-        
-        nifty.registerScreenController(inGameInputs);
-        nifty.registerScreenController(inPauseInputs);
-        nifty.addXml("Interface/Hud.xml");
-        nifty.addXml("Interface/OptionsMenu.xml");
-        nifty.gotoScreen("inGameInputs");
-        guiViewPort.addProcessor(niftyDisplay);
+    private void initStates(){ 
+       mainMenuState = new MainMenuState(stateManager, this);
+       //gameState = new GameState(stateManager, this);
+       //pauseState = new PauseState(stateManager, this);
+       stateManager.attach(mainMenuState);
+       //stateManager.attach(gameState);
+       //stateManager.attach(pauseState);
+       mainMenuState.setEnabled(true);
+       //gameState.setEnabled(false);
+       //pauseState.setEnabled(false);
     }
     
     @Override

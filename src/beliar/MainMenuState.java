@@ -8,6 +8,7 @@ import com.jme3.app.Application;
 import com.jme3.app.SimpleApplication;
 import com.jme3.app.state.AbstractAppState;
 import com.jme3.app.state.AppStateManager;
+import com.jme3.input.InputManager;
 
 /**
  *
@@ -16,10 +17,15 @@ import com.jme3.app.state.AppStateManager;
 public class MainMenuState extends AbstractAppState{
     private SimpleApplication app;
     private AppStateManager stateManager;
+    private InputManager inputManager;
     private InMainMenuInputs inMainMenuInputs;
     private ScreenManager screenManager;
     
+    private GameState gameState;
+    private PauseState pauseState;
+    
     public MainMenuState(AppStateManager stateManager, SimpleApplication app){
+        System.out.println("MainMenuState: Constructor");
         initValues(stateManager, app);
         initStates();
     }
@@ -65,7 +71,11 @@ public class MainMenuState extends AbstractAppState{
     private void initValues(AppStateManager stateManager, SimpleApplication app) {
         this.app = app;
         this.stateManager = stateManager;
+        this.inputManager = this.app.getInputManager();
         this.screenManager = ScreenManager.getScreenManager();
+        
+        this.inputManager.setCursorVisible(true);
+        app.getFlyByCamera().setDragToRotate(true);
     }
     
     private void initStates() {
@@ -74,5 +84,16 @@ public class MainMenuState extends AbstractAppState{
 
     private void showInput() {
         screenManager.switchToMainMenuScreen(inMainMenuInputs);
+    }
+    
+    public void initializeGame(){
+      gameState = new GameState(stateManager, app);
+      pauseState = new PauseState(stateManager, app);
+      stateManager.attach(gameState);
+      stateManager.attach(pauseState);
+      
+      stateManager.getState(MainMenuState.class).setEnabled(false);
+      stateManager.getState(InMainMenuInputs.class).setEnabled(false);
+      stateManager.getState(GameState.class).setEnabled(true);
     }
 }

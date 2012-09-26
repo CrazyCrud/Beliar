@@ -67,10 +67,11 @@ public class InMainMenuInputs extends AbstractAppState implements ScreenControll
   
   public void onStartGame(){
       System.out.println("InMainMenuInputs: onStartGame()");
-      stateManager.getState(MainMenuState.class).setEnabled(false);
-      stateManager.getState(InMainMenuInputs.class).setEnabled(false);
-      stateManager.getState(GameState.class).setEnabled(true);
+      //stateManager.getState(MainMenuState.class).setEnabled(false);
+      //stateManager.getState(InMainMenuInputs.class).setEnabled(false);
+      //stateManager.getState(GameState.class).setEnabled(true);
       
+      stateManager.getState(MainMenuState.class).initializeGame();
   }
   
   public void onOptions(){
