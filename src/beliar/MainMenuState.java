@@ -8,22 +8,18 @@ import com.jme3.app.Application;
 import com.jme3.app.SimpleApplication;
 import com.jme3.app.state.AbstractAppState;
 import com.jme3.app.state.AppStateManager;
-import de.lessvoid.nifty.Nifty;
-import de.lessvoid.nifty.screen.Screen;
-import de.lessvoid.nifty.screen.ScreenController;
 
 /**
  *
  * @author andministrator
  */
-public class PauseState extends AbstractAppState{
-    
+public class MainMenuState extends AbstractAppState{
     private SimpleApplication app;
     private AppStateManager stateManager;
-    private InPauseInputs inPauseInputs;
+    private InMainMenuInputs inMainMenuInputs;
     private ScreenManager screenManager;
     
-    public PauseState(AppStateManager stateManager, SimpleApplication app){
+    public MainMenuState(AppStateManager stateManager, SimpleApplication app){
         initValues(stateManager, app);
         initStates();
     }
@@ -37,8 +33,8 @@ public class PauseState extends AbstractAppState{
     public void setEnabled(boolean enabled){
         super.setEnabled(enabled);
         if(enabled){
-            System.out.println("PauseState: setEnabled");
-            inPauseInputs.setEnabled(true);
+            System.out.println("MainMenuState: setEnabled");
+            inMainMenuInputs.setEnabled(true);
             showInput();
         }else{
             //inPauseInputs.setEnabled(false);
@@ -47,17 +43,17 @@ public class PauseState extends AbstractAppState{
         
     @Override
     public void stateAttached(AppStateManager stateManager) {
-        System.out.println("PauseState: attach");
-        stateManager.attach(inPauseInputs);
-        inPauseInputs.setEnabled(false);
+        System.out.println("MainMenuState: attach");
+        stateManager.attach(inMainMenuInputs);
+        inMainMenuInputs.setEnabled(false);
         //showInput();
     }
     
     @Override
     public void stateDetached(AppStateManager stateManager)
     {
-        System.out.println("PauseState: detached");
-        stateManager.detach(inPauseInputs);
+        System.out.println("MainMenuState: detached");
+        stateManager.detach(inMainMenuInputs);
         stateManager.detach(this);
     }
     
@@ -73,13 +69,10 @@ public class PauseState extends AbstractAppState{
     }
     
     private void initStates() {
-        inPauseInputs = new InPauseInputs(stateManager, app);
+        inMainMenuInputs = new InMainMenuInputs(stateManager, app);
     }
 
     private void showInput() {
-        screenManager.switchToPauseScreen(inPauseInputs);
+        screenManager.switchToMainMenuScreen(inMainMenuInputs);
     }
-
-    
-    
 }

@@ -16,10 +16,12 @@ import javax.imageio.ImageIO;
 public class Main extends SimpleApplication{
 
     private ScreenManager screenManager;
+    private MainMenuState mainMenuState;
     private GameState gameState;
     private PauseState pauseState;
     private InGameInputs inGameInputs;
     private InPauseInputs inPauseInputs;
+    private InMainMenuInputs inMainMenuInputs;
     private NiftyJmeDisplay niftyDisplay;
     private Nifty nifty;
     
@@ -63,13 +65,16 @@ public class Main extends SimpleApplication{
     }
     
     private void initStates(){ 
+       mainMenuState = new MainMenuState(stateManager, this);
        gameState = new GameState(stateManager, this);
        pauseState = new PauseState(stateManager, this);
        //pauseState = new PauseState(this);
        //inPauseInputs = new InPauseInputs(stateManager, this);
+       stateManager.attach(mainMenuState);
        stateManager.attach(gameState);
        stateManager.attach(pauseState);
-       gameState.setEnabled(true);
+       mainMenuState.setEnabled(true);
+       gameState.setEnabled(false);
        pauseState.setEnabled(false);
     }
     

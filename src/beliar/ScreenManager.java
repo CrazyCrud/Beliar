@@ -67,6 +67,12 @@ public class ScreenManager {
         
     }
     
+    public void switchToMainMenuScreen(ScreenController mainMenuInputs){
+        nifty.registerScreenController(mainMenuInputs);
+        nifty.addXml("Interface/MainMenu.xml");
+        nifty.gotoScreen("inMainMenuInputs");
+    }
+    
     public void switchToGameScreen(ScreenController gameInputs){
         nifty.registerScreenController(gameInputs);
         nifty.addXml("Interface/Hud.xml");
