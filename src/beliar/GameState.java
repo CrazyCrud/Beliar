@@ -177,6 +177,7 @@ public class GameState extends AbstractAppState{
         viewPort.removeProcessor(fpp);
         viewPort.removeProcessor(shadowMaker);
         
+        
         stateManager.detach(stateManager.getState(InGameInputs.class));
         stateManager.detach(stateManager.getState(GameSimulation.class));
     }
