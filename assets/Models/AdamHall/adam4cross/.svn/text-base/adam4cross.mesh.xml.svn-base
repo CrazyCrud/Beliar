@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mesh>
+    <sharedgeometry vertexcount="4">
+        <vertexbuffer texture_coords="1" positions="true" colours_diffuse="False" normals="true">
+            <vertex>
+                <position y="-0.518443" x="-0.502229" z="0.499188"/>
+                <normal y="1.000000" x="0.000111" z="0.000111"/>
+                <texcoord u="0.010034" v="0.664189"/>
+            </vertex>
+            <vertex>
+                <position y="-0.518664" x="0.499216" z="0.499188"/>
+                <normal y="1.000000" x="0.000111" z="0.000111"/>
+                <texcoord u="0.010034" v="0.982759"/>
+            </vertex>
+            <vertex>
+                <position y="-0.518443" x="0.500133" z="-0.498713"/>
+                <normal y="1.000000" x="0.000111" z="0.000111"/>
+                <texcoord u="0.327808" v="0.983555"/>
+            </vertex>
+            <vertex>
+                <position y="-0.518443" x="-0.499730" z="-0.498713"/>
+                <normal y="1.000000" x="0.000111" z="0.000111"/>
+                <texcoord u="0.327808" v="0.664986"/>
+            </vertex>
+        </vertexbuffer>
+    </sharedgeometry>
+    <submeshes>
+        <submesh usesharedvertices="true" material="adam4cross" use32bitindexes="False">
+            <faces count="2">
+                <face v1="0" v2="1" v3="2"/>
+                <face v1="0" v2="2" v3="3"/>
+            </faces>
+        </submesh>
+    </submeshes>
+</mesh>

@@ -1,0 +1,30 @@
+material adam4cross 
+{
+	receive_shadows on
+	technique
+	{
+		pass
+		{
+			cull_hardware none
+			ambient 0.6399999856948853 0.6399999856948853 0.6399999856948853 1.0
+			diffuse 0.5119999961853026 0.5119999961853026 0.5119999961853026 1.0
+			specular 0.0 0.0 0.0 1.0 12.0
+			emissive 0.0 0.0 0.0 1.0
+			scene_blend one zero
+			texture_unit
+			{
+				texture Greed.png
+				tex_address_mode wrap
+				scale 1.0 1.0
+				colour_op_ex blend_manual src_current src_texture 0.0
+			}
+			texture_unit
+			{
+				texture Greed_Normal.png
+				tex_address_mode wrap
+				scale 1.0 1.0
+				colour_op_ex blend_manual src_current src_texture 0.0
+			}
+		}
+	}
+}

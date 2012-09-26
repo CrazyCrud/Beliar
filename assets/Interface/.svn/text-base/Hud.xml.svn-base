@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nifty xmlns="http://nifty-gui.sourceforge.net/nifty-1.3.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nifty-gui.sourceforge.net/nifty-1.3.xsd http://nifty-gui.sourceforge.net/nifty-1.3.xsd">
+    <useControls filename="nifty-default-controls.xml" />
+    <useStyles filename="nifty-default-styles.xml" />
+    
+    <!--<popup id="optionsMenu" childLayout="absolute-inside"
+        controller="beliar.InGameInputs" width="50%" height="50%">
+            <interact onClick="closePopup()" onSecondaryClick="closePopup()" 
+                onTertiaryClick="closePopup()" />
+      <control id="#menu" name="niftyMenu" />
+    </popup>-->
+    <screen id="inGameInputs" controller="beliar.InGameInputs">
+        <layer id="background" backgroundColor="#0000">
+        </layer>
+        <layer id="foreground" backgroundColor="#0000" childLayout="vertical">
+            <panel id="top_panel" width="100%" height="12%" childLayout="absolute" > 
+                <image filename="Images/leiste.png" x="28px" y="12px" 
+                    height="27%" width="27%"/>
+                <panel x="0" y="0" childLayout="horizontal" width="85%" height="90%" align="left">
+                    <panel childLayout="vertical" width="10%" height="100%">
+                        <image id="darknessIcon" filename="Images/darkness_icon.png" valign="top" 
+                               align="center" width="100%h" height="70%">
+                               <interact onClick="onDoNothing()"/> 
+                        </image>
+                        <panel width="100%h" height="30%" align="center" childLayout="horizontal">
+                            <control name="label" id="darknessLabel" color="#A0522D" 
+                                 text="0" width="100%h" height="100%" />
+                        </panel>
+                    </panel>
+                    <panel childLayout="vertical" width="10%" height="100%">
+                        <image id="adamIcon" filename="Images/adam_icon.png" valign="top" 
+                           align="center" width="100%h" height="60%">
+                           <interact onClick="onDoNothing()"/> 
+                        </image>
+                        <panel width="100%h" height="30%" align="center" childLayout="horizontal">
+                            <control name="label" id="adamLabel" color="#A0522D" 
+                                text="0" width="100%h" height="100%" />
+                        </panel>
+                    </panel>
+                    <panel childLayout="vertical" width="10%" height="100%">
+                        <image id="kythosIcon" filename="Images/kythos_icon.png" valign="top" 
+                               align="center" width="100%h" height="60%">
+                               <interact onClick="onDoNothing()"/> 
+                        </image>
+                        <panel width="100%h" height="30%" align="center" childLayout="horizontal">
+                            <control name="label" id="kythosLabel" color="#A0522D" 
+                                text="0" width="100%h" height="100%" />
+                        </panel>
+                    </panel>
+                    <panel childLayout="vertical" width="10%" height="100%"> 
+                        <image id="maraIcon" filename="Images/mara_icon.png" valign="top" 
+                               align="center" width="100%h" height="60%">
+                               <interact onClick="onDoNothing()"/> 
+                        </image>
+                        <panel width="100%h" height="30%" align="center" childLayout="horizontal">
+                            <control name="label" id="maraLabel" color="#A0522D" 
+                                text="0" width="100%h" height="100%" />
+                        </panel>
+                    </panel>
+                </panel>
+            </panel>
+            <panel id="mid_panel" width="100%" height="73%" childLayout="horizontal">
+                <panel width="63%" height="100%">
+
+                </panel>
+                <panel id="menu" width="34%" height="90%" valign="bottom"
+                    align="center" childLayout="absolute">
+                    <interact onClick="onDoNothing()"/>
+                    <panel id="backgroundMenu" x="0" y="0" childLayout="center"
+                        width="100%" height="100%">
+                        <image filename="Images/texture.png" 
+                            imageMode="resize:11,10,11,11,11,10,11,10,11,10,11,11" 
+                            width="100%" height="100%"/>
+                    </panel>
+                    <panel x="25px" y="0" width="94%" height="100%" childLayout="vertical">
+                        <panel id="menuLabel" width="100%" height="10%" childLayout="vertical">
+                            <effect id="border">
+                                <onActive name="border" border="0px,0px,1px,0px" 
+                                     color="#ffff,#ffff,#ffff,#ffff" timeType="infinite"/>
+                            </effect>
+                            <text id="menuText" text="" font="Interface/Fonts/andalus_20.fnt" 
+                                align="left" width="30%" height="100%"/>
+                        </panel>
+                        <panel id="menuFirstRow" width="100%" height="30%" childLayout="vertical"
+                            align="center">
+                            <panel width="100%" height="12%"></panel>
+                            <panel width="100%" height="14%" childLayout="horizontal">
+                                <text id="textFirstRow" text="" font="Interface/Fonts/andalus_16.fnt" 
+                                    align="left" width="20%" height="70%"/>
+                            </panel>
+                            <panel id="firstRowTop" width="100%" height="40%"
+                                childLayout="horizontal" valign="center">
+                            </panel>
+                            <panel id="firstRowBottom" width="100%" height="40%"
+                                childLayout="horizontal" valign="center">
+                            </panel>
+                            
+                        </panel>
+                        <panel id="menuSecondRow" width="100%" height="30%" 
+                            childLayout="vertical" align="center">
+                            <panel width="100%" height="14%" childLayout="vertical">
+                                <text id="textSecondRow" text="" font="Interface/Fonts/andalus_16.fnt" 
+                                    align="left" valign="center" width="20%" height="70%"/>
+                            </panel>
+                            <panel id="secondRowTop" width="100%" height="40%"
+                                childLayout="horizontal">     
+                            </panel>
+                            <panel width="100%" height="2%"></panel>
+                            <panel id="secondRowBottom" width="100%" height="40%"
+                                childLayout="horizontal">
+                                    
+                            </panel>
+                            <panel width="100%" height="4%"></panel>
+                        </panel>
+                        <panel id="menuThirdRow" width="100%" height="30%"
+                            childLayout="vertical" align="center">
+                            <panel width="100%" height="14%" childLayout="horizontal">
+                                <text id="textThirdRow" text="" font="Interface/Fonts/andalus_16.fnt" 
+                                    align="left" width="30%" height="70%"/> 
+                            </panel>
+                            <panel id="thirdRowTop" width="100%" height="40%"
+                                childLayout="horizontal" valign="center">
+                            </panel>
+                            <panel width="100%" height="2%"></panel>
+                            <panel id="thirdRowBottom" width="100%" height="40%"
+                                childLayout="horizontal" valign="center">
+                            </panel>
+                            <panel width="100%" height="4%"></panel>
+                        </panel>
+                     </panel>
+                </panel>  
+            </panel>
+            <panel id="bottom_panel" width="100%" height="15%" childLayout="horizontal" >  
+                <panel id="ressource_panel" width="30%" height="100%">
+                    
+                </panel>
+                <panel id="menu_panel" width="70%" height="100%"
+                     childLayout="vertical">
+                    <panel width="100%" height="10%">
+
+                    </panel>
+                    <panel id="details_panel" width="100%" height="90%"
+                         childLayout="horizontal">
+                        <panel width="50%" height="100%">
+                        </panel>
+                        <panel width="50%" height="100%" childLayout="horizontal">
+                            <panel width="25%" height="100%" childLayout="center">
+                                <image id="buildIcon" filename="Images/build_icon.png" valign="center" 
+                                    width="100%h" height="100%">
+                                    <interact onClick="onBuild()"/>
+                                </image>
+                            </panel>
+                            <panel width="25%" height="100%" childLayout="center">
+                                <image id="buildIcon2" filename="Images/build_icon.png" valign="center" 
+                                    width="100%h" height="100%">
+                                    <interact onClick="onArmy()"/>    
+                                </image>
+                            </panel>
+                            <panel width="25%" height="100%" childLayout="center">
+                                <image id="buildIcon3" filename="Images/options_icon.png" valign="center" 
+                                    width="100%h" height="100%">
+                                    <interact onClick="onOptions()"/>    
+                                </image>
+                            </panel>
+                        </panel>
+                    </panel>
+                </panel>
+            </panel>
+        </layer>
+    </screen>
+</nifty>

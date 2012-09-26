@@ -1,0 +1,16 @@
+Material redStone : Common/MatDefs/Light/Lighting.j3md {
+     MaterialParameters {
+        DiffuseMap : Repeat Textures/terrain/redRock.jpg
+        NormalMap : Repeat Textures/terrain/redRock_N.jpg
+        GlowColor : 1.0 0.8 0.2 1.0
+        HighQuality : true
+        UseMaterialColors : false
+        PackedNormalParallax : false
+        VertexLighting : false
+        Specular : 1.0 0.8 0.8 1.0
+        HardwareShadows : true
+     }
+    AdditionalRenderState {
+      FaceCull Back
+    }
+}

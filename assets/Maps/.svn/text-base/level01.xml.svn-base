@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    Document   : Level01.xml
+    Created on : 18. September 2012, 23:17
+    Author     : Martin
+    Description:
+        Purpose of the document follows.
+-->
+
+<root>
+<level>
+    <size>64</size>
+
+    <hellCenter> 10,10 </hellCenter>
+
+    <soul>20,20</soul>
+        
+</level>
+
+<ressources>
+    
+    <kythos>150</kythos>   
+    <adam>250</adam>
+    <mara>50</mara>
+
+</ressources>
+
+</root>

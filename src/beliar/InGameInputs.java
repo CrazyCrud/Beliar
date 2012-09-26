@@ -1,0 +1,599 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package beliar;
+
+import com.jme3.app.Application;
+import com.jme3.app.SimpleApplication;
+import com.jme3.app.state.AbstractAppState;
+import com.jme3.app.state.AppStateManager;
+import de.lessvoid.nifty.Nifty;
+import de.lessvoid.nifty.builder.ImageBuilder;
+import de.lessvoid.nifty.controls.Menu;
+import de.lessvoid.nifty.controls.MenuItemActivatedEvent;
+import de.lessvoid.nifty.elements.Element;
+import de.lessvoid.nifty.screen.Screen;
+import de.lessvoid.nifty.screen.ScreenController;
+import de.lessvoid.nifty.elements.render.TextRenderer;
+import de.lessvoid.nifty.elements.render.ImageRenderer;
+import de.lessvoid.nifty.render.NiftyImage;
+import de.lessvoid.nifty.tools.SizeValue;
+import java.util.List;
+import org.bushe.swing.event.EventTopicSubscriber;
+
+/**
+ *
+ * @author andministrator
+ */
+public class InGameInputs extends AbstractAppState implements ScreenController{
+
+    private AppStateManager stateManager;
+    private SimpleApplication app;
+    private Nifty nifty;
+    private Screen screen;
+    private Element menu, menuFirstRow, menuSecondRow, menuThirdRow, firstRowTop, firstRowBottom, 
+            secondRowTop, secondRowBottom, thirdRowTop, thirdRowBottom;
+    private Element optionsMenu;
+    private int adamRooms, kythosRooms, maraRooms; 
+    private static final int ADAM = 0;
+    private static final int KYTHOS = 1;
+    private static final int MARA = 2;
+    
+    private int menuState;
+    private static final int MENU_CLEAR = 0;
+    private static final int MENU_BUILD = 1;
+    private static final int BUILD_ROOMS = 3;
+    private static final int BUILD_ADAM = 4;
+    private static final int BUILD_KYTHOS = 5;
+    private static final int BUILD_MARA = 6;
+    private static final int MENU_ARMY = 10;
+
+    
+    private static final int BUILDING_LEVEL_ONE = 1;
+    private static final int BUILDING_LEVEL_TWO = 2;
+    private static final int BUILDING_LEVEL_THREE = 3;
+    
+    public InGameInputs(AppStateManager stateManager, Application app){
+        System.out.println("InGameInputs");
+        this.stateManager = stateManager;
+        this.app = (SimpleApplication) app;
+    }
+    
+    @Override
+    public void bind(Nifty nifty, Screen screen) {
+        System.out.println("bind");
+        this.nifty = nifty;
+        this.screen = screen;
+    }
+
+    @Override
+    public void onStartScreen() {
+        System.out.println("onStartScreen");
+        //createOptionsMenu();
+        adamRooms = kythosRooms = maraRooms = 0;
+        menu = nifty.getScreen("inGameInputs").findElementByName("menu");
+        menuFirstRow = nifty.getScreen("inGameInputs").findElementByName("menuFirstRow");
+        menuSecondRow = nifty.getScreen("inGameInputs").findElementByName("menuSecondRow");
+        menuThirdRow = nifty.getScreen("inGameInputs").findElementByName("menuThirdRow");
+        firstRowTop = nifty.getScreen("inGameInputs").findElementByName("firstRowTop");
+        firstRowBottom = nifty.getScreen("inGameInputs").findElementByName("firstRowBottom");
+        secondRowTop = nifty.getScreen("inGameInputs").findElementByName("secondRowTop");
+        secondRowBottom = nifty.getScreen("inGameInputs").findElementByName("secondRowBottom");
+        thirdRowTop = nifty.getScreen("inGameInputs").findElementByName("thirdRowTop");
+        thirdRowBottom = nifty.getScreen("inGameInputs").findElementByName("thirdRowBottom");
+        menuState = MENU_CLEAR;
+        menu.hide();      
+    }
+    
+    @Override
+    public void stateAttached(AppStateManager stateManager) {
+        
+    }
+    
+    @Override
+    public void stateDetached(AppStateManager stateManager){
+        
+    }
+
+    @Override
+    public void setEnabled(boolean enabled){
+        super.setEnabled(enabled);
+        if(enabled){
+            System.out.println("InGameInputs: setEnabled");
+            //this.app.getRootNode().attachChild(rootNode);
+        }else{
+            System.out.println("InGameInputs: setEnabled(false)");
+        }
+    }
+    
+    @Override
+    public void onEndScreen() {
+        System.out.println("onEndScreen");
+    }
+    
+    public void onBuild(){
+        System.out.println("onBuild: " + menuState);
+        if(menu.isVisible()){
+            if(menuState >= MENU_ARMY){
+                clearMenu();
+                setupBuildIcons();
+            }else{
+                menu.hide();
+                clearMenu();
+            }            
+        } else{
+            menu.show();
+            setupBuildIcons();
+        }
+    }
+    
+        public void onArmy(){
+        System.out.println("onArmy: " + menuState);
+        if(menu.isVisible()){ 
+            if(menuState < MENU_ARMY){
+                System.out.println("onArmy: menuState < MENU_ARMY");
+                clearMenu();
+                setupArmyIcons();
+            }else{
+                menu.hide();
+                clearMenu();
+            } 
+        } else{
+            menu.show();
+            setupArmyIcons();
+        }
+    }
+    
+    private void setupBuildIcons(){
+        System.out.println("setupBuildIcons");
+        menuState = MENU_BUILD;
+        
+        Element menuLabel = screen.findElementByName("menuText");
+        menuLabel.getRenderer(TextRenderer.class).setText("Baumenue");
+        Element textThirdRow = screen.findElementByName("textThirdRow");
+        textThirdRow.getRenderer(TextRenderer.class).setText("Verfügbarer Räume");
+        Element textfirstRow = screen.findElementByName("textFirstRow");
+        textfirstRow.getRenderer(TextRenderer.class).setText("Gang anlegen");
+        
+        
+        new ImageBuilder("adamRoom"){{
+            filename("Images/build_path.png");
+            height("95%");
+            width("100%h");
+            alignCenter();
+            interactOnClick("onBuildPath()");   
+                }}.build(nifty, screen, firstRowTop);
+        
+        new ImageBuilder("adamRoom"){{
+            filename("Images/adam_room.png");
+            height("95%");
+            width("100%h");
+            alignCenter();
+            interactOnClick("buildAdamMenu()");   
+                }}.build(nifty, screen, thirdRowTop);
+        
+        new ImageBuilder("kythosRoom"){{
+            filename("Images/kythos_room.png");
+            height("95%");
+            width("100%h");
+            alignCenter();
+            interactOnClick("buildKythosMenu()");   
+                }}.build(nifty, screen, thirdRowTop);
+        
+        new ImageBuilder("maraRoom"){{
+            filename("Images/mara_room.png");
+            height("95%");
+            width("100%h");
+            alignCenter();
+            interactOnClick("buildMaraMenu()");   
+                }}.build(nifty, screen, thirdRowTop);
+    }
+
+    private void setupArmyIcons(){        
+        menuState = MENU_ARMY;
+        
+        Element menuText = screen.findElementByName("menuText");
+        menuText.getRenderer(TextRenderer.class).setText("Verfügbarer Einheiten");
+    }
+    
+    public void onOptions(){
+        System.out.println("InGameInputs: onOptions()");
+        stateManager.getState(GameState.class).setEnabled(false);
+        stateManager.getState(InGameInputs.class).setEnabled(false);
+        stateManager.getState(PauseState.class).setEnabled(true);
+    }
+    
+    public void onBuildPath(){
+        System.out.println("Build a fucking path to get out of here");
+    }  
+       
+    public void buildAdamMenu(){
+        switch(menuState){
+            case MENU_BUILD:
+                setupBuildingIcons(ADAM);
+                setupRoomName(ADAM);
+                menuState = BUILD_ADAM;
+                break;
+            case BUILD_ADAM:
+                clearRoomText();
+                clearSecondRow();
+                menuState = MENU_BUILD;
+                break;
+           default:
+                clearRoomText();
+                clearSecondRow();
+                setupRoomName(ADAM);
+                setupBuildingIcons(ADAM);
+                menuState = BUILD_ADAM;
+        }
+    }
+    
+    public void buildKythosMenu(){
+        switch(menuState){
+            case MENU_BUILD:
+                setupRoomName(KYTHOS);
+                setupBuildingIcons(KYTHOS);
+                menuState = BUILD_KYTHOS;
+                break;
+            case BUILD_KYTHOS:
+                clearRoomText();
+                clearSecondRow();
+                menuState = MENU_BUILD;
+                break;
+            default:
+                clearSecondRow();
+                clearRoomText();
+                setupRoomName(KYTHOS);
+                setupBuildingIcons(KYTHOS);
+                menuState = BUILD_KYTHOS;
+        }
+    }
+    
+    public void buildMaraMenu(){
+        switch(menuState){
+            case MENU_BUILD:
+                setupRoomName(MARA);
+                setupBuildingIcons(MARA);
+                menuState = BUILD_MARA;
+                break;
+            case BUILD_MARA:
+                clearRoomText();
+                clearSecondRow();
+                menuState = MENU_BUILD;
+                break;
+            default:
+                clearRoomText();
+                clearSecondRow();
+                setupRoomName(MARA);
+                setupBuildingIcons(MARA);
+                menuState = BUILD_MARA;
+        }
+    }
+    
+    private void setupRoomName(int whichRoom){
+        System.out.println("setupRoomName");
+        Element text = screen.findElementByName("textSecondRow");
+        
+        switch(whichRoom){
+            case ADAM:
+                text.getRenderer(TextRenderer.class).setText("Adam Raum");
+                break;
+            case KYTHOS:
+                text.getRenderer(TextRenderer.class).setText("Kythos Raum");
+                break;
+            case MARA:
+                text.getRenderer(TextRenderer.class).setText("Mara Raum");
+                break;
+        }
+    }
+    
+    private void setupBuildingIcons(int whichBuilding){
+        System.out.println("setupBuildingIcons " + whichBuilding);
+        final int whichRoom = whichBuilding;        
+
+        new ImageBuilder("buildRoom"){{
+            filename("Images/build_room.png");
+            alignCenter();
+            height("95%");
+            width("100%h");
+            interactOnClick("onBuildRoom(" + whichRoom + ")");
+        }}.build(nifty, screen, secondRowTop);
+        
+        switch(whichBuilding){
+            case ADAM:
+                new ImageBuilder("buildAdamOne"){{
+                    filename("Images/adam_1.png");
+                    height("95%");
+                    width("100%h");
+                    alignCenter();
+                    interactOnClick("buildAdamBuilding(1)");   
+                        }}.build(nifty, screen, secondRowTop);
+                new ImageBuilder("buildAdamTwo"){{
+                    filename("Images/adam_2.png");
+                    height("95%");
+                    width("100%h");
+                    alignCenter();
+                    interactOnClick("buildAdamBuilding(2)");   
+                        }}.build(nifty, screen, secondRowTop);
+                new ImageBuilder("buildAdamThree"){{
+                    filename("Images/adam_3.png");
+                    height("95%");
+                    width("100%h");
+                    alignCenter();
+                    interactOnClick("buildAdamBuilding(3)");   
+                        }}.build(nifty, screen, secondRowTop);
+                return;
+            case KYTHOS:
+               new ImageBuilder("buildKythosOne"){{
+                    filename("Images/kythos_1.png");
+                    height("95%");
+                    width("100%h");
+                    alignCenter();
+                    interactOnClick("buildKythosBuilding(1)");   
+                        }}.build(nifty, screen, secondRowTop);
+                new ImageBuilder("buildKythosTwo"){{
+                    filename("Images/kythos_2.png");
+                    height("95%");
+                    width("100%h");
+                    alignCenter();
+                    interactOnClick("buildKythosBuilding(2)");   
+                        }}.build(nifty, screen, secondRowTop);
+                new ImageBuilder("buildKythosThree"){{
+                    filename("Images/kythos_3.png");
+                    height("95%");
+                    width("100%h");
+                    alignCenter();
+                    interactOnClick("buildKythosBuilding(3)");   
+                        }}.build(nifty, screen, secondRowTop);
+                return;
+            case MARA:
+                new ImageBuilder("buildMaraOne"){{
+                    filename("Images/mara_1.png");
+                    height("95%");
+                    width("100%h");
+                    alignCenter();
+                    interactOnClick("buildMaraBuilding(1)");   
+                        }}.build(nifty, screen, secondRowTop);
+                new ImageBuilder("buildMaraTwo"){{
+                    filename("Images/mara_2.png");
+                    height("95%");
+                    width("100%h");
+                    alignCenter();
+                    interactOnClick("buildMaraBuilding(2)");   
+                        }}.build(nifty, screen, secondRowTop);
+                new ImageBuilder("buildMaraThree"){{
+                    filename("Images/mara_3.png");
+                    height("95%");
+                    width("100%h");
+                    alignCenter();
+                    interactOnClick("buildMaraBuilding(3)");   
+                        }}.build(nifty, screen, secondRowTop);
+                return;
+        }
+    }
+    
+     public void onBuildRoom(String whichRoom){
+        System.out.println("onBuildRoom()");
+        
+        switch(Integer.parseInt(whichRoom)){
+            case ADAM:
+                // Adam-Raum anlegen
+                System.out.println("Build Adam Room");
+                break;
+            case KYTHOS:
+                // Kythos-Raum anlegen
+                System.out.println("Build Kythos Room");
+                break;
+            case MARA:
+                // Mara-Raum anlegen
+                System.out.println("Build Mara Room");
+                break;
+        }
+    }
+    
+    public void buildAdamBuilding(String whichLevel){
+        switch(Integer.parseInt(whichLevel)){
+            case BUILDING_LEVEL_ONE:
+                // Hier Adam-Building Stufe 1
+                updateRessources(ADAM, BUILDING_LEVEL_ONE);
+                return;
+            case BUILDING_LEVEL_TWO:
+                // Hier Adam-Building Stufe 2
+                updateRessources(ADAM, BUILDING_LEVEL_TWO);
+                return;
+            case BUILDING_LEVEL_THREE:
+                // Hier Adam-Building Stufe 3
+                updateRessources(ADAM, BUILDING_LEVEL_THREE);
+                return;
+        }
+    }
+    
+    public void buildKythosBuilding(String whichLevel){
+        switch(Integer.parseInt(whichLevel)){
+            case BUILDING_LEVEL_ONE:
+                updateRessources(KYTHOS, BUILDING_LEVEL_ONE);
+                return;
+            case BUILDING_LEVEL_TWO:
+                updateRessources(KYTHOS, BUILDING_LEVEL_TWO);
+                return;
+            case BUILDING_LEVEL_THREE:
+                updateRessources(KYTHOS, BUILDING_LEVEL_THREE);
+                return;
+        }
+    }
+    
+    public void buildMaraBuilding(String whichLevel){
+        switch(Integer.parseInt(whichLevel)){
+            case BUILDING_LEVEL_ONE:
+                updateRessources(MARA, BUILDING_LEVEL_ONE);
+                return;
+            case BUILDING_LEVEL_TWO:
+                updateRessources(MARA, BUILDING_LEVEL_TWO);
+                return;
+            case BUILDING_LEVEL_THREE:
+                updateRessources(MARA, BUILDING_LEVEL_THREE);
+                return;
+        }
+    }
+    
+    private void clearMenu(){
+       System.out.println("clearMenu");
+       clearText();
+       clearThirdRow();
+       clearSecondRow();
+       clearFirstRow();
+    }
+    
+    private void clearText(){
+        Element textMenuLabel = screen.findElementByName("menuText");
+        textMenuLabel.getRenderer(TextRenderer.class).setText("");
+        Element textSecondRow = screen.findElementByName("textSecondRow");
+        textSecondRow.getRenderer(TextRenderer.class).setText("");
+        Element textFirstRow = screen.findElementByName("textFirstRow");
+        textFirstRow.getRenderer(TextRenderer.class).setText("");
+        Element textThirdRow = screen.findElementByName("textThirdRow");
+        textThirdRow.getRenderer(TextRenderer.class).setText("");
+    }
+    
+    private void clearRoomText(){
+        Element textSecondRow = screen.findElementByName("textSecondRow");
+        textSecondRow.getRenderer(TextRenderer.class).setText("");
+    }
+    
+    private void clearFirstRow(){        
+        List<Element> visibleElements = firstRowTop.getElements();
+        
+        for(Element element: visibleElements){
+            element.markForRemoval();
+        }
+        
+        visibleElements = firstRowBottom.getElements();
+        for(Element element: visibleElements){
+            element.markForRemoval();
+        }
+        
+        firstRowTop.layoutElements();
+        firstRowBottom.layoutElements();
+    }
+    
+    private void clearSecondRow(){
+        List<Element> visibleElements = secondRowTop.getElements();
+        
+        for(Element element: visibleElements){
+            element.markForRemoval();
+        }
+        
+        visibleElements = secondRowBottom.getElements();
+        for(Element element: visibleElements){
+            element.markForRemoval();
+        }
+        
+        secondRowTop.layoutElements();
+        secondRowBottom.layoutElements();
+    }
+    
+    private void clearThirdRow(){
+        List<Element> visibleElements = thirdRowTop.getElements();
+        
+        for(Element element: visibleElements){
+            element.markForRemoval();
+            element.getClass();
+        }
+        
+        visibleElements = thirdRowBottom.getElements();
+        for(Element element: visibleElements){
+            element.markForRemoval();
+        }
+        
+        thirdRowTop.layoutElements();
+        thirdRowBottom.layoutElements();
+    }
+    
+    private void updateRessources(int whichRessource, int whichLevel){
+        switch(whichRessource){
+            case ADAM:
+                if(whichLevel == BUILDING_LEVEL_ONE){
+                    PlayerRessources.adamCreatorSMALL++;
+                }else if(whichLevel == BUILDING_LEVEL_TWO){
+                    PlayerRessources.adamCreatorMIDDLE++;
+                }else if(whichLevel == BUILDING_LEVEL_THREE){
+                    PlayerRessources.adamCreatorBIG++;
+                }
+                break;
+            case KYTHOS:
+                if(whichLevel == BUILDING_LEVEL_ONE){
+                    PlayerRessources.kythosCreatorSMALL++;
+                }else if(whichLevel == BUILDING_LEVEL_TWO){
+                    PlayerRessources.kythosCreatorMIDDLE++;
+                }else if(whichLevel == BUILDING_LEVEL_THREE){
+                    PlayerRessources.kythosCreatorBIG++;
+                }
+                break;
+            case MARA:
+                if(whichLevel == BUILDING_LEVEL_ONE){
+                    PlayerRessources.maraCreatorSMALL++;
+                }else if(whichLevel == BUILDING_LEVEL_TWO){
+                    PlayerRessources.maraCreatorMIDDLE++;
+                }else if(whichLevel == BUILDING_LEVEL_THREE){
+                    PlayerRessources.maraCreatorBIG++;
+                }
+                break;
+        }
+    }
+    
+    public void ressourcesChanged(){
+        Element adam = nifty.getScreen("inGameInputs").findElementByName("adamLabel");
+        Element kythos = nifty.getScreen("inGameInputs").findElementByName("kythosLabel");
+        Element mara = nifty.getScreen("inGameInputs").findElementByName("maraLabel");
+        Element darkness = nifty.getScreen("inGameInputs").findElementByName("darknessLabel");
+        adam.getRenderer(TextRenderer.class).setText(String.valueOf(PlayerRessources.adam));
+        kythos.getRenderer(TextRenderer.class).setText(String.valueOf(PlayerRessources.kythos));
+        mara.getRenderer(TextRenderer.class).setText(String.valueOf(PlayerRessources.mara));
+        darkness.getRenderer(TextRenderer.class).setText(String.valueOf(PlayerRessources.darkness));
+    }
+    
+    private void createOptionsMenu(){
+        optionsMenu = nifty.createPopup("niftyPopupMenu");
+        Menu myMenu = optionsMenu.findNiftyControl("#menu", Menu.class);
+        myMenu.setWidth(new SizeValue("400px"));
+        myMenu.addMenuItem("Click me!", "Images/quit.png", 
+            new menuItem("quit", "Quit")); 
+        nifty.subscribe(
+            nifty.getScreen("inGameInputs"), 
+            myMenu.getId(), 
+            MenuItemActivatedEvent.class, 
+            new MenuItemActivatedEventSubscriber());
+    }
+    
+    public void closePopup(){
+        
+    }
+    
+    public void onDoNothing(){
+        
+    }
+    
+    private class menuItem {
+        public String id;
+        public String name;
+
+        public menuItem(String id, String name){
+               this.id= id;
+               this.name = name;
+        }
+    }
+    
+    private class MenuItemActivatedEventSubscriber 
+        implements EventTopicSubscriber<MenuItemActivatedEvent> {
+ 
+        @Override
+        public void onEvent(final String id, final MenuItemActivatedEvent event) {
+            menuItem item = (menuItem) event.getItem();
+            
+            if ("quit".equals(item.id)) {
+                System.out.println("Quit Game");
+            }
+        }
+  };
+}

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nifty xmlns="http://nifty-gui.sourceforge.net/nifty-1.3.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nifty-gui.sourceforge.net/nifty-1.3.xsd http://nifty-gui.sourceforge.net/nifty-1.3.xsd">
+    <screen id="inPauseInputs" controller="beliar.InPauseInputs">
+        <layer id="background" backgroundColor="#000f">
+         
+        </layer>
+        <layer id="foreground" backgroundColor="#0000" childLayout="vertical">
+            <panel height="30%" width="100%">
+                
+            </panel>
+            <panel id="mid_panel" height="50%" width="50%h" childLayout="center"
+                align="center">
+                <panel width="80%" height="100%" childLayout="vertical">
+                    <panel id="firstEntry" width="100%" height="20%" childLayout="center">
+                        <text text="Zurück zum Spiel" font="Interface/Fonts/GoudyOldStyle_22.fnt"
+                            color="#fffff"> 
+                            <interact onClick="onBackToGame()"/>
+                        </text>
+                    </panel>
+                    <panel id="secondEntry" width="100%" height="20%" childLayout="center">
+                        <text text="Spiel beenden" font="Interface/Fonts/GoudyOldStyle_22.fnt"
+                            color="#fffff"> 
+                            <interact onClick="onExitGame()"/>
+                        </text>
+                    </panel>
+                </panel>
+            </panel>
+            <panel height="30%" width="100%">
+                
+            </panel>
+        </layer>
+    </screen>
+</nifty>
