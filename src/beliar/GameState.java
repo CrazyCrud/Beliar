@@ -167,7 +167,7 @@ public class GameState extends AbstractAppState{
     {
         System.out.println("GameState: stateDetached()");
         
-        localRootNode.removeFromParent();
+        //localRootNode.removeFromParent();
         localRootNode.detachAllChildren();
         rootNode.detachChild(localRootNode);
         
