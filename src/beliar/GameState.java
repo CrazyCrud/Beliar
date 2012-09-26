@@ -62,7 +62,8 @@ public class GameState extends AbstractAppState{
     private DirectionalLight directionLight;
     private PointLight cameraLight;
     private PssmShadowRenderer shadowMaker;
-   
+    private FilterPostProcessor fpp;
+    
     //Meshes
     private MeshContainer mMeshContainer;
     
@@ -169,9 +170,15 @@ public class GameState extends AbstractAppState{
         localRootNode.removeFromParent();
         localRootNode.detachAllChildren();
         rootNode.detachChild(localRootNode);
+        
+        inputManager.clearMappings();
+        inputManager.removeListener(actionListener);
+        viewPort.clearScenes();
+        viewPort.removeProcessor(fpp);
+        viewPort.removeProcessor(shadowMaker);
+        
         stateManager.detach(stateManager.getState(InGameInputs.class));
         stateManager.detach(stateManager.getState(GameSimulation.class));
-         
     }
     
     @Override
@@ -234,7 +241,7 @@ public class GameState extends AbstractAppState{
 
 
         //Fog
-        FilterPostProcessor fpp=new FilterPostProcessor(assetManager);
+        fpp=new FilterPostProcessor(assetManager);
         FogFilter fog=new FogFilter();
         fog.setFogColor(new ColorRGBA(0, 0, 0, 1.0f));
         fog.setFogDistance(50);
