@@ -31,7 +31,7 @@ public class GameSimulation extends AbstractAppState{
 
         @Override
         public void stateDetached(AppStateManager stateManager){
-            
+            System.out.println("GameSimulation: stateDetached()");
         }
 
         @Override

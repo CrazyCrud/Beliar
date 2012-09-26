@@ -43,7 +43,7 @@ public class MainMenuState extends AbstractAppState{
             inMainMenuInputs.setEnabled(true);
             showInput();
         }else{
-            //inPauseInputs.setEnabled(false);
+            inMainMenuInputs.setEnabled(false);
         }
     }
         

@@ -18,6 +18,12 @@
                         </text>
                     </panel>
                     <panel id="secondEntry" width="100%" height="20%" childLayout="center">
+                        <text text="Hauptmenü" font="Interface/Fonts/GoudyOldStyle_22.fnt"
+                            color="#fffff"> 
+                            <interact onClick="onBackToMainScreen()"/>
+                        </text>
+                    </panel>
+                    <panel id="thirdEntry" width="100%" height="20%" childLayout="center">
                         <text text="Spiel beenden" font="Interface/Fonts/GoudyOldStyle_22.fnt"
                             color="#fffff"> 
                             <interact onClick="onExitGame()"/>

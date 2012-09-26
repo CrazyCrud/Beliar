@@ -51,7 +51,7 @@ public class GameState extends AbstractAppState{
     
     private ViewPort viewPort;
     private Node rootNode;
-    private Node localRootNode = new Node("GameScreen Node");
+    private Node localRootNode;
     private Node guiNode;
     private AssetManager assetManager;
 
@@ -118,7 +118,12 @@ public class GameState extends AbstractAppState{
         this.mouseInput = gameContainer.getMouseInput(); 
         this.screenManager = ScreenManager.getScreenManager();
         
+        initValues();
         initStates();
+    }
+ 
+    private void initValues(){
+         localRootNode = new Node("GameScreen Node");
     }
     
     private void initStates(){
@@ -154,18 +159,19 @@ public class GameState extends AbstractAppState{
         rootNode.attachChild(localRootNode);
         stateManager.attach(inGameInputs);
         stateManager.attach(gameSimulation);
-        //showInput();
     }
     
     @Override
     public void stateDetached(AppStateManager stateManager)
     {
         System.out.println("GameState: stateDetached()");
-        rootNode.detachChild(localRootNode);
+        
+        localRootNode.removeFromParent();
         localRootNode.detachAllChildren();
-        stateManager.detach(inGameInputs);
-        stateManager.detach(gameSimulation);
-        stateManager.detach(this);
+        rootNode.detachChild(localRootNode);
+        stateManager.detach(stateManager.getState(InGameInputs.class));
+        stateManager.detach(stateManager.getState(GameSimulation.class));
+         
     }
     
     @Override
@@ -184,19 +190,6 @@ public class GameState extends AbstractAppState{
     private void showInput(){
         System.out.println("GameState: showInput()");
         screenManager.switchToGameScreen(inGameInputs);
-        /*
-        niftyDisplay = new NiftyJmeDisplay(assetManager, inputManager, audioRenderer, viewPort);
-        nifty = niftyDisplay.getNifty();
-        
-        nifty.registerScreenController(inGameInputs);
-        nifty.addXml("Interface/Hud.xml");
-        nifty.gotoScreen("inGameInputs");
-        guiViewPort.addProcessor(niftyDisplay);
-         * */
-    }
-    
-    private void removeInput(){
-        
     }
     
     private void initGame(){
