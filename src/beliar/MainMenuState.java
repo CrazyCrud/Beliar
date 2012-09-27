@@ -21,8 +21,7 @@ public class MainMenuState extends AbstractAppState{
     private InMainMenuInputs inMainMenuInputs;
     private ScreenManager screenManager;
     
-    private GameState gameState;
-    private PauseState pauseState;
+    private LoadingGameState loadingGameState;
     
     public MainMenuState(AppStateManager stateManager, SimpleApplication app){
         System.out.println("MainMenuState: Constructor");
@@ -50,9 +49,9 @@ public class MainMenuState extends AbstractAppState{
     @Override
     public void stateAttached(AppStateManager stateManager) {
         System.out.println("MainMenuState: attach");
+        
         stateManager.attach(inMainMenuInputs);
         inMainMenuInputs.setEnabled(false);
-        //showInput();
     }
     
     @Override
@@ -60,7 +59,6 @@ public class MainMenuState extends AbstractAppState{
     {
         System.out.println("MainMenuState: detached");
         stateManager.detach(inMainMenuInputs);
-        stateManager.detach(this);
     }
     
     @Override
@@ -73,27 +71,24 @@ public class MainMenuState extends AbstractAppState{
         this.stateManager = stateManager;
         this.inputManager = this.app.getInputManager();
         this.screenManager = ScreenManager.getScreenManager();
-        
         this.inputManager.setCursorVisible(true);
         app.getFlyByCamera().setDragToRotate(true);
     }
     
     private void initStates() {
         inMainMenuInputs = new InMainMenuInputs(stateManager, app);
+        loadingGameState = new LoadingGameState(stateManager, app);
     }
 
     private void showInput() {
         screenManager.switchToMainMenuScreen(inMainMenuInputs);
     }
     
-    public void initializeGame(){
-      gameState = new GameState(stateManager, app);
-      pauseState = new PauseState(stateManager, app);
-      stateManager.attach(gameState);
-      stateManager.attach(pauseState);
-      
-      stateManager.getState(MainMenuState.class).setEnabled(false);
-      stateManager.getState(InMainMenuInputs.class).setEnabled(false);
-      stateManager.getState(GameState.class).setEnabled(true);
+    public void loadGame(){
+        stateManager.getState(MainMenuState.class).setEnabled(false);
+        stateManager.getState(InMainMenuInputs.class).setEnabled(false);
+        stateManager.detach(stateManager.getState(MainMenuState.class));
+        stateManager.attach(loadingGameState);
+        stateManager.getState(LoadingGameState.class).setEnabled(true);
     }
 }

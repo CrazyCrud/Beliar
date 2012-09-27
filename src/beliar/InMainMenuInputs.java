@@ -4,14 +4,9 @@
  */
 package beliar;
 
-import com.jme3.app.Application;
 import com.jme3.app.SimpleApplication;
 import com.jme3.app.state.AbstractAppState;
 import com.jme3.app.state.AppStateManager;
-import com.jme3.asset.AssetManager;
-import com.jme3.input.InputManager;
-import com.jme3.renderer.ViewPort;
-import com.jme3.scene.Node;
 import de.lessvoid.nifty.Nifty;
 import de.lessvoid.nifty.screen.Screen;
 import de.lessvoid.nifty.screen.ScreenController;
@@ -59,7 +54,6 @@ public class InMainMenuInputs extends AbstractAppState implements ScreenControll
         super.setEnabled(enabled);
         if(enabled){
             System.out.println("InMainMenuInputs: setEnabled");
-            //this.app.getRootNode().attachChild(rootNode);
         }else{
             System.out.println("InMainMenuInputs: setEnabled(false)");
         }
@@ -67,11 +61,8 @@ public class InMainMenuInputs extends AbstractAppState implements ScreenControll
   
   public void onStartGame(){
       System.out.println("InMainMenuInputs: onStartGame()");
-      //stateManager.getState(MainMenuState.class).setEnabled(false);
-      //stateManager.getState(InMainMenuInputs.class).setEnabled(false);
-      //stateManager.getState(GameState.class).setEnabled(true);
       
-      stateManager.getState(MainMenuState.class).initializeGame();
+      stateManager.getState(MainMenuState.class).loadGame();
   }
   
   public void onOptions(){

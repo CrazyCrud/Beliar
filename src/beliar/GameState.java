@@ -139,7 +139,7 @@ public class GameState extends AbstractAppState{
         
         super.initialize(stateManager,app);  
        
-        initGame();
+        //initGame();
     }
     
     @Override
@@ -198,6 +198,10 @@ public class GameState extends AbstractAppState{
     private void showInput(){
         System.out.println("GameState: showInput()");
         screenManager.switchToGameScreen(inGameInputs);
+    }
+    
+    public void initializeGame(){
+        initGame();
     }
     
     private void initGame(){
