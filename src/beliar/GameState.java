@@ -96,8 +96,6 @@ public class GameState extends AbstractAppState{
     private ViewPort guiViewPort;
     
     //INPUT
-    private NiftyJmeDisplay niftyDisplay;
-    private Nifty nifty;
     private ScreenManager screenManager;
     
     
@@ -168,15 +166,21 @@ public class GameState extends AbstractAppState{
         System.out.println("GameState: stateDetached()");
         
         //localRootNode.removeFromParent();
-        localRootNode.detachAllChildren();
         rootNode.detachChild(localRootNode);
-        
+        localRootNode.detachAllChildren();
+        mapNode.detachAllChildren();
+        pickAble.detachAllChildren();
+        creatures.detachAllChildren();
+        buildings.detachAllChildren();
+        mapNode.detachAllChildren();
+        marker.detachAllChildren();
         inputManager.clearMappings();
         inputManager.removeListener(actionListener);
         viewPort.clearScenes();
         viewPort.removeProcessor(fpp);
         viewPort.removeProcessor(shadowMaker);
-        
+        cam.clearViewportChanged();
+        //flyCam.unregisterInput();        
         
         stateManager.detach(stateManager.getState(InGameInputs.class));
         stateManager.detach(stateManager.getState(GameSimulation.class));
@@ -246,7 +250,7 @@ public class GameState extends AbstractAppState{
 
 
         //Fog
-        fpp=new FilterPostProcessor(assetManager);
+        fpp = new FilterPostProcessor(assetManager);
         FogFilter fog=new FogFilter();
         fog.setFogColor(new ColorRGBA(0, 0, 0, 1.0f));
         fog.setFogDistance(50);

@@ -72,7 +72,7 @@ public class MapHandler {
 
     private void createMapCube(int type, int x, int y)
     {
-        System.out.println("createMapCube");
+        //System.out.println("createMapCube");
         Vector3f position = new Vector3f(0, 0, 0);
         Vector3f transformation = new Vector3f(x, 0, y);
 
