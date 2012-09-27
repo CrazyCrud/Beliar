@@ -8,7 +8,6 @@ import com.jme3.app.Application;
 import com.jme3.app.SimpleApplication;
 import com.jme3.app.state.AbstractAppState;
 import com.jme3.app.state.AppStateManager;
-import com.jme3.input.InputManager;
 import de.lessvoid.nifty.Nifty;
 import de.lessvoid.nifty.screen.Screen;
 import de.lessvoid.nifty.screen.ScreenController;
@@ -32,8 +31,6 @@ public class LoadingGameState extends AbstractAppState implements ScreenControll
         System.out.println("LoadingGameState: Constructor");
         this.stateManager = stateManager;
         this.app = (SimpleApplication) app;
-        
-        initValues(stateManager, app);
     }
     
     public void bind(Nifty nifty, Screen screen) {
@@ -51,7 +48,7 @@ public class LoadingGameState extends AbstractAppState implements ScreenControll
         @Override
     public void stateAttached(AppStateManager stateManager) {
         System.out.println("LoadingGameState: stateAttached");
-
+        initValues(stateManager, app);
     }
     
     @Override
@@ -108,6 +105,11 @@ public class LoadingGameState extends AbstractAppState implements ScreenControll
         screenManager.switchToLoadingScreen(this);
     }
     
+    private void loadGame(){
+        System.out.println("LoadingGameState: loadGame()");
+        load = true;
+    }
+    
     private void startGame(){
       System.out.println("LoadingGameState: startGame()");
 
@@ -116,10 +118,5 @@ public class LoadingGameState extends AbstractAppState implements ScreenControll
       stateManager.attach(gameState);
       stateManager.attach(pauseState);
       stateManager.getState(GameState.class).setEnabled(true);
-    }
-    
-    public void loadGame(){
-        System.out.println("LoadingGameState: loadGame()");
-        load = true;
     }
 }

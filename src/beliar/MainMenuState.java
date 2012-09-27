@@ -25,8 +25,9 @@ public class MainMenuState extends AbstractAppState{
     
     public MainMenuState(AppStateManager stateManager, SimpleApplication app){
         System.out.println("MainMenuState: Constructor");
-        initValues(stateManager, app);
-        initStates();
+        this.app = app;
+        this.stateManager = stateManager;
+        this.inputManager = this.app.getInputManager();
     }
     
     @Override
@@ -49,9 +50,9 @@ public class MainMenuState extends AbstractAppState{
     @Override
     public void stateAttached(AppStateManager stateManager) {
         System.out.println("MainMenuState: attach");
-        
-        stateManager.attach(inMainMenuInputs);
-        inMainMenuInputs.setEnabled(false);
+        initValues();
+        initStates();
+        attachInput();
     }
     
     @Override
@@ -66,18 +67,20 @@ public class MainMenuState extends AbstractAppState{
 
     }
 
-    private void initValues(AppStateManager stateManager, SimpleApplication app) {
-        this.app = app;
-        this.stateManager = stateManager;
-        this.inputManager = this.app.getInputManager();
+    private void initValues() {
         this.screenManager = ScreenManager.getScreenManager();
         this.inputManager.setCursorVisible(true);
-        app.getFlyByCamera().setDragToRotate(true);
+        this.app.getFlyByCamera().setDragToRotate(true);
     }
     
     private void initStates() {
         inMainMenuInputs = new InMainMenuInputs(stateManager, app);
         loadingGameState = new LoadingGameState(stateManager, app);
+    }
+    
+    private void attachInput(){
+        stateManager.attach(inMainMenuInputs);
+        inMainMenuInputs.setEnabled(false);
     }
 
     private void showInput() {
