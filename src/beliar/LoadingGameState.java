@@ -8,6 +8,7 @@ import com.jme3.app.Application;
 import com.jme3.app.SimpleApplication;
 import com.jme3.app.state.AbstractAppState;
 import com.jme3.app.state.AppStateManager;
+import com.jme3.input.InputManager;
 import de.lessvoid.nifty.Nifty;
 import de.lessvoid.nifty.screen.Screen;
 import de.lessvoid.nifty.screen.ScreenController;
@@ -32,7 +33,7 @@ public class LoadingGameState extends AbstractAppState implements ScreenControll
         this.stateManager = stateManager;
         this.app = (SimpleApplication) app;
         
-        initValues();
+        initValues(stateManager, app);
     }
     
     public void bind(Nifty nifty, Screen screen) {
@@ -96,7 +97,7 @@ public class LoadingGameState extends AbstractAppState implements ScreenControll
         }      
     }
     
-    private void initValues(){
+    private void initValues(AppStateManager stateManager, Application app){
         screenManager = ScreenManager.getScreenManager();
         load = false;
         frameCount = 0;
@@ -109,9 +110,7 @@ public class LoadingGameState extends AbstractAppState implements ScreenControll
     
     private void startGame(){
       System.out.println("LoadingGameState: startGame()");
-      
-      //gameState = new GameState(stateManager, app);
-      //pauseState = new PauseState(stateManager, app);
+
       stateManager.getState(LoadingGameState.class).setEnabled(false);
       stateManager.detach(stateManager.getState(LoadingGameState.class));
       stateManager.attach(gameState);

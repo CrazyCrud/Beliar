@@ -87,7 +87,7 @@ public class MainMenuState extends AbstractAppState{
     public void loadGame(){
         stateManager.getState(MainMenuState.class).setEnabled(false);
         stateManager.getState(InMainMenuInputs.class).setEnabled(false);
-        stateManager.detach(stateManager.getState(MainMenuState.class));
+        //stateManager.detach(stateManager.getState(MainMenuState.class));
         stateManager.attach(loadingGameState);
         stateManager.getState(LoadingGameState.class).setEnabled(true);
     }
