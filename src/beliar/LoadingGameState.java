@@ -77,7 +77,7 @@ public class LoadingGameState extends AbstractAppState{
                     System.out.println("LoadingGameState: update(2)");
                     pauseState = new PauseState(stateManager, app);
                 }else if(frameCount == 3){
-                    gameState.initializeGame();
+                    gameState.initialize(stateManager, app);
                     System.out.println("LoadingGameState: update(3)");
                 }else if(frameCount > 30){
                     System.out.println("LoadingGameState: update(30)");

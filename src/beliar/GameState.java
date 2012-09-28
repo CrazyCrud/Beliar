@@ -33,10 +33,13 @@ import com.jme3.post.FilterPostProcessor;
 import com.jme3.post.filters.FogFilter;
 import com.jme3.renderer.Camera;
 import com.jme3.renderer.ViewPort;
+import com.jme3.renderer.queue.RenderQueue.ShadowMode;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Mesh;
+import com.jme3.scene.Spatial;
 import com.jme3.scene.debug.Arrow;
 import com.jme3.scene.debug.Grid;
+import com.jme3.scene.shape.Box;
 import com.jme3.shadow.PssmShadowRenderer;
 import de.lessvoid.nifty.Nifty;
 
@@ -46,8 +49,6 @@ import de.lessvoid.nifty.Nifty;
  */
 public class GameState extends AbstractAppState{
     
-    // DEBUG
-    private int buildingType = 3;
     
     private ViewPort viewPort;
     private Node rootNode;
@@ -66,6 +67,9 @@ public class GameState extends AbstractAppState{
     
     //Meshes
     private MeshContainer mMeshContainer;
+    
+    //DEBUG: GEBAEUDE
+    private Geometry gebaede = new Geometry("Building", new Box(0, 0, 0));
     
     
     //GAME
@@ -96,6 +100,8 @@ public class GameState extends AbstractAppState{
     private ViewPort guiViewPort;
     
     //INPUT
+    private NiftyJmeDisplay niftyDisplay;
+    private Nifty nifty;
     private ScreenManager screenManager;
     
     
@@ -137,7 +143,7 @@ public class GameState extends AbstractAppState{
         
         super.initialize(stateManager,app);  
        
-        //initGame();
+        initGame();
     }
     
     @Override
@@ -165,22 +171,15 @@ public class GameState extends AbstractAppState{
     {
         System.out.println("GameState: stateDetached()");
         
-        //localRootNode.removeFromParent();
-        rootNode.detachChild(localRootNode);
+        localRootNode.removeFromParent();
         localRootNode.detachAllChildren();
-        //mapNode.detachAllChildren();
-        //pickAble.detachAllChildren();
-        //creatures.detachAllChildren();
-        //buildings.detachAllChildren();
-        //mapNode.detachAllChildren();
-        //marker.detachAllChildren();
+        rootNode.detachChild(localRootNode);
+        
         inputManager.clearMappings();
         inputManager.removeListener(actionListener);
         viewPort.clearScenes();
         viewPort.removeProcessor(fpp);
         viewPort.removeProcessor(shadowMaker);
-        cam.clearViewportChanged();
-        //flyCam.unregisterInput();        
         
         stateManager.detach(stateManager.getState(InGameInputs.class));
         stateManager.detach(stateManager.getState(GameSimulation.class));
@@ -194,6 +193,10 @@ public class GameState extends AbstractAppState{
             position.x+=3;
             position.z-=2;
             cameraLight.setPosition(position);
+            
+            
+            gebaede.move(position);
+            
         }else{
             
         }
@@ -202,10 +205,6 @@ public class GameState extends AbstractAppState{
     private void showInput(){
         System.out.println("GameState: showInput()");
         screenManager.switchToGameScreen(inGameInputs);
-    }
-    
-    public void initializeGame(){
-        initGame();
     }
     
     private void initGame(){
@@ -222,8 +221,8 @@ public class GameState extends AbstractAppState{
         initScene();
         initSound();
 
-       // attachGrid(new Vector3f(0, 0, 0), 1024, ColorRGBA.Blue);
-       // attachCoordinateAxes(new Vector3f(-1, 0, -1));
+        attachGrid(new Vector3f(0, 0, 0), 1024, ColorRGBA.Blue);
+        attachCoordinateAxes(new Vector3f(-1, 0, -1));
     }
     
     private void attachGrid(Vector3f pos, int size, ColorRGBA color){
@@ -250,7 +249,7 @@ public class GameState extends AbstractAppState{
 
 
         //Fog
-        fpp = new FilterPostProcessor(assetManager);
+        fpp=new FilterPostProcessor(assetManager);
         FogFilter fog=new FogFilter();
         fog.setFogColor(new ColorRGBA(0, 0, 0, 1.0f));
         fog.setFogDistance(50);
@@ -327,8 +326,6 @@ public class GameState extends AbstractAppState{
     {   //setzt die Objekte entsprechend der Vorgaben aus der Map
         System.out.println("InitScene");
 
-       
-        
         //Markers
         pickAble.attachChild(mapNode);
         pickAble.attachChild(buildings);
@@ -336,6 +333,7 @@ public class GameState extends AbstractAppState{
         
         localRootNode.attachChild(pickAble);
         localRootNode.attachChild(creatures);
+        
     }
     
     
@@ -370,11 +368,15 @@ public class GameState extends AbstractAppState{
                 new KeyTrigger(KeyInput.KEY_SPACE),
                 new MouseButtonTrigger(0));
        
+        inputManager.addMapping("moveMouse",
+                new MouseAxisTrigger(mouseInput.AXIS_X, true),
+                new MouseAxisTrigger(mouseInput.AXIS_Y, true));
+                
+                
         inputManager.addListener(actionListener, "pick target");
+        inputManager.addListener(actionListener, "moveMouse");
         
-        inputManager.addMapping("mouseMove",
-                new MouseAxisTrigger(mouseInput.AXIS_X, false),
-                new MouseAxisTrigger(mouseInput.AXIS_Y, false));
+
         
     } 
     
@@ -382,59 +384,79 @@ public class GameState extends AbstractAppState{
 
         public void onAnalog(String name, float value, float tpf) {
             
-            CollisionResults results = new CollisionResults();
-            
-            Vector2f click2D = inputManager.getCursorPosition();
-            Vector3f click3D = cam.getWorldCoordinates(new Vector2f(click2D.x, click2D.y), 0f);
-            Vector3f dir = cam.getWorldCoordinates(new Vector2f(click2D.x, click2D.y), 1f).subtractLocal(click3D).normalizeLocal();
-            
-            Ray ray = new Ray(click3D,dir);
-            pickAble.collideWith(ray, results);
-            Vector3f pt = new Vector3f();
-            for (int i = 0; i < results.size(); i++) {
-            
-            // (For each “hit”, we know distance, impact point, geometry.)
-            float dist = results.getCollision(i).getDistance();
-             pt = results.getCollision(i).getContactPoint();
-            String target = results.getCollision(i).getGeometry().getName();
-            
-            System.out.println("Selection #" + i + ": " + target + " at " + pt + ", " + dist + " WU away.");
-            
-            }
-            
-            
-            if(results.size() > 0)
+            if(name.equals("pick target"))
             {
-                Geometry target = results.getClosestCollision().getGeometry();
+
+
+                CollisionResults results = checkColision();
+
+                //Raum ausheben//
+                if((results.size() > 0)&&(PlayerRessources.selectionRoom>0))
+                {
+                    Geometry target = results.getClosestCollision().getGeometry();
+
+                    com.jme3.math.Transform transformation = target.getWorldTransform();
+
+                    mMaphandler.handleBuilding(transformation.getTranslation(),PlayerRessources.selectionRoom);
+                    mapNode.detachChild(target);
+                }
+
+                //gebäude setzen
+
                 
-                //Handling      
-                Vector3f position = target.getLocalTranslation();
-                com.jme3.math.Transform transformation = target.getWorldTransform();
-                
-                System.out.println("PositionMAIN"+transformation.toString());
-                mMaphandler.handleBuilding(transformation.getTranslation(),buildingType);
-                mapNode.detachChild(target);
-            }
-            
-            if(results.size()<=0)
-            {
-              System.out.println("No Selection");
-            }
-            
-            else
-            {
-                results.clear();
-            }
-            
+                if(results.size()<=0)
+                {
+                  System.out.println("No Selection");
+                }
+
+                else
+                {
+                    results.clear();
+                }
         }
+            
+       else if (name.equals("moveMouse"))
+        {
+
+                CollisionResults results = checkColision();
+                
+               if((results.size() > 0)&&(PlayerRessources.selectionRoom>0))
+                {
+                    Geometry target = results.getClosestCollision().getGeometry();
+
+                    com.jme3.math.Transform transformation = target.getWorldTransform();
+                    gebaede.move(transformation.getTranslation());
+                    
+                }
+                                
+                                
+                
+        }
+      }
     };
     
-    public void buildSomething(int key){
-        
-        System.out.println("buildSomething");
-        
-        // TODO: OpenBuildMenu
-        buildingType = key;
-        
+    private CollisionResults checkColision()
+    {
+                CollisionResults results = new CollisionResults();
+             
+                System.out.println("MOUSEMOVE");
+                Vector2f click2D = inputManager.getCursorPosition();
+                Vector3f click3D = cam.getWorldCoordinates(new Vector2f(click2D.x, click2D.y), 0f);
+                Vector3f dir = cam.getWorldCoordinates(new Vector2f(click2D.x, click2D.y), 1f).subtractLocal(click3D).normalizeLocal();
+
+                Ray ray = new Ray(click3D,dir);
+                pickAble.collideWith(ray, results);
+                Vector3f pt = new Vector3f();
+                for (int i = 0; i < results.size(); i++) {
+
+                // (For each “hit”, we know distance, impact point, geometry.)
+                float dist = results.getCollision(i).getDistance();
+                 pt = results.getCollision(i).getContactPoint();
+                String target = results.getCollision(i).getGeometry().getName();
+
+                System.out.println("Selection #" + i + ": " + target + " at " + pt + ", " + dist + " WU away.");
+
+                }
+                return results;
     }
 }

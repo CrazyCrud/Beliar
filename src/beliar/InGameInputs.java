@@ -54,6 +54,7 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
     private static final int BUILDING_LEVEL_TWO = 2;
     private static final int BUILDING_LEVEL_THREE = 3;
     
+    
     public InGameInputs(AppStateManager stateManager, Application app){
         System.out.println("InGameInputs");
         this.stateManager = stateManager;
@@ -62,7 +63,7 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
     
     @Override
     public void bind(Nifty nifty, Screen screen) {
-        System.out.println("InGameInputs: bind");
+        System.out.println("bind");
         this.nifty = nifty;
         this.screen = screen;
     }
@@ -206,6 +207,8 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
     
     public void onBuildPath(){
         System.out.println("Build a fucking path to get out of here");
+        PlayerRessources.selectionRoom=ValuesTerrain.HALL;
+        
     }  
        
     public void buildAdamMenu(){
@@ -380,14 +383,17 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
             case ADAM:
                 // Adam-Raum anlegen
                 System.out.println("Build Adam Room");
+                PlayerRessources.selectionRoom=ValuesTerrain.HALLOFANARCHY;
                 break;
             case KYTHOS:
                 // Kythos-Raum anlegen
                 System.out.println("Build Kythos Room");
+                PlayerRessources.selectionRoom=ValuesTerrain.CAVEOFBEAST;
                 break;
             case MARA:
                 // Mara-Raum anlegen
                 System.out.println("Build Mara Room");
+                PlayerRessources.selectionRoom=ValuesTerrain.TOMBOFMEMORY;
                 break;
         }
     }
@@ -443,6 +449,8 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
        clearThirdRow();
        clearSecondRow();
        clearFirstRow();
+       
+       PlayerRessources.selectionRoom =0;
     }
     
     private void clearText(){

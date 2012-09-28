@@ -29,5 +29,9 @@ public class PlayerRessources {
 	
 	//Creatures
 	public static int creaturesAtDarkness=0;
+        
+        //SelectionRoom/Build
+        public static int selectionRoom =0;
+        
 	
 }
