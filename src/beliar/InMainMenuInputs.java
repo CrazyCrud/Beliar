@@ -17,33 +17,34 @@ import de.lessvoid.nifty.screen.ScreenController;
  */
 public class InMainMenuInputs extends AbstractAppState implements ScreenController{
       /** Nifty GUI ScreenControl methods */
-    
+
   private AppStateManager stateManager;
   private SimpleApplication app;
-  
+
   public InMainMenuInputs(AppStateManager stateManager, SimpleApplication app){
       System.out.println("InMainMenuInputs: Constructor");
       this.stateManager = stateManager;
       this.app = (SimpleApplication) app;
   }
-    
-  public void bind(Nifty nifty, Screen screen) {
-        
-    }
 
+  @Override
+  public void bind(Nifty nifty, Screen screen) {
+      System.out.println("InMainMenuInputs: bind()");
+  }
+  @Override
   public void onStartScreen() {
 
   }
-
+  @Override
   public void onEndScreen() {
 
   }
-  
+
   @Override
   public void stateAttached(AppStateManager stateManager) {
         System.out.println("InMainMenuInputs: stateAttached");
     }
-    
+
   @Override
   public void stateDetached(AppStateManager stateManager){
         System.out.println("InMainMenuInputs: stateDetached");
@@ -58,22 +59,22 @@ public class InMainMenuInputs extends AbstractAppState implements ScreenControll
             System.out.println("InMainMenuInputs: setEnabled(false)");
         }
   }
-  
+
   public void onStartGame(){
       System.out.println("InMainMenuInputs: onStartGame()");
-      
+
       stateManager.getState(MainMenuState.class).loadGame();
   }
-  
+
   public void onOptions(){
       System.out.println("InMainMenuInputs: onOptions()");
   }
-  
+
   public void onExitGame(){
       System.out.println("InMainMenuInputs: onExitGame()");
       app.stop();
   }
-  
+
   @Override
   public void update(float tpf) { 
     super.update(tpf);

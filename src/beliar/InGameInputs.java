@@ -62,7 +62,7 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
     
     @Override
     public void bind(Nifty nifty, Screen screen) {
-        System.out.println("bind");
+        System.out.println("InGameInputs: bind");
         this.nifty = nifty;
         this.screen = screen;
     }

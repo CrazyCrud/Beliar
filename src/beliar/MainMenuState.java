@@ -45,7 +45,6 @@ public class MainMenuState extends AbstractAppState{
         super.setEnabled(enabled);
         if(enabled){
             System.out.println("MainMenuState: setEnabled");
-            inMainMenuInputs.setEnabled(true);
             showInput();
             initAudio();
             playAudio();
@@ -103,10 +102,11 @@ public class MainMenuState extends AbstractAppState{
     
     private void initAudio(){
         menuTheme = new AudioNode(app.getAssetManager(), "Sounds/music/mainmenu.ogg", true);
-        menuTheme.setVolume(1.0f);
+        menuTheme.setVolume(0.75f);
     }
 
     private void showInput() {
+        inMainMenuInputs.setEnabled(true);
         screenManager.switchToMainMenuScreen(inMainMenuInputs);
     }
     
@@ -125,5 +125,6 @@ public class MainMenuState extends AbstractAppState{
         //stateManager.detach(stateManager.getState(MainMenuState.class));
         stateManager.attach(loadingGameState);
         stateManager.getState(LoadingGameState.class).setEnabled(true);
+        
     }
 }

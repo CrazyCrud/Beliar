@@ -59,6 +59,10 @@ public class ScreenManager {
         guiViewPort.addProcessor(niftyDisplay);  
     }
     
+    public Nifty getNifty(){
+        return nifty;
+    }
+    
     public void setGameState(ScreenController gameInputs){
         
     }
