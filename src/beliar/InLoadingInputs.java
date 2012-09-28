@@ -12,6 +12,12 @@ import de.lessvoid.nifty.elements.Element;
 import de.lessvoid.nifty.elements.render.TextRenderer;
 import de.lessvoid.nifty.screen.Screen;
 import de.lessvoid.nifty.screen.ScreenController;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileReader;
+import java.io.InputStreamReader;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -75,12 +81,28 @@ public class InLoadingInputs extends AbstractAppState implements ScreenControlle
     }
     
     private void initValues(){
-        danteQuotes.add(dante1);
-        danteQuotes.add(dante2);
+        System.out.println("System" + System.getProperty("user.dir"));
+        try{
+            File txtFile = new File("assets/Interface/Text/Dante.txt");
+            FileInputStream inputStream = new FileInputStream(txtFile);
+            InputStreamReader streamReader = new InputStreamReader(inputStream, Charset.forName("ISO-8859-1"));
+
+            BufferedReader bfReader = new BufferedReader(streamReader);
+            String nextLine = bfReader.readLine();
+           
+            while(nextLine != null){
+                danteQuotes.add(nextLine);
+                nextLine = bfReader.readLine();
+            }
+            
+            bfReader.close();
+        }catch(Exception e){
+            
+        }
     }
     
     private void showText(){
-        System.out.println("LoadingGameState: " + (int)(Math.random() * danteQuotes.size()));
+        System.out.println("InLoadingInputs: showText() " + danteQuotes.size());
         String text = danteQuotes.get((int)(Math.random() * danteQuotes.size()));
         citation.getRenderer(TextRenderer.class).setText(text);
     }
