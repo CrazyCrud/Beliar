@@ -8,7 +8,10 @@ import com.jme3.app.Application;
 import com.jme3.app.SimpleApplication;
 import com.jme3.app.state.AbstractAppState;
 import com.jme3.app.state.AppStateManager;
+import com.jme3.audio.AudioNode;
+import com.jme3.audio.AudioNode.Status;
 import com.jme3.input.InputManager;
+import com.jme3.scene.Node;
 
 /**
  *
@@ -22,6 +25,8 @@ public class MainMenuState extends AbstractAppState{
     private ScreenManager screenManager;
     
     private LoadingGameState loadingGameState;
+    private Node rootNode;
+    private AudioNode menuTheme;
     
     public MainMenuState(AppStateManager stateManager, SimpleApplication app){
         System.out.println("MainMenuState: Constructor");
@@ -42,7 +47,10 @@ public class MainMenuState extends AbstractAppState{
             System.out.println("MainMenuState: setEnabled");
             inMainMenuInputs.setEnabled(true);
             showInput();
+            initAudio();
+            playAudio();
         }else{
+            stopAudio();
             inMainMenuInputs.setEnabled(false);
         }
     }
@@ -64,11 +72,21 @@ public class MainMenuState extends AbstractAppState{
     
     @Override
     public void update(float tpf){
-
+        if(isEnabled()){
+            System.out.println("MainMenuState: update()");
+            Status menuThemeStatus = menuTheme.getStatus();
+            if(menuThemeStatus == AudioNode.Status.Stopped){
+                System.out.println("AudioNode is stopped");
+                menuTheme.play();
+            }
+        }else{
+            
+        }
     }
 
     private void initValues() {
         this.screenManager = ScreenManager.getScreenManager();
+        this.rootNode = app.getRootNode();
         this.inputManager.setCursorVisible(true);
         this.app.getFlyByCamera().setDragToRotate(true);
     }
@@ -82,9 +100,23 @@ public class MainMenuState extends AbstractAppState{
         stateManager.attach(inMainMenuInputs);
         inMainMenuInputs.setEnabled(false);
     }
+    
+    private void initAudio(){
+        menuTheme = new AudioNode(app.getAssetManager(), "Sounds/music/mainmenu.ogg", true);
+        menuTheme.setVolume(1.0f);
+    }
 
     private void showInput() {
         screenManager.switchToMainMenuScreen(inMainMenuInputs);
+    }
+    
+    private void playAudio(){
+        rootNode.attachChild(menuTheme);
+    }
+    
+    private void stopAudio(){
+        menuTheme.stop();
+        rootNode.detachChild(menuTheme);
     }
     
     public void loadGame(){

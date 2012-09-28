@@ -168,12 +168,12 @@ public class GameState extends AbstractAppState{
         //localRootNode.removeFromParent();
         rootNode.detachChild(localRootNode);
         localRootNode.detachAllChildren();
-        mapNode.detachAllChildren();
-        pickAble.detachAllChildren();
-        creatures.detachAllChildren();
-        buildings.detachAllChildren();
-        mapNode.detachAllChildren();
-        marker.detachAllChildren();
+        //mapNode.detachAllChildren();
+        //pickAble.detachAllChildren();
+        //creatures.detachAllChildren();
+        //buildings.detachAllChildren();
+        //mapNode.detachAllChildren();
+        //marker.detachAllChildren();
         inputManager.clearMappings();
         inputManager.removeListener(actionListener);
         viewPort.clearScenes();
