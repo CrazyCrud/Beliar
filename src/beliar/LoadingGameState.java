@@ -8,6 +8,8 @@ import com.jme3.app.Application;
 import com.jme3.app.SimpleApplication;
 import com.jme3.app.state.AbstractAppState;
 import com.jme3.app.state.AppStateManager;
+import com.jme3.audio.AudioNode;
+import com.jme3.scene.Node;
 import de.lessvoid.nifty.Nifty;
 import de.lessvoid.nifty.screen.Screen;
 import de.lessvoid.nifty.screen.ScreenController;
@@ -24,6 +26,8 @@ public class LoadingGameState extends AbstractAppState implements ScreenControll
     private PauseState pauseState;
     private ScreenManager screenManager;
     
+    private Node rootNode;
+    private AudioNode loadingTheme;
     private boolean load;
     private int frameCount;
     
@@ -62,6 +66,8 @@ public class LoadingGameState extends AbstractAppState implements ScreenControll
         if(enabled){
             System.out.println("LoadingGameState: setEnabled");
             showInput();
+            initAudio();
+            playAudio();
             loadGame();
         }else{
             System.out.println("LoadingGameState: setEnabled(false)");
@@ -85,6 +91,7 @@ public class LoadingGameState extends AbstractAppState implements ScreenControll
                     System.out.println("LoadingGameState: update(3)");
                 }else if(frameCount > 30){
                     System.out.println("LoadingGameState: update(30)");
+                    stopAudio();
                     startGame();
                 }
                 frameCount++;
@@ -95,9 +102,26 @@ public class LoadingGameState extends AbstractAppState implements ScreenControll
     }
     
     private void initValues(AppStateManager stateManager, Application app){
+        rootNode = this.app.getRootNode();
         screenManager = ScreenManager.getScreenManager();
         load = false;
         frameCount = 0;
+    }
+    
+    private void initAudio(){
+        loadingTheme = new AudioNode(this.app.getAssetManager(), 
+                "Sounds/music/loading.ogg", false);
+        loadingTheme.setLooping(true);
+        loadingTheme.setVolume(0.8f);
+    }
+    
+    private void playAudio(){
+        rootNode.attachChild(loadingTheme);
+        loadingTheme.play();
+    }
+    
+    private void stopAudio(){
+        loadingTheme.stop();
     }
     
     private void showInput(){
