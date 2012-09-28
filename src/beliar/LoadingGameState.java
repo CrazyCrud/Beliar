@@ -60,6 +60,7 @@ public class LoadingGameState extends AbstractAppState{
             loadGame();
         }else{
             System.out.println("LoadingGameState: setEnabled(false)");
+            inLoadingInputs.setEnabled(false);
         }
     }
 
