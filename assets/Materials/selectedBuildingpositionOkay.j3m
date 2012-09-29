@@ -1,12 +1,13 @@
 Material My Material : Common/MatDefs/Light/Lighting.j3md {
      MaterialParameters {
-        Diffuse : 0.4 1.0 0.0 1.0
         AlphaMap : Repeat Textures/Material/alphamap_selection.png
+        Diffuse : 0.0 1.0 0.0 1.0
      }
     AdditionalRenderState {
-      AlphaTestFalloff 2.0
-      Wireframe On
+      AlphaTestFalloff 0.0
+      PointSprite Off
+      ColorWrite Off
       DepthWrite Off
-      Blend Additive
+      Wireframe On
     }
 }

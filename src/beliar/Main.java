@@ -70,14 +70,14 @@ public class Main extends SimpleApplication{
     }
     
     private void initStates(){ 
-       mainMenuState = new MainMenuState(stateManager, this);
-       //gameState = new GameState(stateManager, this);
+       //mainMenuState = new MainMenuState(stateManager, this);
+       gameState = new GameState(stateManager, this);
        //pauseState = new PauseState(stateManager, this);
-       stateManager.attach(mainMenuState);
-       //stateManager.attach(gameState);
+       //stateManager.attach(mainMenuState);
+       stateManager.attach(gameState);
        //stateManager.attach(pauseState);
-       mainMenuState.setEnabled(true);
-       //gameState.setEnabled(false);
+       //mainMenuState.setEnabled(false);
+       gameState.setEnabled(true);
        //pauseState.setEnabled(false);
     }
     

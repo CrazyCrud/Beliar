@@ -137,7 +137,10 @@ public class MapHandler {
         terrainMap[x][y]= type;
     }
     
-    
+    public int getCellType(int x, int y)
+    {
+        return terrainMap[x][y];
+    }
     public void handleBuilding(Vector3f position,int type)
     {
         System.out.println("HandleBuilding");

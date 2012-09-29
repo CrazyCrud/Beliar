@@ -11,7 +11,21 @@ import com.jme3.scene.Node;
 
 //HIER KOMMT DER TESTCOMITTT!!!!!
 public class GameContainer {
-	//GAMETICKER in seconds
+    
+    //Prices BUILDINGS //ADAM//KYTHOS//MARA
+        public final static int[] COSTADAMBIG       ={100,0,0};
+        public final static int[] COSTADAMMIDDLE    ={100,0,0};
+        public final static int[] COSTADAMSMALL     ={100,0,0};
+
+        public final static int[] COSTKYTHOSBIG     ={100,0,0};
+        public final static int[] COSTKYTHOSMIDDLE  ={100,0,0};
+        public final static int[] COSTKYTHOSSMALL   ={100,0,0};
+
+        public final static int[] COSTMARABIG       ={100,0,0};
+        public final static int[] COSTMARAMIDDLE    ={100,0,0};
+        public final static int[] COSTMARASMALL     ={100,0,0};
+    
+    //GAMETICKER in seconds
 	public final static int UPDATE_PERIOD = 15;
 
 	//RessourcesProduction
@@ -37,11 +51,14 @@ public class GameContainer {
 	
 	public final static int healthCentreREngeneration = 1;
         
+        
         private Node rootNode;
         private Application app;
         private MouseInput mouseInput;
         
         private static GameContainer Instance;
+        
+        
         
         private GameContainer(){
             // Nothing to do here...

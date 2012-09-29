@@ -28,6 +28,7 @@ import org.bushe.swing.event.EventTopicSubscriber;
  */
 public class InGameInputs extends AbstractAppState implements ScreenController{
 
+    private GameState myGameState;
     private AppStateManager stateManager;
     private SimpleApplication app;
     private Nifty nifty;
@@ -55,10 +56,11 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
     private static final int BUILDING_LEVEL_THREE = 3;
     
     
-    public InGameInputs(AppStateManager stateManager, Application app){
+    public InGameInputs(AppStateManager stateManager, Application app,GameState myState){
         System.out.println("InGameInputs");
         this.stateManager = stateManager;
         this.app = (SimpleApplication) app;
+        this.myGameState=myState;
     }
     
     @Override
@@ -399,17 +401,27 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
     }
     
     public void buildAdamBuilding(String whichLevel){
+        char adamChar = 'a';
+        
         switch(Integer.parseInt(whichLevel)){
             case BUILDING_LEVEL_ONE:
+                System.out.println("Adam-Building Stufe 1");
                 // Hier Adam-Building Stufe 1
+                PlayerRessources.selectionRoom=0;
+                myGameState.handleBuildSelection(adamChar, BUILDING_LEVEL_ONE);
                 updateRessources(ADAM, BUILDING_LEVEL_ONE);
                 return;
             case BUILDING_LEVEL_TWO:
                 // Hier Adam-Building Stufe 2
+                 System.out.println("Adam-Building Stufe 2");
+                 PlayerRessources.selectionRoom=0;
+                myGameState.handleBuildSelection(adamChar, BUILDING_LEVEL_TWO);
                 updateRessources(ADAM, BUILDING_LEVEL_TWO);
                 return;
             case BUILDING_LEVEL_THREE:
-                // Hier Adam-Building Stufe 3
+                 System.out.println("Adam-Building Stufe 3");
+                 PlayerRessources.selectionRoom=0;
+                myGameState.handleBuildSelection(adamChar, BUILDING_LEVEL_THREE);
                 updateRessources(ADAM, BUILDING_LEVEL_THREE);
                 return;
         }
@@ -522,10 +534,14 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
         switch(whichRessource){
             case ADAM:
                 if(whichLevel == BUILDING_LEVEL_ONE){
-                    PlayerRessources.adamCreatorSMALL++;
-                }else if(whichLevel == BUILDING_LEVEL_TWO){
+                     PlayerRessources.adamCreatorSMALL++;
+                }
+                
+                else if(whichLevel == BUILDING_LEVEL_TWO){   
                     PlayerRessources.adamCreatorMIDDLE++;
-                }else if(whichLevel == BUILDING_LEVEL_THREE){
+                }
+                
+                else if(whichLevel == BUILDING_LEVEL_THREE){            
                     PlayerRessources.adamCreatorBIG++;
                 }
                 break;

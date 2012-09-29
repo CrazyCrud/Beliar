@@ -69,7 +69,9 @@ public class MeshContainer {
         adamHall.put("end",        assetManager.loadModel("Scenes/adamHall/room/adamEnd.j3o"));
         
         //Buildings
-        
+        adamHall.put("production1",        assetManager.loadModel("Scenes/adamHall/room/adamEnd.j3o"));
+        adamHall.put("production2",        assetManager.loadModel("Scenes/adamHall/room/adamEnd.j3o"));
+        adamHall.put("production3",        assetManager.loadModel("Scenes/adamHall/room/adamEnd.j3o"));
     }
     
         private void initCaveOfTheBeast()
@@ -83,6 +85,8 @@ public class MeshContainer {
         caveOfTheBeast.put("end",        assetManager.loadModel("Scenes/kythosHall/room/kythosEnd.j3o"));
         
         //Buildings
-        
+        caveOfTheBeast.put("production_1",        assetManager.loadModel("Scenes/adamHall/room/adamEnd.j3o"));
+        caveOfTheBeast.put("production_2",        assetManager.loadModel("Scenes/adamHall/room/adamEnd.j3o"));
+        caveOfTheBeast.put("production_3",        assetManager.loadModel("Scenes/adamHall/room/adamEnd.j3o"));
     }
 }

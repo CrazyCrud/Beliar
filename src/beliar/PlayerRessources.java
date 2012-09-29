@@ -1,5 +1,7 @@
 package beliar;
 
+import com.jme3.scene.Spatial;
+
 public class PlayerRessources {
 	
 	public static boolean isLost = false;
@@ -7,11 +9,11 @@ public class PlayerRessources {
 	public static int populationLimit =0;
 	public static int populationCount=0;
 	
-	public static int adam=0;
-	public static int kythos=0;
-	public static int mara=0;
+	public static int adam=10000;
+	public static int kythos=500;
+	public static int mara=10;
 	
-	public static int darkness=0;
+	public static int darkness=10;
 	public static int healthCentre = 100;
 	
 	//BuildingCount
@@ -32,6 +34,8 @@ public class PlayerRessources {
         
         //SelectionRoom/Build
         public static int selectionRoom =0;
+        public static Spatial selectedBuilding = null;
+        
         
 	
 }

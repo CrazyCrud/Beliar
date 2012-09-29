@@ -9,9 +9,11 @@ import com.jme3.app.state.AbstractAppState;
 import com.jme3.app.state.AppStateManager;
 import com.jme3.scene.Node;
 import com.jme3.app.SimpleApplication;
+import com.jme3.asset.AssetKey;
 import com.jme3.asset.AssetManager;
 import com.jme3.audio.AudioRenderer;
 import com.jme3.collision.CollisionResults;
+import com.jme3.collision.bih.BIHNode;
 import com.jme3.input.FlyByCamera;
 import com.jme3.input.InputManager;
 import com.jme3.input.KeyInput;
@@ -68,8 +70,9 @@ public class GameState extends AbstractAppState{
     //Meshes
     private MeshContainer mMeshContainer;
     
-    //DEBUG: GEBAEUDE
-    private Geometry gebaede = new Geometry("Building", new Box(0, 0, 0));
+    private Spatial selection;
+    private Vector3f mousePositionWorld= new Vector3f(0, 0, 0);
+    private int typeBuildingRoom = 0;
     
     
     //GAME
@@ -133,7 +136,7 @@ public class GameState extends AbstractAppState{
     
     private void initStates(){
         System.out.println("GameState: initStates()");
-        inGameInputs = new InGameInputs(stateManager, app);
+        inGameInputs = new InGameInputs(stateManager, app,this);
         gameSimulation = new GameSimulation(stateManager, app);  
     }
  
@@ -194,8 +197,12 @@ public class GameState extends AbstractAppState{
             position.z-=2;
             cameraLight.setPosition(position);
             
-            
-            gebaede.move(position);
+            if(selection!=null)
+            {
+                System.out.println("Ich rendere ein Gebaude");
+                selection.setLocalTranslation(mousePositionWorld);
+                
+            }
             
         }else{
             
@@ -308,6 +315,21 @@ public class GameState extends AbstractAppState{
         marker = new Node("marker");
         mapNode = new Node("mapNode");
         buildings = new Node("buildings");
+        
+        pickAble.addLight(cameraLight);
+        pickAble.addLight(directionLight);
+        
+        creatures.addLight(cameraLight);
+        creatures.addLight(directionLight);
+        
+        marker.addLight(cameraLight);
+        marker.addLight(directionLight);
+        
+        mapNode.addLight(cameraLight);
+        mapNode.addLight(directionLight);
+        
+        buildings.addLight(cameraLight);
+        buildings.addLight(directionLight);
     }
     
     private void initMap()
@@ -329,8 +351,8 @@ public class GameState extends AbstractAppState{
         //Markers
         pickAble.attachChild(mapNode);
         pickAble.attachChild(buildings);
-        pickAble.attachChild(marker);
         
+        localRootNode.attachChild(marker);
         localRootNode.attachChild(pickAble);
         localRootNode.attachChild(creatures);
         
@@ -400,8 +422,26 @@ public class GameState extends AbstractAppState{
                     mMaphandler.handleBuilding(transformation.getTranslation(),PlayerRessources.selectionRoom);
                     mapNode.detachChild(target);
                 }
-
-                //gebäude setzen
+                
+                //gebaude bauen
+                else if ((results.size()>0)&&(selection!=null))
+                {
+                    System.out.println("Gebäude platzieren?");
+                    
+                    int[] bill = GameContainer.COSTADAMSMALL;
+                    
+                    if((checkFieldType()==true)&&(checkCostsBuilding(bill)==true))
+                    {
+                    buildings.attachChild(selection);
+                    stopBuilding();
+                    reduceRessources(bill);
+                    
+                    }
+                    else
+                    {
+                        System.out.println("Bauen verweigert");
+                    }
+                }
 
                 
                 if(results.size()<=0)
@@ -417,29 +457,83 @@ public class GameState extends AbstractAppState{
             
        else if (name.equals("moveMouse"))
         {
-
                 CollisionResults results = checkColision();
-                
-               if((results.size() > 0)&&(PlayerRessources.selectionRoom>0))
+              
+               if((results.size() > 0)&&selection!=null)
                 {
                     Geometry target = results.getClosestCollision().getGeometry();
-
-                    com.jme3.math.Transform transformation = target.getWorldTransform();
-                    gebaede.move(transformation.getTranslation());
-                    
+                    mousePositionWorld.set(target.getWorldTranslation());
+                    checkFieldType();
                 }
-                                
-                                
-                
         }
       }
     };
+    
+    public void handleBuildSelection(char typeRoom, int size)
+    {
+        
+        System.out.println("HandleBuildSelection");
+               
+        String loadingString = "production".concat(String.valueOf(size));
+              
+        switch(typeRoom)
+        {
+           case 'a':
+               System.out.println("ADAM"+loadingString);
+               typeBuildingRoom=ValuesTerrain.HALLOFANARCHY;
+        PlayerRessources.selectedBuilding = mMeshContainer.adamHall.get(loadingString).clone();
+        
+                break;
+               
+           case 'k':  
+               System.out.println("KYTHOS"+loadingString);
+               typeBuildingRoom =ValuesTerrain.CAVEOFBEAST;
+        PlayerRessources.selectedBuilding = mMeshContainer.caveOfTheBeast.get(loadingString).clone();  
+        
+                break;
+           
+           case 'm': 
+               System.out.println("MARA"+loadingString);
+               typeBuildingRoom =ValuesTerrain.TOMBOFMEMORY;
+        PlayerRessources.selectedBuilding = mMeshContainer.tombOfMemory.get(loadingString).clone();   
+        
+                break;
+               
+        }
+      
+        PlayerRessources.selectionRoom=0;
+        initBuildSelection();
+        
+        
+    }
+    
+    private void initBuildSelection()
+    {
+        System.out.println("initBuildingSelection");
+        PlayerRessources.selectedBuilding.addLight(directionLight);
+        PlayerRessources.selectedBuilding.addLight(cameraLight);
+        selection = PlayerRessources.selectedBuilding;
+        selection.move(mousePositionWorld);
+        
+        if(selection!= null)
+        {
+            marker.attachChild(selection);
+        }
+        else
+        {
+            System.err.println("ERROR DETECTED!");
+        }
+            /* output = meshBox.get("4cross").clone();
+            output.rotate(0,0, 0);
+            output.setName(name+""+x+""+y);*/
+        
+    }
     
     private CollisionResults checkColision()
     {
                 CollisionResults results = new CollisionResults();
              
-                System.out.println("MOUSEMOVE");
+                //System.out.println("MOUSEMOVE");
                 Vector2f click2D = inputManager.getCursorPosition();
                 Vector3f click3D = cam.getWorldCoordinates(new Vector2f(click2D.x, click2D.y), 0f);
                 Vector3f dir = cam.getWorldCoordinates(new Vector2f(click2D.x, click2D.y), 1f).subtractLocal(click3D).normalizeLocal();
@@ -454,9 +548,58 @@ public class GameState extends AbstractAppState{
                  pt = results.getCollision(i).getContactPoint();
                 String target = results.getCollision(i).getGeometry().getName();
 
-                System.out.println("Selection #" + i + ": " + target + " at " + pt + ", " + dist + " WU away.");
+                //System.out.println("Selection #" + i + ": " + target + " at " + pt + ", " + dist + " WU away.");
 
                 }
                 return results;
     }
+    
+    private boolean checkFieldType()
+    {
+        int cellType = mMaphandler.getCellType((int)mousePositionWorld.x, (int)mousePositionWorld.z);
+    System.out.println("CellType:"+ cellType);
+    
+    if(cellType==typeBuildingRoom)
+    {
+        System.out.println("Bauerlaubnis erteilt");
+        Material mat = new Material(assetManager,"Common/MatDefs/Misc/Unshaded.j3md");
+        mat.setColor("Color", ColorRGBA.Green);
+        selection.setMaterial(mat);
+        
+        
+        return true;
+    }
+    else
+    {
+        System.out.println("Bauerlaubnis verweigert");
+        Material mat = new Material(assetManager,"Common/MatDefs/Misc/Unshaded.j3md");
+        mat.setColor("Color", ColorRGBA.Red);
+        selection.setMaterial(mat);
+        return false;
+    }
+    
+    }
+    
+    private boolean checkCostsBuilding(int[] bill)
+    {
+        if((PlayerRessources.adam>=bill[0])  &&(PlayerRessources.kythos>=bill[1])&&(PlayerRessources.mara>=bill[2]))
+            return true;
+        else
+            return false;
+    }
+    public void stopBuilding()
+    {
+        selection=null;
+        PlayerRessources.selectedBuilding=null;
+        PlayerRessources.selectionRoom=0;
+        marker.detachAllChildren();
+    }
+    
+    public void reduceRessources(int[]bill)
+    {
+        PlayerRessources.adam -= bill[0];
+        PlayerRessources.kythos -= bill[1];
+        PlayerRessources.mara -= bill[2];
+    }
+    
 }
