@@ -4,6 +4,10 @@
  */
 package beliar;
 
+import Container.GameContainer;
+import com.jme3.animation.AnimChannel;
+import com.jme3.animation.AnimControl;
+import com.jme3.animation.AnimEventListener;
 import com.jme3.app.Application;
 import com.jme3.app.state.AbstractAppState;
 import com.jme3.app.state.AppStateManager;
@@ -49,7 +53,7 @@ import de.lessvoid.nifty.Nifty;
  *
  * @author andministrator
  */
-public class GameState extends AbstractAppState{
+public class GameState extends AbstractAppState implements AnimEventListener{
     
     
     private ViewPort viewPort;
@@ -74,6 +78,10 @@ public class GameState extends AbstractAppState{
     private Vector3f mousePositionWorld= new Vector3f(0, 0, 0);
     private int typeBuildingRoom = 0;
     
+    //Animation
+    private AnimChannel channel;
+    private AnimControl control;
+  
     
     //GAME
     private InGameInputs inGameInputs;
@@ -108,7 +116,7 @@ public class GameState extends AbstractAppState{
     private ScreenManager screenManager;
     
     
- public GameState(AppStateManager stateManager, SimpleApplication app){
+ public GameState(AppStateManager stateManager, SimpleApplication app) {
         System.out.println("GameState");  
         this.app = (SimpleApplication) ((SimpleApplication)app);
         this.rootNode = ((SimpleApplication)app).getRootNode();
@@ -342,7 +350,7 @@ public class GameState extends AbstractAppState{
     private void initSound()
     {
         mSoundManager = new SoundManager(assetManager, localRootNode);
-        mSoundManager.playMusic("01");
+        mSoundManager.playMusic("03");
     }
     private void initScene()
     {   //setzt die Objekte entsprechend der Vorgaben aus der Map
@@ -358,7 +366,7 @@ public class GameState extends AbstractAppState{
         
     }
     
-    
+
     private void attachCoordinateAxes(Vector3f pos){
       Arrow arrow = new Arrow(Vector3f.UNIT_X);
       arrow.setLineWidth(4); // make arrow thicker
@@ -435,7 +443,7 @@ public class GameState extends AbstractAppState{
                     buildings.attachChild(selection);
                     stopBuilding();
                     reduceRessources(bill);
-                    
+                    mSoundManager.playUISound("placeBuilding");
                     }
                     else
                     {
@@ -600,6 +608,14 @@ public class GameState extends AbstractAppState{
         PlayerRessources.adam -= bill[0];
         PlayerRessources.kythos -= bill[1];
         PlayerRessources.mara -= bill[2];
+    }
+
+    public void onAnimCycleDone(AnimControl control, AnimChannel channel, String animName) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public void onAnimChange(AnimControl control, AnimChannel channel, String animName) {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
     
 }
