@@ -84,8 +84,8 @@ public class MeshContainer {
         caveOfTheBeast.put("end",        assetManager.loadModel("Scenes/kythosHall/room/kythosEnd.j3o"));
         
         //Buildings
-        caveOfTheBeast.put("production_1",        assetManager.loadModel("Scenes/adamHall/room/adamEnd.j3o"));
-        caveOfTheBeast.put("production_2",        assetManager.loadModel("Scenes/adamHall/room/adamEnd.j3o"));
-        caveOfTheBeast.put("production_3",        assetManager.loadModel("Scenes/adamHall/room/adamEnd.j3o"));
+        caveOfTheBeast.put("production1",        assetManager.loadModel("Scenes/kythosHall/buildings/kythosBuilding_1.j3o"));
+        caveOfTheBeast.put("production2",        assetManager.loadModel("Scenes/adamHall/room/adamEnd.j3o"));
+        caveOfTheBeast.put("production3",        assetManager.loadModel("Scenes/adamHall/room/adamEnd.j3o"));
     }
 }

@@ -53,7 +53,7 @@ import de.lessvoid.nifty.Nifty;
  *
  * @author andministrator
  */
-public class GameState extends AbstractAppState implements AnimEventListener{
+public class GameState extends AbstractAppState{
     
     
     private ViewPort viewPort;
@@ -204,6 +204,7 @@ public class GameState extends AbstractAppState implements AnimEventListener{
             position.x+=3;
             position.z-=2;
             cameraLight.setPosition(position);
+            inGameInputs.ressourcesChanged();
             
             if(selection!=null)
             {
@@ -438,13 +439,20 @@ public class GameState extends AbstractAppState implements AnimEventListener{
                     
                     int[] bill = GameContainer.COSTADAMSMALL;
                     
-                    if((checkFieldType()==true)&&(checkCostsBuilding(bill)==true))
+                    if((checkFieldType((int)mousePositionWorld.x,(int)mousePositionWorld.z)==true)&&(checkCostsBuilding(bill)==true))
                     {
                         selection = PlayerRessources.selectedBuilding;
-                    buildings.attachChild(selection);
-                    stopBuilding();
-                    reduceRessources(bill);
-                    mSoundManager.playUISound("placeBuilding");
+                        if(selection==null)
+                        {
+                            System.out.println("!!!ERROR!!!");
+                        }
+                        selection.setMaterial(assetManager.loadMaterial(PlayerRessources.loadingStringMaterial));
+                        buildings.attachChild(selection);
+                        stopBuilding();
+                        reduceRessources(bill);
+                        mSoundManager.playUISound("placeBuilding");
+                        mMaphandler.placeBuilding((int)mousePositionWorld.x,(int)mousePositionWorld.z);
+                        inGameInputs.ressourcesChanged();
                     }
                     else
                     {
@@ -472,7 +480,7 @@ public class GameState extends AbstractAppState implements AnimEventListener{
                 {
                     Geometry target = results.getClosestCollision().getGeometry();
                     mousePositionWorld.set(target.getWorldTranslation());
-                    checkFieldType();
+                    checkFieldType((int)mousePositionWorld.x,(int)mousePositionWorld.z);
                 }
         }
       }
@@ -483,21 +491,29 @@ public class GameState extends AbstractAppState implements AnimEventListener{
         
         System.out.println("HandleBuildSelection");
                
+        
         String loadingString = "production".concat(String.valueOf(size));
-              
+        String loadingStringMaterial;
         switch(typeRoom)
         {
            case 'a':
                System.out.println("ADAM"+loadingString);
                typeBuildingRoom=ValuesTerrain.HALLOFANARCHY;
-        PlayerRessources.selectedBuilding = mMeshContainer.adamHall.get(loadingString).clone();
-        
+               System.out.println("ADAMMATERIAL:");
+               
+               
+                PlayerRessources.selectedBuilding = mMeshContainer.adamHall.get(loadingString).clone();
+                loadSelectedMaterial("adamBuilding_",size);
+                
+
+                
                 break;
                
            case 'k':  
                System.out.println("KYTHOS"+loadingString);
                typeBuildingRoom =ValuesTerrain.CAVEOFBEAST;
-        PlayerRessources.selectedBuilding = mMeshContainer.caveOfTheBeast.get(loadingString).clone();  
+                loadSelectedMaterial("kythosBuilding_",size);
+                PlayerRessources.selectedBuilding = mMeshContainer.caveOfTheBeast.get(loadingString).clone();  
         
                 break;
            
@@ -509,13 +525,15 @@ public class GameState extends AbstractAppState implements AnimEventListener{
                 break;
                
         }
-      
         PlayerRessources.selectionRoom=0;
         initBuildSelection();
         
         
     }
-    
+    private void loadSelectedMaterial(String type,int size)
+    {
+                PlayerRessources.loadingStringMaterial= GameContainer.materialAdress.concat(type+ String.valueOf(size)+".j3m");
+    }
     private void initBuildSelection()
     {
         System.out.println("initBuildingSelection");
@@ -532,10 +550,6 @@ public class GameState extends AbstractAppState implements AnimEventListener{
         {
             System.err.println("ERROR DETECTED!");
         }
-            /* output = meshBox.get("4cross").clone();
-            output.rotate(0,0, 0);
-            output.setName(name+""+x+""+y);*/
-        
     }
     
     private CollisionResults checkColision()
@@ -563,12 +577,12 @@ public class GameState extends AbstractAppState implements AnimEventListener{
                 return results;
     }
     
-    private boolean checkFieldType()
+    private boolean checkFieldType(int x, int y)
     {
         int cellType = mMaphandler.getCellType((int)mousePositionWorld.x, (int)mousePositionWorld.z);
     System.out.println("CellType:"+ cellType);
     
-    if(cellType==typeBuildingRoom)
+    if((cellType==typeBuildingRoom)&&mMaphandler.getPlacesBuildingAt(x, y))
     {
         System.out.println("Bauerlaubnis erteilt");
         Material mat = new Material(assetManager,"Common/MatDefs/Misc/Unshaded.j3md");
@@ -588,6 +602,7 @@ public class GameState extends AbstractAppState implements AnimEventListener{
     }
     
     }
+
     
     private boolean checkCostsBuilding(int[] bill)
     {
@@ -609,14 +624,5 @@ public class GameState extends AbstractAppState implements AnimEventListener{
         PlayerRessources.adam -= bill[0];
         PlayerRessources.kythos -= bill[1];
         PlayerRessources.mara -= bill[2];
-    }
-
-    public void onAnimCycleDone(AnimControl control, AnimChannel channel, String animName) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    public void onAnimChange(AnimControl control, AnimChannel channel, String animName) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-    
+    }  
 }

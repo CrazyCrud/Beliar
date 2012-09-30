@@ -403,6 +403,7 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
     public void buildAdamBuilding(String whichLevel){
         char adamChar = 'a';
         
+        
         switch(Integer.parseInt(whichLevel)){
             case BUILDING_LEVEL_ONE:
                 System.out.println("Adam-Building Stufe 1");
@@ -428,15 +429,20 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
     }
     
     public void buildKythosBuilding(String whichLevel){
+        char kythosChar = 'k';
+        
         switch(Integer.parseInt(whichLevel)){
             case BUILDING_LEVEL_ONE:
                 updateRessources(KYTHOS, BUILDING_LEVEL_ONE);
+                myGameState.handleBuildSelection(kythosChar, BUILDING_LEVEL_ONE);
                 return;
             case BUILDING_LEVEL_TWO:
                 updateRessources(KYTHOS, BUILDING_LEVEL_TWO);
+                myGameState.handleBuildSelection(kythosChar, BUILDING_LEVEL_TWO);
                 return;
             case BUILDING_LEVEL_THREE:
                 updateRessources(KYTHOS, BUILDING_LEVEL_THREE);
+                myGameState.handleBuildSelection(kythosChar, BUILDING_LEVEL_THREE);
                 return;
         }
     }

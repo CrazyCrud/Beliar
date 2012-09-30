@@ -27,6 +27,7 @@ public class MapHandler {
     private com.jme3.scene.Node mapNode;
     private MeshContainer containerMapHandler;
     private int terrainMap[][];
+    private boolean positionBuildings[][];
     
     private int positionSoulAbyss[][];
     private int positionEnter[][];
@@ -97,6 +98,7 @@ public class MapHandler {
     {
         //DEBUG!!!
        terrainMap= new int [128][128];
+       positionBuildings = new boolean[128][128];
         setHellCenterAt(10, 10);
         for (int x=0;x<127;x++)
         {
@@ -107,6 +109,11 @@ public class MapHandler {
                 terrainMap[x][y]=0;
                 int mapType = terrainMap[x][y];
 		createMapCube(mapType, x, y);
+                positionBuildings[x][y]=true;
+                }
+                else
+                {
+                    positionBuildings[x][y]=false;
                 }
             }
         }
@@ -473,5 +480,16 @@ public class MapHandler {
         output.move(x, 0, y);        
         System.out.println("Outline"+output.getTriangleCount());
         }     
+    }
+
+
+    public void placeBuilding(int x, int y)
+    {
+        positionBuildings[x][y]=false;
+    }
+    
+    public boolean getPlacesBuildingAt(int x, int y)
+    {
+        return positionBuildings[x][y];
     }
 }

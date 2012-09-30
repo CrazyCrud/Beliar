@@ -12,18 +12,21 @@ import com.jme3.scene.Node;
 //HIER KOMMT DER TESTCOMITTT!!!!!
 public class GameContainer {
     
+    //Adresses
+    public final static String materialAdress = "Materials/";
+    
     //Prices BUILDINGS //ADAM//KYTHOS//MARA
-        public final static int[] COSTADAMBIG       ={100,0,0};
-        public final static int[] COSTADAMMIDDLE    ={100,0,0};
+        public final static int[] COSTADAMBIG       ={500,0,0};
+        public final static int[] COSTADAMMIDDLE    ={200,0,0};
         public final static int[] COSTADAMSMALL     ={100,0,0};
 
-        public final static int[] COSTKYTHOSBIG     ={100,0,0};
-        public final static int[] COSTKYTHOSMIDDLE  ={100,0,0};
-        public final static int[] COSTKYTHOSSMALL   ={100,0,0};
+        public final static int[] COSTKYTHOSBIG     ={700,0,0};
+        public final static int[] COSTKYTHOSMIDDLE  ={550,0,0};
+        public final static int[] COSTKYTHOSSMALL   ={300,0,0};
 
-        public final static int[] COSTMARABIG       ={100,0,0};
-        public final static int[] COSTMARAMIDDLE    ={100,0,0};
-        public final static int[] COSTMARASMALL     ={100,0,0};
+        public final static int[] COSTMARABIG       ={1500,500,0};
+        public final static int[] COSTMARAMIDDLE    ={900,250,0};
+        public final static int[] COSTMARASMALL     ={450,150,0};
     
     //GAMETICKER in seconds
 	public final static int UPDATE_PERIOD = 15;
@@ -107,4 +110,5 @@ public class GameContainer {
         public MouseInput getMouseInput(){
             return mouseInput;
         }
+        
 }

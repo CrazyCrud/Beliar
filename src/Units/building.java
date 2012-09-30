@@ -7,6 +7,7 @@ package Units;
 import com.jme3.animation.AnimChannel;
 import com.jme3.animation.AnimControl;
 import com.jme3.animation.AnimEventListener;
+import com.jme3.material.Material;
 import com.jme3.scene.Spatial;
 
 /**
@@ -18,7 +19,7 @@ public class building {
     private Spatial object;
     private AnimChannel channel;
     private AnimControl control;
-    
+    private Material myMaterial;
     private int posX;
     private int posZ;
     

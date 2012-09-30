@@ -1,0 +1,7 @@
+Material kythosBuilding_1 : Common/MatDefs/Light/Lighting.j3md {
+     MaterialParameters {
+        DiffuseMap : Textures/Meshes/Buildings/kythos_1.png
+     }
+    AdditionalRenderState {
+    }
+}

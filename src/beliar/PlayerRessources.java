@@ -1,5 +1,6 @@
 package beliar;
 
+import com.jme3.material.Material;
 import com.jme3.scene.Spatial;
 
 public class PlayerRessources {
@@ -35,7 +36,7 @@ public class PlayerRessources {
         //SelectionRoom/Build
         public static int selectionRoom =0;
         public static Spatial selectedBuilding = null;
-        
+        public static String  loadingStringMaterial = null;
         
 	
 }
