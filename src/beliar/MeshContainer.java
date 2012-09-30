@@ -55,7 +55,6 @@ public class MeshContainer {
         limbo.put("end", assetManager.loadModel("Scenes/limbo/room/limboEnd.j3o"));
         
         //Buildings
-        
     }
     
     private void initHallOfAnarchy()
@@ -69,7 +68,7 @@ public class MeshContainer {
         adamHall.put("end",        assetManager.loadModel("Scenes/adamHall/room/adamEnd.j3o"));
         
         //Buildings
-        adamHall.put("production1",        assetManager.loadModel("Scenes/adamHall/room/adamEnd.j3o"));
+        adamHall.put("production1",        assetManager.loadModel("Scenes/adamHall/buildings/adamBuilding_1.j3o"));
         adamHall.put("production2",        assetManager.loadModel("Scenes/adamHall/room/adamEnd.j3o"));
         adamHall.put("production3",        assetManager.loadModel("Scenes/adamHall/room/adamEnd.j3o"));
     }

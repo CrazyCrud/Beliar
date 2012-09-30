@@ -1,4 +1,4 @@
-package beliar;
+package Container;
 
 import com.jme3.app.Application;
 import com.jme3.asset.AssetManager;

@@ -1,0 +1,10 @@
+Material My Material : Common/MatDefs/Light/Lighting.j3md {
+     MaterialParameters {
+        NormalMap : Textures/Meshes/Buildings/adam_1_Normal.png
+        DiffuseMap : Textures/Meshes/Buildings/adam_1.png
+        GlowColor : 1.0 0.8 0.2 1.0
+        Specular : 1.0 0.8 0.4 1.0
+     }
+    AdditionalRenderState {
+    }
+}
