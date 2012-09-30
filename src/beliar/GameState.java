@@ -4,7 +4,7 @@
  */
 package beliar;
 
-import Container.GameContainer;
+import beliar.GameContainer;
 import com.jme3.animation.AnimChannel;
 import com.jme3.animation.AnimControl;
 import com.jme3.animation.AnimEventListener;
@@ -440,6 +440,7 @@ public class GameState extends AbstractAppState implements AnimEventListener{
                     
                     if((checkFieldType()==true)&&(checkCostsBuilding(bill)==true))
                     {
+                        selection = PlayerRessources.selectedBuilding;
                     buildings.attachChild(selection);
                     stopBuilding();
                     reduceRessources(bill);
