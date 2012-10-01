@@ -30,8 +30,17 @@ public class Slave {
         slaveNode.setUserData(UnitValues.HEALTH_KEY, UnitValues.HEALTH_VALUE_SLAVE);
         slaveNode.setUserData(UnitValues.SPEED_KEY, UnitValues.SPEED_VALUE_SLAVE);
         slaveNode.addControl(new UnitControl(gameState));
+        slaveNode.addControl(new SlaveAnimationControl());
         slaveNode.addControl(new IdleBehaviourControl());
         slaveNode.addControl(new WalkControl());
         return slaveNode;
+    }
+    
+    public void removeSlave(){
+        slaveNode.removeFromParent();
+        slaveNode.removeControl(UnitControl.class);
+        slaveNode.removeControl(SlaveAnimationControl.class);
+        slaveNode.removeControl(IdleBehaviourControl.class);
+        slaveNode.removeControl(WalkControl.class);
     }
 }

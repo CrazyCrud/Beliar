@@ -4,6 +4,7 @@
  */
 package Units;
 
+import com.jme3.math.Vector3f;
 import com.jme3.renderer.RenderManager;
 import com.jme3.renderer.ViewPort;
 import com.jme3.scene.Spatial;
@@ -24,16 +25,16 @@ public class UnitControl extends AbstractControl{
     
     @Override
     protected void controlUpdate(float tpf) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        
     }
 
     @Override
     protected void controlRender(RenderManager rm, ViewPort vp) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        
     }
 
     public Control cloneForSpatial(Spatial spatial) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return null;
     }
     
     public void setHealth(float health){
@@ -54,5 +55,13 @@ public class UnitControl extends AbstractControl{
     
     public float getSpeed(){
         return spatial.getUserData(UnitValues.SPEED_KEY);
+    }
+    
+    public void setLocation(Vector3f newLocation){
+        spatial.setLocalTranslation(newLocation);
+    }
+    
+    public Vector3f getLocation(){
+        return spatial.getLocalTranslation();
     }
 }
