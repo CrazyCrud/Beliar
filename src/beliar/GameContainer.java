@@ -58,7 +58,7 @@ public class GameContainer {
         private Node rootNode;
         private Application app;
         private MouseInput mouseInput;
-        
+        private int screenWidth, screenHeight;
         private static GameContainer Instance;
         
         
@@ -109,6 +109,19 @@ public class GameContainer {
         
         public MouseInput getMouseInput(){
             return mouseInput;
+        }
+        
+        public void setDimensions(int width, int height){
+            this.screenWidth = width;
+            this.screenHeight = height;
+        }
+        
+        public int getScreenWidth(){
+            return screenWidth;
+        }
+        
+        public int getScreenHeight(){
+            return screenHeight;
         }
         
 }

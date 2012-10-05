@@ -12,10 +12,10 @@ import de.lessvoid.nifty.elements.Element;
 import de.lessvoid.nifty.elements.render.TextRenderer;
 import de.lessvoid.nifty.screen.Screen;
 import de.lessvoid.nifty.screen.ScreenController;
+import de.lessvoid.nifty.tools.SizeValue;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileReader;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
@@ -30,7 +30,7 @@ public class InLoadingInputs extends AbstractAppState implements ScreenControlle
     private AppStateManager stateManager;
     private Application app;
     private Nifty nifty;
-    private Element citation;
+    private Element citation, progressBar;
     
     private String dante1 = "Die Not der Menschen, die da unten zittern, "
             + "verfäbrt mir das Gesicht, und Mitleid ist, was du als Furcht verstehst.";
@@ -48,6 +48,7 @@ public class InLoadingInputs extends AbstractAppState implements ScreenControlle
         System.out.println("InLoadingInputs: bind()");
         this.nifty = nifty;
         citation = nifty.getScreen("loadingGame").findElementByName("citation");
+        progressBar = nifty.getScreen("loadingGame").findElementByName("progressbar");
         showText();
     }
 
@@ -105,6 +106,14 @@ public class InLoadingInputs extends AbstractAppState implements ScreenControlle
         System.out.println("InLoadingInputs: showText() " + danteQuotes.size());
         String text = danteQuotes.get((int)(Math.random() * danteQuotes.size()));
         citation.getRenderer(TextRenderer.class).setText(text);
+    }
+    
+    public void setProgress(final float progress) {
+        System.out.println("InLoadingGameState: setProgress()");
+        final int MIN_WIDTH = 32;
+        int pixelWidth = (int) (MIN_WIDTH + (progressBar.getParent().getWidth() - MIN_WIDTH) * progress);
+        progressBar.setConstraintWidth(new SizeValue(pixelWidth + "px"));
+        progressBar.getParent().layoutElements();
     }
     
 }

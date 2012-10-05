@@ -56,6 +56,8 @@ public class ScreenManager {
         
         niftyDisplay = new NiftyJmeDisplay(assetManager, inputManager, audioRenderer, viewPort);
         nifty = niftyDisplay.getNifty();
+        GameContainer.getInstance().setDimensions(nifty.getRenderEngine().getWidth(), 
+                nifty.getRenderEngine().getHeight());
         guiViewPort.addProcessor(niftyDisplay);  
     }
     

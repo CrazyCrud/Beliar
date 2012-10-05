@@ -72,11 +72,14 @@ public class LoadingGameState extends AbstractAppState{
             if(load){
                 if(frameCount == 1){
                     System.out.println("LoadingGameState: update(1)");
+                    setProgressBar(0.4f);
                     gameState = new GameState(stateManager, app);
                 }else if(frameCount == 2){
                     System.out.println("LoadingGameState: update(2)");
+                    setProgressBar(0.6f);
                     pauseState = new PauseState(stateManager, app);
                 }else if(frameCount == 3){
+                    setProgressBar(1.0f);
                     gameState.initialize(stateManager, app);
                     System.out.println("LoadingGameState: update(3)");
                 }else if(frameCount > 30){
@@ -114,7 +117,7 @@ public class LoadingGameState extends AbstractAppState{
         loadingTheme = new AudioNode(this.app.getAssetManager(), 
                 "Sounds/music/loading.ogg", false);
         loadingTheme.setLooping(true);
-        loadingTheme.setVolume(0.7f);
+        loadingTheme.setVolume(0.5f);
     }
 
     private void playAudio(){
@@ -139,6 +142,10 @@ public class LoadingGameState extends AbstractAppState{
     private void loadGame(){
         System.out.println("LoadingGameState: loadGame()");
         load = true;
+    }
+    
+    private void setProgressBar(float loadingState){
+        inLoadingInputs.setProgress(loadingState);
     }
 
     private void startGame(){

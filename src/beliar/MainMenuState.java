@@ -72,11 +72,10 @@ public class MainMenuState extends AbstractAppState{
     @Override
     public void update(float tpf){
         if(isEnabled()){
-            System.out.println("MainMenuState: update()");
             Status menuThemeStatus = menuTheme.getStatus();
             if(menuThemeStatus == AudioNode.Status.Stopped){
-                System.out.println("AudioNode is stopped");
                 menuTheme.play();
+                System.out.println("AudioNode is stopped");
             }
         }else{
             
@@ -86,8 +85,8 @@ public class MainMenuState extends AbstractAppState{
     private void initValues() {
         this.screenManager = ScreenManager.getScreenManager();
         this.rootNode = app.getRootNode();
-        this.inputManager.setCursorVisible(true);
-        this.app.getFlyByCamera().setDragToRotate(true);
+        //this.inputManager.setCursorVisible(true);
+        //this.app.getFlyByCamera().setDragToRotate(true);
     }
     
     private void initStates() {
@@ -102,7 +101,7 @@ public class MainMenuState extends AbstractAppState{
     
     private void initAudio(){
         menuTheme = new AudioNode(app.getAssetManager(), "Sounds/music/mainmenu.ogg", true);
-        menuTheme.setVolume(0.75f);
+        menuTheme.setVolume(0.35f);
     }
 
     private void showInput() {

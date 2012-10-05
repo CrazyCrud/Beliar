@@ -1,37 +1,119 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <nifty xmlns="http://nifty-gui.sourceforge.net/nifty-1.3.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nifty-gui.sourceforge.net/nifty-1.3.xsd http://nifty-gui.sourceforge.net/nifty-1.3.xsd">
     <screen id="inMainMenuInputs" controller="beliar.InMainMenuInputs">
-        <layer id="background" backgroundColor="#000f">
-         
+        <layer id="background" backgroundColor="#000f" childLayout="center">
+            <effect><onStartScreen name="fade" start="#00" end="#ff"
+                length="4000" startDelay="2000" inherit="true"/></effect>
+            <panel width="100%" height="100%" childLayout="absolute">
+                <panel x="0" y="0" width="100%" height="100%" childLayout="center">
+                    <image width="100%" height="100%" filename="Images/mainmenu.png"></image>
+                </panel>
+                <panel x="0" y="0" width="100%" height="100%" childLayout="vertical">
+                    <panel id="panel_textTop" height="20%" width="100%" childLayout="absolute">  
+                        <image id="textTop" width="100%" height="100%" filename="Images/text_1.png"
+                                x="${CALL.getOffsetLeft()}" y="0">
+                            <effect>
+                                <onCustom customKey="moveTopText" name="move" mode="toOffset" 
+                                    offsetX="${CALL.getOffsetRight()}" length="64000" startDelay="7000"/>
+                            </effect>
+                        </image>
+                    </panel>
+                    <panel height="20%" width="100%">  
+                    </panel>
+                    <panel id="panel_textMid" height="20%" width="100%" 
+                            childLayout="absolute">
+                        <image id="textMid" width="100%" height="100%" filename="Images/text_3.png"
+                                x="${CALL.getOffsetLeft()}" y="0">
+                            <effect>
+                                <onCustom customKey="moveMidText" name="move" mode="toOffset" 
+                                    offsetX="${CALL.getOffsetRight()}" length="68000" startDelay="32000"/>
+                            </effect>
+                        </image>
+                    </panel>
+                    <panel height="20%" width="100%">   
+                    </panel>
+                    <panel id="panel_textBottom" height="20%" width="100%" childLayout="absolute">
+                        <image id="textBottom" width="100%" height="100%" filename="Images/text_2.png"
+                                x="${CALL.getOffsetLeft()}" y="0">
+                            <effect>
+                                <onCustom customKey="moveBottomText" name="move" mode="toOffset" 
+                                    offsetX="${CALL.getOffsetRight()}" length="64000" startDelay="11000"/>
+                            </effect>
+                        </image>
+                   </panel>
+                </panel>
+            </panel>
         </layer>
         <layer id="foreground" backgroundColor="#0000" childLayout="vertical">
-            <panel height="30%" width="100%">
-                
-            </panel>
-            <panel id="mid_panel" height="50%" width="50%h" childLayout="center"
-                align="center">
-                <panel width="80%" height="100%" childLayout="vertical">
-                    <panel id="firstEntry" width="100%" height="20%" childLayout="center">
-                        <text text="Spiel starten" font="Interface/Fonts/GoudyOldStyle_22.fnt"
-                            color="#fffff"> 
+            <interact onClick="onDoNothing()"/>
+            <effect><onStartScreen name="fade" start="#00" end="#ff"
+                length="4000" startDelay="4000" oneShot="false" inherint="true"/></effect>
+            <panel id="mid_panel" height="90%" width="100%" childLayout="center" valign="top">
+                <panel width="60%" height="85%" childLayout="vertical" align="center">
+                   <panel id="logo" height="40%" width="70%" childLayout="center" align="center">
+                       <panel width="90%" height="90%" childLayout="absolute">
+                           <image x="0" y="0" filename="Images/logo_1.png" width="100%" height="100%"/>
+                           <image id="blendLogo" x="0" y="0" filename="Images/logo_2.png" width="100%" height="100%">
+                                <effect>
+                                    <onCustom customKey="fadeInLogo" name="fade" start="#0"
+                                        end="#ffff" length="12000" startDelay="17000" oneShot="false" neverStopRendering="false"/>
+                                    <onCustom customKey="fadeOutLogo" name="fade" start="#f"
+                                        end="#1111" length="5000" startDelay="2000" neverStopRendering="true"/>
+                                </effect>
+                           </image>
+                       </panel>
+                   </panel>
+                   <panel id="firstEntry" width="40%" height="12%" childLayout="center" align="center"
+                            valign="center">      
+                        <image id="newgame" filename="Images/newgame_normal.png" width="80%" height="80%" imageMode="normal"> 
                             <interact onClick="onStartGame()"/>
-                        </text>
+                            <effect>
+                                <onHover name="changeImage" active="Images/Hover/newgame_selected.png" 
+                                    inactive="Images/newgame_normal.png"/>
+                            </effect>
+                        </image>
                     </panel>
-                    <panel id="secondEntry" width="100%" height="20%" childLayout="center">
-                        <text text="Optionen" font="Interface/Fonts/GoudyOldStyle_22.fnt"
-                            color="#fffff"> 
+                    <panel id="secondEntry" width="40%" height="12%" childLayout="center" align="center" 
+                            valign="center">
+                        <image id="loadgame" filename="Images/loadgame_normal.png" width="80%" height="80%"> 
+                            <interact onClick="onDoNothing()"/>
+                            <effect>
+                                <onHover name="changeImage" active="Images/Hover/loadgame_selected.png" 
+                                    inactive="Images/loadgame_normal.png"/>
+                            </effect>
+                        </image>
+                    </panel>
+                    <panel id="thirdEntry" width="40%" height="12%" childLayout="center" align="center" 
+                            valign="center">
+                        <image id="options" filename="Images/option_normal.png" width="80%" height="80%"> 
                             <interact onClick="onOptions()"/>
-                        </text>
+                            <effect>
+                                <onHover name="changeImage" active="Images/Hover/option_selected.png" 
+                                    inactive="Images/option_normal.png"/>
+                            </effect>
+                        </image>
                     </panel>
-                    <panel id="thirdEntry" width="100%" height="20%" childLayout="center">
-                        <text text="Spiel beenden" font="Interface/Fonts/GoudyOldStyle_22.fnt"
-                            color="#fffff"> 
+                    <panel id="fourthEntry" width="40%" height="12%" childLayout="center" align="center"
+                            valign="center">
+                        <image id="endgame" filename="Images/endgame_normal.png" width="80%" height="80%"> 
                             <interact onClick="onExitGame()"/>
-                        </text>
+                            <effect>
+                                <onHover name="changeImage" active="Images/Hover/endgame_selected.png" 
+                                    inactive="Images/endgame_normal.png"/>
+                            </effect>
+                        </image>
+                    </panel>
+                    <panel id="fithEntry" width="40%" height="12%" childLayout="center" align="center" 
+                            valign="center">
+                        <!--
+                        <image id="credits" filename="Images/credits_normal.png" width="80%" height="80%"> 
+                            <interact onClick="onOptions()"/>
+                        </image>
+                        -->
                     </panel>
                 </panel>
             </panel>
-            <panel height="30%" width="100%">
+            <panel height="10%" width="100%">
                 
             </panel>
         </layer>
