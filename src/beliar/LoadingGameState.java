@@ -80,7 +80,7 @@ public class LoadingGameState extends AbstractAppState{
                     pauseState = new PauseState(stateManager, app);
                 }else if(frameCount == 3){
                     setProgressBar(1.0f);
-                    gameState.initialize(stateManager, app);
+                    gameState.initializeGame();
                     System.out.println("LoadingGameState: update(3)");
                 }else if(frameCount > 30){
                     System.out.println("LoadingGameState: update(30)");

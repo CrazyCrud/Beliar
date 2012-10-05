@@ -154,7 +154,7 @@ public class GameState extends AbstractAppState{
         
         super.initialize(stateManager,app);  
        
-        initGame();
+        
     }
     
     @Override
@@ -216,6 +216,10 @@ public class GameState extends AbstractAppState{
         }else{
             
         }
+    }
+    
+    public void initializeGame(){
+        initGame();
     }
 
     private void showInput(){
