@@ -33,6 +33,16 @@ public class PlayerRessources {
 	//Creatures
 	public static int creaturesAtDarkness=0;
         
+        //Soulabyss
+        public static int soulAbyssOfPlayer =1;
+        public static int soulsCount =0;
+        
+        //Production
+        public static int percentAdam=30;
+        public static int percentKythos=30;
+        public static int perventMara=30;
+        public static int slavesToBuild=0;
+        
         //SelectionRoom/Build
         public static int selectionRoom =0;
         public static Spatial selectedBuilding = null;

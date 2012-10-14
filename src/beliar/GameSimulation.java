@@ -6,6 +6,7 @@ import com.jme3.app.SimpleApplication;
 import com.jme3.app.state.AbstractAppState;
 import com.jme3.app.state.AppStateManager;
 
+
 public class GameSimulation extends AbstractAppState{
 	
 	private SimpleApplication app;
@@ -55,6 +56,8 @@ public class GameSimulation extends AbstractAppState{
                 resetTimer();
                 updateRessources();
                 updateDisplay();
+                createDoomed();
+                produceStuff();
             }
         }
 
@@ -78,6 +81,7 @@ public class GameSimulation extends AbstractAppState{
 		System.out.println("ADAM:"+PlayerRessources.adam+"\n KYTHOS:"+PlayerRessources.kythos+"\n MARA:"+PlayerRessources.mara);
 	}
         
+        
         private void updateDisplay(){
             //this.app.getStateManager().getState(InGameInputs.class).ressourcesChanged();
         }
@@ -98,7 +102,59 @@ public class GameSimulation extends AbstractAppState{
 		
 	}
 	
+        public void createDoomed()
+        {
+            int countSoulAbyss= PlayerRessources.soulAbyssOfPlayer;
+            
+            PlayerRessources.soulsCount += countSoulAbyss*(PlayerRessources.darkness*(int)(Math.random()*10));
+            
+            System.out.println("Verdammte:"+PlayerRessources.soulsCount);
+        }
+        
+        public void produceStuff()
+        {
+            //Space for Souls
+            int adamPlace =     PlayerRessources.adamCreatorBIG*GameContainer.ADAMBIG+
+                                PlayerRessources.adamCreatorMIDDLE*GameContainer.ADAMMIDDLE+
+                                PlayerRessources.adamCreatorSMALL*GameContainer.ADAMSMALL;
+            
+            int kythosPlace =   PlayerRessources.kythosCreatorBIG*GameContainer.KYTHOSBIG+
+                                PlayerRessources.kythosCreatorMIDDLE*GameContainer.KYTHOSMIDDLE+
+                                PlayerRessources.kythosCreatorSMALL*GameContainer.KYTHOSSMALL;
+            
+            int maraPlace =     PlayerRessources.maraCreatorBIG*GameContainer.MARABIG+
+                                PlayerRessources.maraCreatorMIDDLE*GameContainer.MARAMIDDLE+
+                                PlayerRessources.maraCreatorSMALL*GameContainer.MARASMALL;
+            
+            
+            int soulsForAdam = (int)(PlayerRessources.soulsCount/100)*PlayerRessources.percentAdam;
+            int soulsForKythos= (int)(PlayerRessources.soulsCount/100)*PlayerRessources.percentKythos;
+           // int soulsForMara = (int)(PlayerRessources.soulsCount/100)*PlayerRessources.percent;
+            
+            //int Newsouls = 
+            System.out.println("ADAM: "+adamPlace);
+            System.out.println("KYTHOS: "+kythosPlace);
+            System.out.println("MARA: "+maraPlace);
+            
+        }
+            
+    public void reduceRessources(int[]bill)
+    {
+        PlayerRessources.adam -= bill[0];
+        PlayerRessources.kythos -= bill[1];
+        PlayerRessources.mara -= bill[2];
+    }  
+    
 
+    public boolean checkCostsBuilding(int[] bill)
+    {
+        if((PlayerRessources.adam>=bill[0])  &&(PlayerRessources.kythos>=bill[1])&&(PlayerRessources.mara>=bill[2]))
+            return true;
+        else
+            return false;
+    }
+    
+    
 }
 
 

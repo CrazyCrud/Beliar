@@ -23,8 +23,9 @@ public final class ValuesTerrain {
 	public final static int FARM = 8;
 	
         public final static int HELLCENTER= 9;
-	//ENVIROMENT
-	public static int HOLY = 10;
 	
+        //ENVIROMENT
+	public final static int HOLY = 10;
+	public final static int SOULABYSS=11;
 	
 }

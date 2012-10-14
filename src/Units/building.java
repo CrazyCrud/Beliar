@@ -9,6 +9,7 @@ import com.jme3.animation.AnimControl;
 import com.jme3.animation.AnimEventListener;
 import com.jme3.material.Material;
 import com.jme3.scene.Spatial;
+import java.sql.Time;
 
 /**
  *
@@ -20,6 +21,7 @@ public class building {
     private AnimChannel channel;
     private AnimControl control;
     private Material myMaterial;
+    private Time productionTimeStarts;
     private int posX;
     private int posZ;
     

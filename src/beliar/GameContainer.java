@@ -43,7 +43,12 @@ public class GameContainer {
 	public final static int MARABIG=5;
 	public final static int MARAMIDDLE=3;
 	public final static int MARASMALL=1;
-
+        
+        //Production: 1Soul = ?
+        public final static int SOULADAM=3;
+        public final static int SOULKYTHOS =2;
+        public final static int SOULMARA=1;
+        
 	//Darkness
 	public final static float darkness=0.5f;
 	
