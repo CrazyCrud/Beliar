@@ -1,5 +1,7 @@
 package beliar;
 
+import Units.ProductionBuilding;
+import Units.building;
 import beliar.GameContainer;
 import com.jme3.app.Application;
 import com.jme3.app.SimpleApplication;
@@ -39,6 +41,7 @@ public class GameSimulation extends AbstractAppState{
         @Override
         public void update(float tpf){      
             if(isEnabled()){
+                updateDisplay();
                 updateTimer(tpf);
             }else{
                 
@@ -54,33 +57,13 @@ public class GameSimulation extends AbstractAppState{
             timer += tpf;
             if(timer > GameContainer.UPDATE_PERIOD){
                 resetTimer();
-                updateRessources();
-                updateDisplay();
+                
                 createDoomed();
-                produceStuff();
+                //produceStuff();
+                updateProductionBuildings();
+                checkForSalvationOfSouls();
             }
         }
-
-	public void updateRessources()
-	{
-		//Adam
-		PlayerRessources.adam+= (PlayerRessources.adamCreatorBIG*GameContainer.ADAMBIG);
-		PlayerRessources.adam+= (PlayerRessources.adamCreatorMIDDLE*GameContainer.ADAMMIDDLE);
-		PlayerRessources.adam+= (PlayerRessources.adamCreatorSMALL*GameContainer.ADAMSMALL);
-		
-		//Kythos
-		PlayerRessources.kythos+= (PlayerRessources.kythosCreatorBIG*GameContainer.KYTHOSBIG);
-		PlayerRessources.kythos+= (PlayerRessources.kythosCreatorMIDDLE*GameContainer.KYTHOSMIDDLE);
-		PlayerRessources.kythos+= (PlayerRessources.kythosCreatorSMALL*GameContainer.KYTHOSSMALL);
-		
-		//Mara
-		PlayerRessources.mara+= (PlayerRessources.maraCreatorBIG*GameContainer.MARABIG);
-		PlayerRessources.mara+= (PlayerRessources.maraCreatorMIDDLE*GameContainer.MARAMIDDLE);
-		PlayerRessources.mara+= (PlayerRessources.maraCreatorSMALL*GameContainer.MARASMALL);
-		
-		System.out.println("ADAM:"+PlayerRessources.adam+"\n KYTHOS:"+PlayerRessources.kythos+"\n MARA:"+PlayerRessources.mara);
-	}
-        
         
         private void updateDisplay(){
             //this.app.getStateManager().getState(InGameInputs.class).ressourcesChanged();
@@ -111,6 +94,8 @@ public class GameSimulation extends AbstractAppState{
             System.out.println("Verdammte:"+PlayerRessources.soulsCount);
         }
         
+        /*
+        //DEPRECEATED
         public void produceStuff()
         {
             //Space for Souls
@@ -137,7 +122,8 @@ public class GameSimulation extends AbstractAppState{
             System.out.println("MARA: "+maraPlace);
             
         }
-            
+        */
+        
     public void reduceRessources(int[]bill)
     {
         PlayerRessources.adam -= bill[0];
@@ -154,7 +140,41 @@ public class GameSimulation extends AbstractAppState{
             return false;
     }
     
+    private void updateProductionBuildings()
+    {
+        System.out.println("updateProductionBuildings");
+        for (building myBuilding :PlayerRessources.buildings)
+        {
+            myBuilding.update();
+        }
+        
+    }
     
+    private void reduceSouls(int count)
+    {
+        PlayerRessources.soulsCount-=count;
+    }
+    
+    private void checkForSalvationOfSouls()
+      {
+          System.out.println("Freiheit der Seelen?");
+        if(PlayerRessources.soulsCount> GameContainer.freeSouls)
+        {
+            
+          System.out.println("Freiheit der Seelen? CHECK");
+            PlayerRessources.chanceForSalvation=+PlayerRessources.soulsCount/2;
+        }
+        
+        if(PlayerRessources.chanceForSalvation>=GameContainer.soulsRate)
+        {
+            
+          System.out.println("Freiheit der Seelen? JA!");
+            reduceSouls((int)PlayerRessources.chanceForSalvation);
+            if(PlayerRessources.soulsCount<=0)
+               PlayerRessources.soulsCount=0; 
+            System.out.println("SoulsCount"+PlayerRessources.soulsCount);
+        }
+      }
 }
 
 

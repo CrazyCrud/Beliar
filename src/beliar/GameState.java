@@ -4,6 +4,7 @@
  */
 package beliar;
 
+import Units.ProductionBuilding;
 import beliar.GameContainer;
 import com.jme3.animation.AnimChannel;
 import com.jme3.animation.AnimControl;
@@ -15,6 +16,7 @@ import com.jme3.scene.Node;
 import com.jme3.app.SimpleApplication;
 import com.jme3.asset.AssetKey;
 import com.jme3.asset.AssetManager;
+import com.jme3.audio.AudioNode;
 import com.jme3.audio.AudioRenderer;
 import com.jme3.collision.CollisionResults;
 import com.jme3.collision.bih.BIHNode;
@@ -400,12 +402,17 @@ public class GameState extends AbstractAppState {
 
                 //Raum ausheben//
                 if ((results.size() > 0) && (PlayerRessources.selectionRoom > 0)) {
+                   
                     Geometry target = results.getClosestCollision().getGeometry();
 
                     com.jme3.math.Transform transformation = target.getWorldTransform();
 
                     mMaphandler.handleBuilding(transformation.getTranslation(), PlayerRessources.selectionRoom);
                     mapNode.detachChild(target);
+                    if(PlayerRessources.selectedBuilding!=null)
+                    {
+                    stopBuilding();
+                    }
                 } //gebaude bauen
                 else if ((results.size() > 0) && (selection != null)) {
                     System.out.println("Gebäude platzieren?");
@@ -418,6 +425,11 @@ public class GameState extends AbstractAppState {
                             System.out.println("!!!ERROR!!!");
                         }
                         selection.setMaterial(assetManager.loadMaterial(PlayerRessources.loadingStringMaterial));
+                        //buildings.attachChild(selection);
+                        
+                        ProductionBuilding myBuild = new ProductionBuilding(selection, (int)mousePositionWorld.x, (int)mousePositionWorld.z);
+                        myBuild.setActive(true);
+                        PlayerRessources.buildings.add(myBuild);
                         buildings.attachChild(selection);
                         stopBuilding();
                         gameSimulation.reduceRessources(bill);
@@ -559,5 +571,10 @@ public class GameState extends AbstractAppState {
         PlayerRessources.selectedBuilding = null;
         PlayerRessources.selectionRoom = 0;
         marker.detachAllChildren();
+    }
+    
+    public void playSoundEffect(String name)
+    {
+        mSoundManager.playUISound("click");
     }
 }

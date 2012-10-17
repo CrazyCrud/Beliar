@@ -26,11 +26,13 @@ public class InMainMenuInputs extends AbstractAppState implements ScreenControll
 
   private Nifty nifty;
   private Element textTop, textBottom, textMid, blendLogo;
+  private MainMenuState myState;
   
-  public InMainMenuInputs(AppStateManager stateManager, SimpleApplication app){
+  public InMainMenuInputs(AppStateManager stateManager, SimpleApplication app, MainMenuState myState){
       System.out.println("InMainMenuInputs: Constructor");
       this.stateManager = stateManager;
       this.app = (SimpleApplication) app;
+      this.myState = myState;
       
   }
 
@@ -45,6 +47,7 @@ public class InMainMenuInputs extends AbstractAppState implements ScreenControll
   @Override
   public void onStartScreen() {
       System.out.println("onStartScreen()");
+      
   }
   @Override
   public void onEndScreen() {
@@ -120,15 +123,17 @@ public class InMainMenuInputs extends AbstractAppState implements ScreenControll
   
   public void onStartGame(){
       System.out.println("InMainMenuInputs: onStartGame()");
-
+      myState.playUISound("click");
       stateManager.getState(MainMenuState.class).loadGame();
   }
 
   public void onOptions(){
+      myState.playUISound("click");
       System.out.println("InMainMenuInputs: onOptions()");
   }
 
   public void onExitGame(){
+      myState.playUISound("click");
       System.out.println("InMainMenuInputs: onExitGame()");
       app.stop();
   }

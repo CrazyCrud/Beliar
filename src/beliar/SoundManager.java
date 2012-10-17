@@ -38,6 +38,7 @@ public class SoundManager {
    
    private void initUISound()
    {
+       uiSounds.put("click",new AudioNode(assetManager,"Sounds/sounds/UI/click.ogg",false));
        uiSounds.put("createRoom", new AudioNode(assetManager,"Sounds/sounds/UI/createRoom.ogg",false));
        uiSounds.put("placeBuilding", new AudioNode(assetManager,"Sounds/sounds/UI/placeBuilding.ogg",false));
    }

@@ -1,7 +1,9 @@
 package beliar;
 
+import Units.building;
 import com.jme3.material.Material;
 import com.jme3.scene.Spatial;
+import java.util.ArrayList;
 
 public class PlayerRessources {
 	
@@ -36,6 +38,7 @@ public class PlayerRessources {
         //Soulabyss
         public static int soulAbyssOfPlayer =1;
         public static int soulsCount =0;
+        public static int chanceForSalvation=0;
         
         //Production
         public static int percentAdam=30;
@@ -49,4 +52,7 @@ public class PlayerRessources {
         public static String  loadingStringMaterial = null;
         
 	
+        //BuildingList
+        public static ArrayList<building> buildings = new ArrayList<building>();
+        
 }

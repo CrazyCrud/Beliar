@@ -51,6 +51,8 @@ public class GameContainer {
         
 	//Darkness
 	public final static float darkness=0.5f;
+        public final static int freeSouls = 10;
+        public final static int soulsRate = 100;
 	
 	//Science
 	public final static int BIGSCIENCE= 20000;

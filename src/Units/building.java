@@ -15,33 +15,27 @@ import java.sql.Time;
  *
  * @author Martin
  */
-public class building {
+public abstract class building {
     
     private Spatial object;
     private AnimChannel channel;
     private AnimControl control;
     private Material myMaterial;
-    private Time productionTimeStarts;
     private int posX;
     private int posZ;
     
     private int healthPoints;
-    private boolean isProdutive = false;
     
     private AnimEventListener myListener;
 
-    public building(Spatial object,AnimEventListener myListener,int posX,int posZ) {
+    public building(Spatial object,int posX,int posZ) {
         this.object = object;
+        //this.myMaterial;
         this.posX = posX;
         this.posZ = posZ;
-        this.myListener = myListener;
     }
     
-    private void initAnimation()
-    {
-        
-    }
-    
+
     public void changeAnimation(String animName)
     {
         
@@ -66,9 +60,7 @@ public class building {
     {
         return healthPoints;
     }
-    
-    public boolean isProductive()
-    {
-        return isProdutive;
-    }
+
+    //abstracts
+    public abstract void update();
 }

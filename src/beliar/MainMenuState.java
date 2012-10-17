@@ -27,6 +27,7 @@ public class MainMenuState extends AbstractAppState{
     private LoadingGameState loadingGameState;
     private Node rootNode;
     private AudioNode menuTheme;
+    private AudioNode click;
     
     public MainMenuState(AppStateManager stateManager, SimpleApplication app){
         System.out.println("MainMenuState: Constructor");
@@ -90,7 +91,7 @@ public class MainMenuState extends AbstractAppState{
     }
     
     private void initStates() {
-        inMainMenuInputs = new InMainMenuInputs(stateManager, app);
+        inMainMenuInputs = new InMainMenuInputs(stateManager, app,this);
         loadingGameState = new LoadingGameState(stateManager, app);
     }
     
@@ -100,8 +101,10 @@ public class MainMenuState extends AbstractAppState{
     }
     
     private void initAudio(){
+        click = new AudioNode(app.getAssetManager(), "Sounds/sounds/UI/click.ogg", false);
         menuTheme = new AudioNode(app.getAssetManager(), "Sounds/music/mainmenu.ogg", true);
         menuTheme.setVolume(0.35f);
+        rootNode.attachChild(click);
     }
 
     private void showInput() {
@@ -125,5 +128,11 @@ public class MainMenuState extends AbstractAppState{
         stateManager.attach(loadingGameState);
         stateManager.getState(LoadingGameState.class).setEnabled(true);
         
+    } 
+    
+    public void playUISound(String name)
+    {
+        if(name.equals("click"))
+        click.play();
     }
 }

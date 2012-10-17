@@ -208,12 +208,14 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
     }
     
     public void onBuildPath(){
+        myGameState.playSoundEffect("click");
         System.out.println("Build a fucking path to get out of here");
         PlayerRessources.selectionRoom=ValuesTerrain.HALL;
         
     }  
        
     public void buildAdamMenu(){
+        myGameState.playSoundEffect("click");
         switch(menuState){
             case MENU_BUILD:
                 setupBuildingIcons(ADAM);
@@ -235,6 +237,7 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
     }
     
     public void buildKythosMenu(){
+        myGameState.playSoundEffect("click");
         switch(menuState){
             case MENU_BUILD:
                 setupRoomName(KYTHOS);
@@ -256,6 +259,7 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
     }
     
     public void buildMaraMenu(){
+        myGameState.playSoundEffect("click");
         switch(menuState){
             case MENU_BUILD:
                 setupRoomName(MARA);
@@ -277,6 +281,7 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
     }
     
     private void setupRoomName(int whichRoom){
+        
         System.out.println("setupRoomName");
         Element text = screen.findElementByName("textSecondRow");
         
@@ -401,6 +406,7 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
     }
     
     public void buildAdamBuilding(String whichLevel){
+        myGameState.playSoundEffect("click");
         char adamChar = 'a';
         
         
@@ -429,6 +435,7 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
     }
     
     public void buildKythosBuilding(String whichLevel){
+        myGameState.playSoundEffect("click");
         char kythosChar = 'k';
         
         switch(Integer.parseInt(whichLevel)){
@@ -448,6 +455,7 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
     }
     
     public void buildMaraBuilding(String whichLevel){
+        myGameState.playSoundEffect("click");
         switch(Integer.parseInt(whichLevel)){
             case BUILDING_LEVEL_ONE:
                 updateRessources(MARA, BUILDING_LEVEL_ONE);
