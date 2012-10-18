@@ -1,0 +1,9 @@
+Material My Material : Common/MatDefs/Light/Lighting.j3md {
+     MaterialParameters {
+        DiffuseMap : Textures/Units/SlaveC.png
+        NormalMap : Textures/Units/SlaveN.png
+        HighQuality : false
+     }
+    AdditionalRenderState {
+    }
+}
