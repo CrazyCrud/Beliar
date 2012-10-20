@@ -1,7 +1,7 @@
 package beliar;
 
 import Units.ProductionBuilding;
-import Units.building;
+import Units.Unit;
 import beliar.GameContainer;
 import com.jme3.app.Application;
 import com.jme3.app.SimpleApplication;
@@ -143,7 +143,7 @@ public class GameSimulation extends AbstractAppState{
     private void updateProductionBuildings()
     {
         System.out.println("updateProductionBuildings");
-        for (building myBuilding :PlayerRessources.buildings)
+        for (Unit myBuilding :PlayerRessources.buildings)
         {
             myBuilding.update();
         }

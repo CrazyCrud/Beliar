@@ -1,6 +1,6 @@
 package beliar;
 
-import Units.building;
+import Units.Unit;
 import com.jme3.material.Material;
 import com.jme3.scene.Spatial;
 import java.util.ArrayList;
@@ -53,6 +53,6 @@ public class PlayerRessources {
         
 	
         //BuildingList
-        public static ArrayList<building> buildings = new ArrayList<building>();
+        public static ArrayList<Unit> buildings = new ArrayList<Unit>();
         
 }

@@ -12,6 +12,7 @@ public class MeshContainer {
 
     private AssetManager assetManager;
     
+    
     public HashMap<String,Spatial> limbo= new HashMap<String, Spatial>();
     
     public HashMap<String,Spatial> adamHall= new HashMap<String, Spatial>();
@@ -27,7 +28,7 @@ public class MeshContainer {
     
     
     public Spatial hellCenter;
-    
+    public Spatial slave;
     //TESTELEPHANT
     public Spatial mesh;
         
@@ -37,13 +38,17 @@ public class MeshContainer {
         initLimbo();
         initHallOfAnarchy();
         initCaveOfTheBeast();
-        
+        initUnits();
         
        hellCenter = assetManager.loadModel("Scenes/hellcenter.j3o");
        //DEBUG!
        //mesh = assetManager.loadModel("Models/Elephant/Elephant.mesh.xml");
     }
     
+    private void initUnits()
+    {
+        slave = assetManager.loadModel("Scenes/Units/slave.j3o");
+    }
     private void initLimbo()
     {
         //RoomParts     "Scenes/limbo/room/[...]"

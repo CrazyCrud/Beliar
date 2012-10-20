@@ -427,10 +427,11 @@ public class GameState extends AbstractAppState {
                         selection.setMaterial(assetManager.loadMaterial(PlayerRessources.loadingStringMaterial));
                         //buildings.attachChild(selection);
                         
-                        ProductionBuilding myBuild = new ProductionBuilding(selection, (int)mousePositionWorld.x, (int)mousePositionWorld.z);
+                        ProductionBuilding myBuild = new ProductionBuilding(selection,assetManager.loadMaterial(PlayerRessources.loadingStringMaterial), (int)mousePositionWorld.x, (int)mousePositionWorld.z,100);
                         myBuild.setActive(true);
-                        PlayerRessources.buildings.add(myBuild);
-                        buildings.attachChild(selection);
+                        //PlayerRessources.buildings.add(myBuild);
+                        Node selectionToBuild = (Node) selection;
+                        buildings.attachChild(selectionToBuild);
                         stopBuilding();
                         gameSimulation.reduceRessources(bill);
                         mSoundManager.playUISound("placeBuilding");
