@@ -43,6 +43,7 @@ public class GameSimulation extends AbstractAppState{
             if(isEnabled()){
                 updateDisplay();
                 updateTimer(tpf);
+                updateProductionBuildings();
             }else{
                 
             }
@@ -60,7 +61,7 @@ public class GameSimulation extends AbstractAppState{
                 
                 createDoomed();
                 //produceStuff();
-                updateProductionBuildings();
+                
                 checkForSalvationOfSouls();
             }
         }
@@ -140,14 +141,29 @@ public class GameSimulation extends AbstractAppState{
             return false;
     }
     
-    private void updateProductionBuildings()
-    {
-        System.out.println("updateProductionBuildings");
-        for (Unit myBuilding :PlayerRessources.buildings)
-        {
+    private void updateProductionBuildings() {
+        System.out.println("updateProductionBuildings" + PlayerRessources.buildings.size());
+        for (ProductionBuilding myBuilding : PlayerRessources.buildings) {
+            System.out.println("MyBuildingsName" + myBuilding.toString());
             myBuilding.update();
+
+            if (myBuilding.hasGoodies()) {
+                char type = myBuilding.getType();
+
+                switch (type) {
+                    case 'a':
+                        PlayerRessources.adam += myBuilding.getGoods();
+                        break;
+                    case 'k':
+                        PlayerRessources.kythos += myBuilding.getGoods();
+                        break;
+                    case 'm':
+                        PlayerRessources.mara += myBuilding.getGoods();
+                        break;
+
+                }
+            }
         }
-        
     }
     
     private void reduceSouls(int count)

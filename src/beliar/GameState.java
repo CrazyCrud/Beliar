@@ -99,6 +99,11 @@ public class GameState extends AbstractAppState {
     private Camera cam;
     private FlyByCamera flyCam;
     private ViewPort guiViewPort;
+    
+    //DIRTY
+    private char charBuildingType = 0;
+    private int sizeBuilding = 0;
+    
     //INPUT
     private NiftyJmeDisplay niftyDisplay;
     private Nifty nifty;
@@ -417,6 +422,7 @@ public class GameState extends AbstractAppState {
                 else if ((results.size() > 0) && (selection != null)) {
                     System.out.println("Gebäude platzieren?");
 
+                    //DEBUG
                     int[] bill = GameContainer.COSTADAMSMALL;
 
                     if ((checkFieldType((int) mousePositionWorld.x, (int) mousePositionWorld.z) == true) && (gameSimulation.checkCostsBuilding(bill) == true)) {
@@ -424,17 +430,24 @@ public class GameState extends AbstractAppState {
                         if (selection == null) {
                             System.out.println("!!!ERROR!!!");
                         }
-                        selection.setMaterial(assetManager.loadMaterial(PlayerRessources.loadingStringMaterial));
-                        //buildings.attachChild(selection);
                         
-                        ProductionBuilding myBuild = new ProductionBuilding(selection,assetManager.loadMaterial(PlayerRessources.loadingStringMaterial), (int)mousePositionWorld.x, (int)mousePositionWorld.z,100);
+                        //StartBuilding()
+                        gameSimulation.reduceRessources(bill);
+                        
+                        //createBuildingInWorld
+                        selection.setMaterial(assetManager.loadMaterial(PlayerRessources.loadingStringMaterial));
+                        ProductionBuilding myBuild = new ProductionBuilding(selection,assetManager.loadMaterial(PlayerRessources.loadingStringMaterial), (int)mousePositionWorld.x, (int)mousePositionWorld.z,100,charBuildingType,sizeBuilding);
                         myBuild.setActive(true);
-                        //PlayerRessources.buildings.add(myBuild);
+                        PlayerRessources.buildings.add(myBuild);
                         Node selectionToBuild = (Node) selection;
                         buildings.attachChild(selectionToBuild);
+                        
+                        //clearSelection
                         stopBuilding();
-                        gameSimulation.reduceRessources(bill);
+                        
+                        //Sound
                         mSoundManager.playUISound("placeBuilding");
+                        //PlaceInMap
                         mMaphandler.placeBuilding((int) mousePositionWorld.x, (int) mousePositionWorld.z);
                         inGameInputs.ressourcesChanged();
                     } else {
@@ -464,12 +477,13 @@ public class GameState extends AbstractAppState {
 
         System.out.println("HandleBuildSelection");
 
-
         String loadingString = "production".concat(String.valueOf(size));
-        String loadingStringMaterial;
+        //String loadingStringMaterial;
+        setSizeAndType(typeRoom, size);
         switch (typeRoom) {
             case 'a':
                 System.out.println("ADAM" + loadingString);
+                
                 typeBuildingRoom = ValuesTerrain.HALLOFANARCHY;
                 System.out.println("ADAMMATERIAL:");
 
@@ -504,9 +518,14 @@ public class GameState extends AbstractAppState {
     }
 
     private void loadSelectedMaterial(String type, int size) {
+        
         PlayerRessources.loadingStringMaterial = GameContainer.materialAdress.concat(type + String.valueOf(size) + ".j3m");
     }
-
+    private void setSizeAndType(char type,int size)
+    {
+       this.sizeBuilding=size;
+       this.charBuildingType=type;
+    }
     private void initBuildSelection() {
         System.out.println("initBuildingSelection");
         PlayerRessources.selectedBuilding.addLight(directionLight);

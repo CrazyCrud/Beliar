@@ -4,13 +4,12 @@
  */
 package Units;
 
+import beliar.GameContainer;
 import beliar.PlayerRessources;
 import com.jme3.animation.AnimChannel;
 import com.jme3.animation.AnimControl;
 import com.jme3.material.Material;
-import com.jme3.math.ColorRGBA;
 import com.jme3.scene.Spatial;
-import sun.net.www.content.image.png;
 
 /**
  *
@@ -18,14 +17,20 @@ import sun.net.www.content.image.png;
  */
 public class ProductionBuilding extends Unit {
 
+    private char type;
+    private int size;
+    private boolean hasGoodies;
     private boolean isActive;
     //DEBUG
     private int progressPercentPerTick = 1;
     private int souluseperProduction = 2;
     private int percentStatus = 0;
 
-    public ProductionBuilding(Spatial object, Material myMaterial, int posX, int posZ, int healthPointsStart) {
+    public ProductionBuilding(Spatial object, Material myMaterial, int posX, int posZ, int healthPointsStart,char type,int size) {
         super(object, myMaterial, healthPointsStart, healthPointsStart, posX, posZ);
+        this.type = type;
+        this.size = size;
+        
     }
 
     private boolean checkForRessources() {
@@ -44,6 +49,7 @@ public class ProductionBuilding extends Unit {
         if (checkForRessources()) {
             PlayerRessources.soulsCount -= souluseperProduction;
             changeAnim("work", 0.5f, 'l');
+            percentStatus++;
         } else {
             System.out.println("Keine Güter");
             changeAnim("idle", 0.5f, 'l');
@@ -52,9 +58,44 @@ public class ProductionBuilding extends Unit {
             getObject().setMaterial(mat);*/
         }
     }
-
-    private void getGoods() {
-        System.out.println("Güter abgeliefert");
+    
+    public boolean hasGoodies()
+    {
+        return hasGoodies;
+    }
+    
+    public int getGoods() {
+        switch (type)
+        {
+            case 'a':
+                switch(size)
+                {
+                    case 0: return GameContainer.ADAMSMALL;
+                    case 1: return GameContainer.ADAMMIDDLE;
+                    case 2: return GameContainer.ADAMBIG;
+                }
+                break;
+                
+           case 'k':
+                switch(size)
+                {
+                    case 0: return GameContainer.KYTHOSSMALL;
+                    case 1: return GameContainer.KYTHOSMIDDLE;
+                    case 2: return GameContainer.KYTHOSBIG;
+                }
+                break;
+                                
+          case 'm':
+                switch(size)
+                {
+                    case 0: return GameContainer.MARASMALL;
+                    case 1: return GameContainer.MARAMIDDLE;
+                    case 2: return GameContainer.MARABIG;
+                }
+                break;
+        }
+        hasGoodies = false;
+        return 0;
     }
 
     private void progressProduction() {
@@ -71,6 +112,7 @@ public class ProductionBuilding extends Unit {
     public boolean isActive() {
         return isActive;
     }
+    
 
     public void update() {
         System.out.println("UPDATEBUILDING" + super.getObject().getName());
@@ -78,7 +120,7 @@ public class ProductionBuilding extends Unit {
             if (percentStatus < 100 && percentStatus > 0) {
                 progressProduction();
             } else {
-                getGoods();
+                hasGoodies=true;
                 startProduction();
             }
         }
@@ -90,4 +132,15 @@ public class ProductionBuilding extends Unit {
 
     public void onAnimChange(AnimControl control, AnimChannel channel, String animName) {
          }
+    
+        
+    public char getType()
+    {
+        return type;
+    }
+    
+    public int gezSize()
+    {
+        return size;
+    }
 }

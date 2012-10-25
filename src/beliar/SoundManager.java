@@ -53,11 +53,14 @@ public class SoundManager {
    
    public void playMusic(String trackName)
     {
+    /*
         //TODO: Ändern des Tracks via Daten!
         AudioNode track = backgroundMusic.get(trackName);
         track.setPositional(false);
         track.play();
         rootNode.attachChild(track);
+     * 
+     */
     }
     
     

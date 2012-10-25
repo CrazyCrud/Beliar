@@ -56,7 +56,7 @@ public class LoadingGameState extends AbstractAppState{
             System.out.println("LoadingGameState: setEnabled");
             showInput();
             initAudio();
-            playAudio();
+          //  playAudio();
             loadGame();
         }else{
             System.out.println("LoadingGameState: setEnabled(false)");

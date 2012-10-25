@@ -15,6 +15,7 @@ public class GameContainer {
     //Adresses
     public final static String materialAdress = "Materials/";
     
+    
     //Prices BUILDINGS //ADAM//KYTHOS//MARA
         public final static int[] COSTADAMBIG       ={500,0,0};
         public final static int[] COSTADAMMIDDLE    ={200,0,0};
@@ -29,7 +30,7 @@ public class GameContainer {
         public final static int[] COSTMARASMALL     ={450,150,0};
     
     //GAMETICKER in seconds
-	public final static int UPDATE_PERIOD = 15;
+	public final static int UPDATE_PERIOD = 1;
 
 	//RessourcesProduction
 	public final static int ADAMBIG=10;
