@@ -1,8 +1,9 @@
 *.class
-
+*.properties
+*.dll
 # Package Files #
 *.jar
 *.war
 *.ear
-*.dll
-*.properties
+
+
