@@ -55,20 +55,24 @@ public class MapNodes {
                     if((y + 1) < mapLength + 1){
                         if(isNodeEmpty(x, y + 1)){
                             nodeUnder = new Node(x, y + 1);
+                            node.setEdge(nodeUnder, int_map[y + 1][x]);
                             node_mapNodes[y + 1][x] = nodeUnder;
                         }
                         if(isNodeEmpty(x + 1, y + 1)){
                             nodeRightUnder = new Node(x + 1, y + 1);
+                            node.setEdge(nodeRightUnder, int_map[y + 1][x + 1]);
                             node_mapNodes[y + 1][x + 1] = nodeRightUnder;
                         }
                     }
                     if((y - 1) >= 0){
                         if(isNodeEmpty(x, y - 1)){
                             nodeOver = new Node(x, y - 1);
+                            node.setEdge(nodeOver, int_map[y - 1][x]);
                             node_mapNodes[y - 1][x] = nodeOver;
                         }
                         if(isNodeEmpty( + 1, y - 1)){
                             nodeRightOver = new Node(x + 1, y - 1);
+                            node.setEdge(nodeRightOver, int_map[y - 1][x + 1]);
                             node_mapNodes[y - 1][x + 1] = nodeRightOver;
                         } 
                     }
@@ -76,13 +80,15 @@ public class MapNodes {
                     if((y + 1) < mapLength + 1){
                         if(isNodeEmpty(x, y + 1)){
                             nodeUnder = new Node(x, y + 1);
+                            node.setEdge(nodeUnder, int_map[y + 1][x]);
                             node_mapNodes[y + 1][x] = nodeUnder;
                         }
                     }
                     if((y - 1) >= 0){
                         if(isNodeEmpty(x, y - 1)){
                            nodeOver = new Node(x, y - 1);
-                            node_mapNodes[y - 1][x] = nodeOver; 
+                           node.setEdge(nodeOver, int_map[y - 1][x]);
+                           node_mapNodes[y - 1][x] = nodeOver; 
                         }
                     }
                 }
@@ -90,17 +96,20 @@ public class MapNodes {
                 if((x - 1) >= 0){
                     if(isNodeEmpty(x - 1, y)){
                         nodeLeft = new Node(x - 1, y);
+                        node.setEdge(nodeLeft, int_map[y][x - 1]);
                         node_mapNodes[y][x - 1] = nodeLeft;
                     }
                     if((y + 1) < mapLength + 1){
                         if(isNodeEmpty(x - 1, y + 1)){
                             nodeLeftUnder = new Node(x - 1, y + 1);
+                            node.setEdge(nodeLeftUnder, int_map[y + 1][x - 1]);
                             node_mapNodes[y + 1][x - 1] = nodeLeftUnder;
-                        }
+                        } 
                     }
                     if((y - 1) >= 0){
                         if(isNodeEmpty(x - 1, y - 1)){
                             nodeLeftOver = new Node(x - 1, y - 1);
+                            node.setEdge(nodeLeftOver, int_map[y - 1][x - 1]);
                             node_mapNodes[y - 1][x - 1] = nodeLeftOver;
                         }
                     }
