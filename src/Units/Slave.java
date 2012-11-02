@@ -24,7 +24,7 @@ public class Slave {
     }
     
     public Spatial createSlave(beliar.GameState gameState, Vector3f spwanLocation){
-        slaveGeo = (Geometry) assetManager.loadModel("Models/Units/slave.mesh.xml");
+        slaveGeo = (Geometry) assetManager.loadModel("Models/slave/slave.mesh.xml");
         slaveGeo.setLocalTranslation(spwanLocation);
         slaveNode.attachChild(slaveGeo);
         slaveNode.setUserData(UnitValues.HEALTH_KEY, UnitValues.HEALTH_VALUE_SLAVE);

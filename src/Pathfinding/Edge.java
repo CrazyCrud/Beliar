@@ -18,7 +18,7 @@ public class Edge {
         this.destination = destination;
         this.weight = weight;
         
-        source.addEdge(this);
-        destination.addBacktrack(this);
+        //source.addEdge(this);
+        //destination.addBacktrack(this);
     }
 }

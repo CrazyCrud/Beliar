@@ -27,7 +27,21 @@ public class Pathfinder {
         accumulatedWeight = new HashMap<Node,Float>();
     }
     
-    protected Node step(Filter<Node> target){
+    public List<Node> search(Node start, Filter<Node> target){
+        this.frontline.add(start);
+        
+        while(!this.frontline.isEmpty()){
+            Node found = this.step(target);
+            
+            if(found != null){
+                return this.getPath(found);
+            }
+        }
+        
+        return null;
+    }
+    
+    private Node step(Filter<Node> target){
         Node head = frontline.pollFirst();
         
         if(head == null){
@@ -59,22 +73,8 @@ public class Pathfinder {
         
         return null;
     }
-    
-    protected List<Node> search(Node start, Filter<Node> target){
-        this.frontline.add(start);
-        
-        while(!this.frontline.isEmpty()){
-            Node found = this.step(target);
-            
-            if(found != null){
-                return this.getPath(found);
-            }
-        }
-        
-        return null;
-    }
-    
-    protected List<Node> getPath(Node node){
+
+    private List<Node> getPath(Node node){
         LinkedList<Node> path = new LinkedList<Node>();
         
         path.addFirst(node);

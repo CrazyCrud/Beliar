@@ -4,22 +4,19 @@
  */
 package beliar;
 
+import Map.MapHandler;
 import Units.ProductionBuilding;
 import beliar.GameContainer;
 import com.jme3.animation.AnimChannel;
 import com.jme3.animation.AnimControl;
-import com.jme3.animation.AnimEventListener;
 import com.jme3.app.Application;
 import com.jme3.app.state.AbstractAppState;
 import com.jme3.app.state.AppStateManager;
 import com.jme3.scene.Node;
 import com.jme3.app.SimpleApplication;
-import com.jme3.asset.AssetKey;
 import com.jme3.asset.AssetManager;
-import com.jme3.audio.AudioNode;
 import com.jme3.audio.AudioRenderer;
 import com.jme3.collision.CollisionResults;
-import com.jme3.collision.bih.BIHNode;
 import com.jme3.input.FlyByCamera;
 import com.jme3.input.InputManager;
 import com.jme3.input.KeyInput;
@@ -41,15 +38,13 @@ import com.jme3.post.FilterPostProcessor;
 import com.jme3.post.filters.FogFilter;
 import com.jme3.renderer.Camera;
 import com.jme3.renderer.ViewPort;
-import com.jme3.renderer.queue.RenderQueue.ShadowMode;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Mesh;
 import com.jme3.scene.Spatial;
 import com.jme3.scene.debug.Arrow;
 import com.jme3.scene.debug.Grid;
-import com.jme3.scene.shape.Box;
 import com.jme3.shadow.PssmShadowRenderer;
-import controller.mapController;
+import Map.MapController;
 import de.lessvoid.nifty.Nifty;
 
 /**
@@ -88,7 +83,7 @@ public class GameState extends AbstractAppState {
     private Node mapNode;
     private Node marker;
     private RTSCam rtsCam;
-    private mapController mMapController;
+    private MapController mMapController;
     private MapHandler mMaphandler;
     private SoundManager mSoundManager;
     private SimpleApplication app;

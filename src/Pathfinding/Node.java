@@ -24,19 +24,25 @@ public class Node {
         this.backtracks = new ArrayList<Edge>();
     }
     
-    public void addEdge(Edge edge){
+    protected void addEdge(Edge edge){
         edges.add(edge);
     }
 
-    public void addBacktrack(Edge edge){
+    protected void addBacktrack(Edge edge){
         backtracks.add(edge);
     }
     
-    public List<Edge> getEdges(){
+    protected List<Edge> getEdges(){
         return edges;
     }
     
-    public List<Edge> getBacktracks(){
+    protected List<Edge> getBacktracks(){
         return backtracks;
+    }
+    
+    public void setEdge(Node destination, float weight){
+        Edge edge = new Edge(this, destination, weight);
+        edges.add(edge);
+        destination.addBacktrack(edge);
     }
 }
