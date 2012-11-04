@@ -36,8 +36,7 @@ public class Pathfinder {
             if(found != null){
                 return this.getPath(found);
             }
-        }
-        
+        } 
         return null;
     }
     

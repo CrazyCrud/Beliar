@@ -45,4 +45,16 @@ public class Node {
         edges.add(edge);
         destination.addBacktrack(edge);
     }
+    
+    public int getXPos(){
+        return x;
+    }
+    
+    public int getYPos(){
+        return y;
+    }
+    
+    public int getNumberOfEdges(){
+        return edges == null? 0 : edges.size();
+    }
 }

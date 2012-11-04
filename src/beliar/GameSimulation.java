@@ -142,9 +142,9 @@ public class GameSimulation extends AbstractAppState{
     }
     
     private void updateProductionBuildings() {
-        System.out.println("updateProductionBuildings" + PlayerRessources.buildings.size());
+        //System.out.println("updateProductionBuildings " + PlayerRessources.buildings.size());
         for (ProductionBuilding myBuilding : PlayerRessources.buildings) {
-            System.out.println("MyBuildingsName" + myBuilding.toString());
+            //System.out.println("MyBuildingsName" + myBuilding.toString());
             myBuilding.update();
 
             if (myBuilding.hasGoodies()) {
@@ -173,22 +173,23 @@ public class GameSimulation extends AbstractAppState{
     
     private void checkForSalvationOfSouls()
       {
-          System.out.println("Freiheit der Seelen?");
+          //System.out.println("Freiheit der Seelen?");
         if(PlayerRessources.soulsCount> GameContainer.freeSouls)
         {
             
-          System.out.println("Freiheit der Seelen? CHECK");
+          //System.out.println("Freiheit der Seelen? CHECK");
             PlayerRessources.chanceForSalvation=+PlayerRessources.soulsCount/2;
         }
         
         if(PlayerRessources.chanceForSalvation>=GameContainer.soulsRate)
         {
             
-          System.out.println("Freiheit der Seelen? JA!");
+          //System.out.println("Freiheit der Seelen? JA!");
             reduceSouls((int)PlayerRessources.chanceForSalvation);
-            if(PlayerRessources.soulsCount<=0)
-               PlayerRessources.soulsCount=0; 
-            System.out.println("SoulsCount"+PlayerRessources.soulsCount);
+            if(PlayerRessources.soulsCount<=0){
+                PlayerRessources.soulsCount=0; 
+            }  
+            //System.out.println("SoulsCount"+PlayerRessources.soulsCount);
         }
       }
 }

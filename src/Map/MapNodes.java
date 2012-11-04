@@ -5,7 +5,6 @@
 package Map;
 
 import Pathfinding.Node;
-import Pathfinding.Edge;
 
 /**
  *
@@ -17,7 +16,7 @@ public class MapNodes {
     private Node [][] node_mapNodes;
     
     private MapNodes(){
-        instance = new MapNodes();
+        // nothing to do here...
     }
     
     public static MapNodes getInstance(){
@@ -26,97 +25,67 @@ public class MapNodes {
         }        
         return instance = new MapNodes();
     }
-    
-    public void getMap(){
-        int_map = MapController.getMap();
-    }
-    
-    public void createMapNodes(){
+
+    public void initializeMapNodes(){
+        System.out.println("MapNodes: initializeMapNodes");
+
+        initializeMap();
         if(int_map == null){
             return;
         }
+        createMapNodes();
+        setEdges();
+    }
+    
+    private void initializeMap(){
+        int_map = MapController.getMap();
+    }
+    
+    private void createMapNodes() {
+        System.out.println("MapNodes: createMapNodes");
         node_mapNodes = new Node[int_map.length][int_map.length];
         
-        int y, x;
+        int x, y;
         int mapLength = int_map.length;
         
-        for(y = 0; y < mapLength; y++){
-            for(x = 0; x < mapLength; x++){
-                Node node = new Node(x, y);
-                Node nodeRight, nodeLeft, nodeOver, nodeUnder,
-                        nodeRightOver, nodeLeftOver, nodeRightUnder, nodeLeftUnder;
-                
-                if((x + 1) < (mapLength + 1)){
-                    if(isNodeEmpty(x + 1, y)){
-                        nodeRight = new Node(x + 1, y);
-                        node.setEdge(nodeRight, int_map[y][x + 1]);
-                        node_mapNodes[y][x + 1] = nodeRight;
-                    }
-                    if((y + 1) < mapLength + 1){
-                        if(isNodeEmpty(x, y + 1)){
-                            nodeUnder = new Node(x, y + 1);
-                            node.setEdge(nodeUnder, int_map[y + 1][x]);
-                            node_mapNodes[y + 1][x] = nodeUnder;
-                        }
-                        if(isNodeEmpty(x + 1, y + 1)){
-                            nodeRightUnder = new Node(x + 1, y + 1);
-                            node.setEdge(nodeRightUnder, int_map[y + 1][x + 1]);
-                            node_mapNodes[y + 1][x + 1] = nodeRightUnder;
-                        }
-                    }
-                    if((y - 1) >= 0){
-                        if(isNodeEmpty(x, y - 1)){
-                            nodeOver = new Node(x, y - 1);
-                            node.setEdge(nodeOver, int_map[y - 1][x]);
-                            node_mapNodes[y - 1][x] = nodeOver;
-                        }
-                        if(isNodeEmpty( + 1, y - 1)){
-                            nodeRightOver = new Node(x + 1, y - 1);
-                            node.setEdge(nodeRightOver, int_map[y - 1][x + 1]);
-                            node_mapNodes[y - 1][x + 1] = nodeRightOver;
-                        } 
-                    }
-                }else{
-                    if((y + 1) < mapLength + 1){
-                        if(isNodeEmpty(x, y + 1)){
-                            nodeUnder = new Node(x, y + 1);
-                            node.setEdge(nodeUnder, int_map[y + 1][x]);
-                            node_mapNodes[y + 1][x] = nodeUnder;
-                        }
-                    }
-                    if((y - 1) >= 0){
-                        if(isNodeEmpty(x, y - 1)){
-                           nodeOver = new Node(x, y - 1);
-                           node.setEdge(nodeOver, int_map[y - 1][x]);
-                           node_mapNodes[y - 1][x] = nodeOver; 
-                        }
-                    }
+        for(x = 0; x < mapLength; x++){
+            for(y = 0; y < mapLength; y++){
+                node_mapNodes[x][y] = new Node(x, y);
+            }
+        }
+    }
+
+    private void setEdges() {
+        System.out.println("MapNodes: setEdges");
+        int x, y;
+        int mapLength = int_map.length;
+        
+        for(x = 0; x < mapLength; x++){
+            for(y = 0; y < mapLength; y++){
+                Node node = node_mapNodes[x][y];
+                if((x - 1) > -1){
+                    node.setEdge(node_mapNodes[x - 1][y], int_map[x - 1][y]);
                 }
-                
-                if((x - 1) >= 0){
-                    if(isNodeEmpty(x - 1, y)){
-                        nodeLeft = new Node(x - 1, y);
-                        node.setEdge(nodeLeft, int_map[y][x - 1]);
-                        node_mapNodes[y][x - 1] = nodeLeft;
-                    }
-                    if((y + 1) < mapLength + 1){
-                        if(isNodeEmpty(x - 1, y + 1)){
-                            nodeLeftUnder = new Node(x - 1, y + 1);
-                            node.setEdge(nodeLeftUnder, int_map[y + 1][x - 1]);
-                            node_mapNodes[y + 1][x - 1] = nodeLeftUnder;
-                        } 
-                    }
-                    if((y - 1) >= 0){
-                        if(isNodeEmpty(x - 1, y - 1)){
-                            nodeLeftOver = new Node(x - 1, y - 1);
-                            node.setEdge(nodeLeftOver, int_map[y - 1][x - 1]);
-                            node_mapNodes[y - 1][x - 1] = nodeLeftOver;
-                        }
-                    }
+                if((x + 1) < mapLength){
+                    node.setEdge(node_mapNodes[x + 1][y], int_map[x + 1][y]);
                 }
-                
-                if(isNodeEmpty(x, y)){
-                    node_mapNodes[y][x] = node;
+                if((y - 1) > -1){
+                    node.setEdge(node_mapNodes[x][y - 1], int_map[x][y - 1]);
+                }
+                if((y + 1) < mapLength){
+                    node.setEdge(node_mapNodes[x][y + 1], int_map[x][y + 1]);
+                }
+                if((x - 1) > -1 && (y - 1) > -1){
+                    node.setEdge(node_mapNodes[x - 1][y - 1], int_map[x - 1][y - 1]);
+                }
+                if((x + 1) < mapLength && (y - 1) > -1){
+                    node.setEdge(node_mapNodes[x + 1][y - 1], int_map[x + 1][y - 1]);
+                }
+                if((x - 1) > -1 && (y + 1) < mapLength){
+                    node.setEdge(node_mapNodes[x - 1][y + 1], int_map[x - 1][y + 1]);
+                }
+                if((x + 1) < mapLength && (y + 1) < mapLength){
+                    node.setEdge(node_mapNodes[x + 1][y + 1], int_map[x + 1][y + 1]);
                 }
             }
         }

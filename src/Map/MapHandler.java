@@ -48,6 +48,7 @@ public class MapHandler {
         readMapFile("level01");
         initMap();
         wirteMap();
+        writeMapNodes();
     }
 
     private void readMapFile(String levelName) {
@@ -144,7 +145,6 @@ public class MapHandler {
                 }
             }
         }
-        wirteMap();
     }
 
     private void setHellCenterAt(int x, int y) {
@@ -427,5 +427,10 @@ public class MapHandler {
     private void wirteMap(){
         System.out.println("MapHandler: writeMap()");
         MapController.setMap(terrainMap);
+    }
+    
+    private void writeMapNodes(){
+        System.out.println("MapHandler: writeMapNodes()");
+        MapController.setMapNodes();
     }
 }

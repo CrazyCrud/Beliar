@@ -18,8 +18,13 @@ public final class MapController {
     }
     
     public static void setMap(int [][] newMap){
-        System.out.println("MapModel: setMap()");
+        System.out.println("MapController: setMap()");
         MapModel.getInstance().setMap(newMap);
+    }
+    
+    public static void setMapNodes(){
+        System.out.println("MapController: setMapNodes()");
+        MapNodes.getInstance().initializeMapNodes();
     }
     
     public static Node getNode(int x, int y){
