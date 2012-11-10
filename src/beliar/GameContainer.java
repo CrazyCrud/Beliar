@@ -1,22 +1,21 @@
 package beliar;
 
 import com.jme3.app.Application;
-import com.jme3.asset.AssetManager;
-import com.jme3.input.InputManager;
 import com.jme3.input.MouseInput;
-import com.jme3.renderer.Camera;
-import com.jme3.renderer.ViewPort;
 import com.jme3.scene.Node;
 
 
-//HIER KOMMT DER TESTCOMITTT!!!!!
 public class GameContainer {
     
     //Adresses
-    public final static String materialAdress = "Materials/";
+        public final static String materialAdress = "Materials/";
     
     
     //Prices BUILDINGS //ADAM//KYTHOS//MARA
+        public static final int ADAM_BUILDING = 1;
+        public static final int KYTHOS_BUILDING = 2;
+        public static final int MARA_BUILDING = 3;
+        
         public final static int[] COSTADAMBIG       ={500,0,0};
         public final static int[] COSTADAMMIDDLE    ={200,0,0};
         public final static int[] COSTADAMSMALL     ={100,0,0};
@@ -29,9 +28,10 @@ public class GameContainer {
         public final static int[] COSTMARAMIDDLE    ={900,250,0};
         public final static int[] COSTMARASMALL     ={450,150,0};
     
-    //GAMETICKER in seconds
-	public final static int UPDATE_PERIOD = 1;
-
+        //GAMETICKER in seconds
+    	public final static int UPDATE_PERIOD_SOUL_PRODUCTION = 1;
+        public final static int UPDATE_PERIOD_GOODS_PRODUCTION = 10;
+        
 	//RessourcesProduction
 	public final static int ADAMBIG=10;
 	public final static int ADAMMIDDLE=5;
@@ -60,7 +60,7 @@ public class GameContainer {
 	public final static int MIDDLESCIENCE= 10000;
 	public final static int SMALLSCIENCE= 5000;
 	
-	public final static int healthCentreREngeneration = 1;
+	public final static int healthCentreRengeneration = 1;
         
         
         private Node rootNode;

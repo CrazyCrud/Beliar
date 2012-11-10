@@ -1,8 +1,7 @@
 package beliar;
 
 import Units.ProductionBuilding;
-import Units.Unit;
-import beliar.GameContainer;
+import Units.BuildingController;
 import com.jme3.app.Application;
 import com.jme3.app.SimpleApplication;
 import com.jme3.app.state.AbstractAppState;
@@ -12,14 +11,15 @@ import com.jme3.app.state.AppStateManager;
 public class GameSimulation extends AbstractAppState{
 	
 	private SimpleApplication app;
-        private AppStateManager stateManager;
-	private float timer;
-        
+	private float float_timerSoulProduction, float_timerGoodsProduction;
+        private static final int SOUL_PRODUCTION = 0;
+        private static final int GOODS_PRODUCTION = 1;
+       
 	public GameSimulation(AppStateManager stateManager, SimpleApplication app) {
-            System.out.println("GameSimulation");
+            System.out.println("GameSimulation: Constructor");
             this.app = app;
-            this.stateManager = stateManager;
-            resetTimer();
+            resetTimer(SOUL_PRODUCTION);
+            resetTimer(GOODS_PRODUCTION);
 	}
 	
         @Override
@@ -30,7 +30,7 @@ public class GameSimulation extends AbstractAppState{
         
         @Override
         public void stateAttached(AppStateManager stateManager) {
-            
+            System.out.println("GameSimulation: stateAttached()");
         }
 
         @Override
@@ -42,32 +42,46 @@ public class GameSimulation extends AbstractAppState{
         public void update(float tpf){      
             if(isEnabled()){
                 updateDisplay();
-                updateTimer(tpf);
-                updateProductionBuildings();
+                updateTimerSoulProduction(tpf);
+                updateTimerGoodsProduction(tpf);
             }else{
                 
-            }
-            
+            }           
         }
-        
-        private void resetTimer(){
-            timer = 0;
-        }
-        
-        private void updateTimer(float tpf){
-            timer += tpf;
-            if(timer > GameContainer.UPDATE_PERIOD){
-                resetTimer();
-                
-                createDoomed();
-                //produceStuff();
-                
+ 
+        private void updateTimerSoulProduction(float tpf){
+            float_timerSoulProduction += tpf;
+            if(float_timerSoulProduction > GameContainer.UPDATE_PERIOD_SOUL_PRODUCTION){
+                resetTimer(SOUL_PRODUCTION);
+                createDoomed();                
                 checkForSalvationOfSouls();
             }
         }
         
+        private void updateTimerGoodsProduction(float tpf) {
+            float_timerGoodsProduction += tpf;
+            if(float_timerGoodsProduction > GameContainer.UPDATE_PERIOD_GOODS_PRODUCTION){
+                resetTimer(GOODS_PRODUCTION);
+                updateProductionBuildings();
+            }
+        }
+        
+        private void resetTimer(int whichTimer){
+            switch(whichTimer){
+                case SOUL_PRODUCTION:
+                    float_timerSoulProduction = 0;
+                    break;
+                case GOODS_PRODUCTION:
+                    float_timerGoodsProduction = 0;
+                    break;
+            }
+        }
+        
         private void updateDisplay(){
-            //this.app.getStateManager().getState(InGameInputs.class).ressourcesChanged();
+            if(this.app.getStateManager().getState(InGameInputs.class) == null){
+                return;
+            }
+            this.app.getStateManager().getState(InGameInputs.class).ressourcesChanged();
         }
 	
 	public void calculateDarkness()
@@ -77,8 +91,8 @@ public class GameSimulation extends AbstractAppState{
 	
 	public void checkGameStatus()
 	{
-		if (PlayerRessources.healthCentre<=0)
-			PlayerRessources.isLost=true;
+            if (PlayerRessources.healthCentre<=0)
+                    PlayerRessources.isLost=true;
 	}
 	
 	public void doScience()
@@ -91,39 +105,7 @@ public class GameSimulation extends AbstractAppState{
             int countSoulAbyss= PlayerRessources.soulAbyssOfPlayer;
             
             PlayerRessources.soulsCount += countSoulAbyss*(PlayerRessources.darkness*(int)(Math.random()*10));
-            
-            System.out.println("Verdammte:"+PlayerRessources.soulsCount);
         }
-        
-        /*
-        //DEPRECEATED
-        public void produceStuff()
-        {
-            //Space for Souls
-            int adamPlace =     PlayerRessources.adamCreatorBIG*GameContainer.ADAMBIG+
-                                PlayerRessources.adamCreatorMIDDLE*GameContainer.ADAMMIDDLE+
-                                PlayerRessources.adamCreatorSMALL*GameContainer.ADAMSMALL;
-            
-            int kythosPlace =   PlayerRessources.kythosCreatorBIG*GameContainer.KYTHOSBIG+
-                                PlayerRessources.kythosCreatorMIDDLE*GameContainer.KYTHOSMIDDLE+
-                                PlayerRessources.kythosCreatorSMALL*GameContainer.KYTHOSSMALL;
-            
-            int maraPlace =     PlayerRessources.maraCreatorBIG*GameContainer.MARABIG+
-                                PlayerRessources.maraCreatorMIDDLE*GameContainer.MARAMIDDLE+
-                                PlayerRessources.maraCreatorSMALL*GameContainer.MARASMALL;
-            
-            
-            int soulsForAdam = (int)(PlayerRessources.soulsCount/100)*PlayerRessources.percentAdam;
-            int soulsForKythos= (int)(PlayerRessources.soulsCount/100)*PlayerRessources.percentKythos;
-           // int soulsForMara = (int)(PlayerRessources.soulsCount/100)*PlayerRessources.percent;
-            
-            //int Newsouls = 
-            System.out.println("ADAM: "+adamPlace);
-            System.out.println("KYTHOS: "+kythosPlace);
-            System.out.println("MARA: "+maraPlace);
-            
-        }
-        */
         
     public void reduceRessources(int[]bill)
     {
@@ -133,34 +115,59 @@ public class GameSimulation extends AbstractAppState{
     }  
     
 
-    public boolean checkCostsBuilding(int[] bill)
+    public boolean checkCostsBuilding(int whichBuilding, int size)
     {
-        if((PlayerRessources.adam>=bill[0])  &&(PlayerRessources.kythos>=bill[1])&&(PlayerRessources.mara>=bill[2]))
+        int [] cost = {0,0,0};
+        switch(whichBuilding){
+            case GameContainer.ADAM_BUILDING:
+                if(size == GameContainer.ADAMSMALL){
+                    cost = GameContainer.COSTADAMSMALL;
+                }else if(size == GameContainer.ADAMMIDDLE){
+                    cost = GameContainer.COSTADAMMIDDLE;
+                }else{
+                    cost = GameContainer.COSTADAMBIG;
+                }
+                break;
+            case GameContainer.KYTHOS_BUILDING:
+                if(size == GameContainer.KYTHOSSMALL){
+                    cost = GameContainer.COSTKYTHOSSMALL;
+                }else if(size == GameContainer.KYTHOSMIDDLE){
+                    cost = GameContainer.COSTKYTHOSMIDDLE;
+                }else{
+                    cost = GameContainer.COSTKYTHOSBIG;
+                }
+                break;
+            case GameContainer.MARA_BUILDING:
+                if(size == GameContainer.MARASMALL){
+                    cost = GameContainer.COSTMARASMALL;
+                }else if(size == GameContainer.MARAMIDDLE){
+                    cost = GameContainer.COSTMARAMIDDLE;
+                }else{
+                    cost = GameContainer.COSTMARABIG;
+                }
+                break;
+        }
+        if((PlayerRessources.adam>=cost[0])  &&(PlayerRessources.kythos>=cost[1])&&(PlayerRessources.mara>=cost[2]))
             return true;
         else
             return false;
     }
     
     private void updateProductionBuildings() {
-        //System.out.println("updateProductionBuildings " + PlayerRessources.buildings.size());
-        for (ProductionBuilding myBuilding : PlayerRessources.buildings) {
-            //System.out.println("MyBuildingsName" + myBuilding.toString());
-            myBuilding.update();
-
+        for (ProductionBuilding myBuilding : BuildingController.getProductionBuildings()) {
             if (myBuilding.hasGoodies()) {
-                char type = myBuilding.getType();
+                int type = myBuilding.getType();
 
                 switch (type) {
-                    case 'a':
+                    case GameContainer.ADAM_BUILDING:
                         PlayerRessources.adam += myBuilding.getGoods();
                         break;
-                    case 'k':
+                    case GameContainer.KYTHOS_BUILDING:
                         PlayerRessources.kythos += myBuilding.getGoods();
                         break;
-                    case 'm':
+                    case GameContainer.MARA_BUILDING:
                         PlayerRessources.mara += myBuilding.getGoods();
                         break;
-
                 }
             }
         }
@@ -173,27 +180,21 @@ public class GameSimulation extends AbstractAppState{
     
     private void checkForSalvationOfSouls()
       {
-          //System.out.println("Freiheit der Seelen?");
+        //System.out.println("Freiheit der Seelen?");
         if(PlayerRessources.soulsCount> GameContainer.freeSouls)
-        {
-            
-          //System.out.println("Freiheit der Seelen? CHECK");
-            PlayerRessources.chanceForSalvation=+PlayerRessources.soulsCount/2;
+        {  
+            //System.out.println("Freiheit der Seelen? CHECK");
+            PlayerRessources.chanceForSalvation =+ PlayerRessources.soulsCount/2;
         }
         
-        if(PlayerRessources.chanceForSalvation>=GameContainer.soulsRate)
+        if(PlayerRessources.chanceForSalvation >= GameContainer.soulsRate)
         {
-            
-          //System.out.println("Freiheit der Seelen? JA!");
+            //System.out.println("Freiheit der Seelen? JA!");
             reduceSouls((int)PlayerRessources.chanceForSalvation);
-            if(PlayerRessources.soulsCount<=0){
-                PlayerRessources.soulsCount=0; 
+            if(PlayerRessources.soulsCount <= 0){
+                PlayerRessources.soulsCount = 0; 
             }  
             //System.out.println("SoulsCount"+PlayerRessources.soulsCount);
         }
       }
 }
-
-
-
-

@@ -21,9 +21,12 @@ public class SoundManager {
     private HashMap<String,AudioNode> backgroundMusic = new HashMap<String, AudioNode>();
     private HashMap<String,AudioNode> uiSounds = new HashMap<String, AudioNode>();
     
+    public static final int PLACE_BUILDING = 0;
+    public static final int CLICK = 1;
+    
     public SoundManager(AssetManager assetManager, Node rootNode) {
-    this.assetManager = assetManager;
-    this.rootNode = rootNode;
+        this.assetManager = assetManager;
+        this.rootNode = rootNode;
     
     initBackgroundMusic();
     initUISound();
@@ -31,9 +34,9 @@ public class SoundManager {
     }
    private void initBackgroundMusic()
    { 
-    backgroundMusic.put("01", new AudioNode(assetManager, "Sounds/music/background_1.ogg",true));
-    //backgroundMusic.put("02", new AudioNode(assetManager, "Sounds/music/background_2.ogg",true));
-    backgroundMusic.put("03", new AudioNode(assetManager, "Sounds/music/background_3.ogg",true));
+        backgroundMusic.put("01", new AudioNode(assetManager, "Sounds/music/background_1.ogg",true));
+        //backgroundMusic.put("02", new AudioNode(assetManager, "Sounds/music/background_2.ogg",true));
+        backgroundMusic.put("03", new AudioNode(assetManager, "Sounds/music/background_3.ogg",true));
    }
    
    private void initUISound()
@@ -53,14 +56,7 @@ public class SoundManager {
    
    public void playMusic(String trackName)
     {
-    /*
-        //TODO: Ändern des Tracks via Daten!
-        AudioNode track = backgroundMusic.get(trackName);
-        track.setPositional(false);
-        track.play();
-        rootNode.attachChild(track);
-     * 
-     */
+
     }
     
     

@@ -14,20 +14,24 @@ import com.jme3.scene.control.Control;
  *
  * @author andministrator
  */
-public class AnimationControl extends AbstractControl{
+public class SlaveCharacterControl extends AbstractControl{
 
+    
     @Override
     protected void controlUpdate(float tpf) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        if(isEnabled()){
+
+        }
     }
 
     @Override
     protected void controlRender(RenderManager rm, ViewPort vp) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        
     }
 
     public Control cloneForSpatial(Spatial spatial) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-    
+        SlaveCharacterControl clone = new SlaveCharacterControl();
+        clone.setSpatial(spatial);
+        return clone;
+    }  
 }

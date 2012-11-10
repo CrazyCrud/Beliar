@@ -5,8 +5,8 @@
 package beliar;
 
 import Map.MapHandler;
-import Units.ProductionBuilding;
-import beliar.GameContainer;
+import Units.BuildingController;
+import Units.UnitController;
 import com.jme3.animation.AnimChannel;
 import com.jme3.animation.AnimControl;
 import com.jme3.app.Application;
@@ -96,8 +96,8 @@ public class GameState extends AbstractAppState {
     private ViewPort guiViewPort;
     
     //DIRTY
-    private char charBuildingType = 0;
-    private int sizeBuilding = 0;
+    private int int_buildingType = 0;
+    private int int_sizeBuilding = 0;
     
     //INPUT
     private NiftyJmeDisplay niftyDisplay;
@@ -194,9 +194,7 @@ public class GameState extends AbstractAppState {
             inGameInputs.ressourcesChanged();
 
             if (selection != null) {
-                System.out.println("Ich rendere ein Gebaude");
                 selection.setLocalTranslation(mousePositionWorld);
-
             }
 
         } else {
@@ -294,12 +292,10 @@ public class GameState extends AbstractAppState {
         AmbientLight al = new AmbientLight();
         al.setColor(ColorRGBA.White.mult(1.3f));
         localRootNode.addLight(al);
-
     }
 
     private void initMeshLibary() {
-        //Aufgabe: Alle Objekte werden geladen und in der Meshbiliothek hinterlegt
-        System.out.println("InitMesh");
+        System.out.println("InitMeshLibary");
         mMeshContainer = new MeshContainer(assetManager);
     }
 
@@ -309,7 +305,7 @@ public class GameState extends AbstractAppState {
         marker = new Node("marker");
         mapNode = new Node("mapNode");
         buildings = new Node("buildings");
-
+        
         pickAble.addLight(cameraLight);
         pickAble.addLight(directionLight);
 
@@ -327,9 +323,6 @@ public class GameState extends AbstractAppState {
     }
 
     private void initMap() {
-        System.out.println("InitMap");
-
-        //MapHanderl ergaenzen mit String
         mMaphandler = new MapHandler(mMeshContainer, mapNode, assetManager);
     }
 
@@ -338,17 +331,15 @@ public class GameState extends AbstractAppState {
         mSoundManager.playMusic("03");
     }
 
-    private void initScene() {   //setzt die Objekte entsprechend der Vorgaben aus der Map
+    private void initScene() { 
         System.out.println("InitScene");
 
-        //Markers
         pickAble.attachChild(mapNode);
         pickAble.attachChild(buildings);
 
         localRootNode.attachChild(marker);
         localRootNode.attachChild(pickAble);
         localRootNode.attachChild(creatures);
-
     }
 
     private void attachCoordinateAxes(Vector3f pos) {
@@ -387,20 +378,17 @@ public class GameState extends AbstractAppState {
 
         inputManager.addListener(actionListener, "pick target");
         inputManager.addListener(actionListener, "moveMouse");
-
-
-
     }
+    
     private AnalogListener actionListener = new AnalogListener() {
-
         public void onAnalog(String name, float value, float tpf) {
-
+            int xPos = (int) mousePositionWorld.x;
+            int zPos = (int) mousePositionWorld.z;
+            
             if (name.equals("pick target")) {
-
 
                 CollisionResults results = checkColision();
 
-                //Raum ausheben//
                 if ((results.size() > 0) && (PlayerRessources.selectionRoom > 0)) {
                    
                     Geometry target = results.getClosestCollision().getGeometry();
@@ -409,120 +397,137 @@ public class GameState extends AbstractAppState {
 
                     mMaphandler.handleBuilding(transformation.getTranslation(), PlayerRessources.selectionRoom);
                     mapNode.detachChild(target);
-                    if(PlayerRessources.selectedBuilding!=null)
+                    
+                    if(PlayerRessources.selectedBuilding != null)
                     {
-                    stopBuilding();
+                        stopBuilding();
                     }
-                } //gebaude bauen
+                } 
                 else if ((results.size() > 0) && (selection != null)) {
-                    System.out.println("Gebäude platzieren?");
-
-                    //DEBUG
-                    int[] bill = GameContainer.COSTADAMSMALL;
-
-                    if ((checkFieldType((int) mousePositionWorld.x, (int) mousePositionWorld.z) == true) && (gameSimulation.checkCostsBuilding(bill) == true)) {
+                    if ((checkFieldType(xPos, zPos) == true) && 
+                            (gameSimulation.checkCostsBuilding(int_buildingType, int_sizeBuilding) == true)) {
                         selection = PlayerRessources.selectedBuilding;
+                        
                         if (selection == null) {
-                            System.out.println("!!!ERROR!!!");
+                            return;
                         }
                         
-                        //StartBuilding()
-                        gameSimulation.reduceRessources(bill);
-                        
-                        //createBuildingInWorld
-                        selection.setMaterial(assetManager.loadMaterial(PlayerRessources.loadingStringMaterial));
-                        ProductionBuilding myBuild = new ProductionBuilding(selection,assetManager.loadMaterial(PlayerRessources.loadingStringMaterial), (int)mousePositionWorld.x, (int)mousePositionWorld.z,100,charBuildingType,sizeBuilding);
-                        myBuild.setActive(true);
-                        PlayerRessources.buildings.add(myBuild);
-                        Node selectionToBuild = (Node) selection;
-                        buildings.attachChild(selectionToBuild);
-                        
-                        //clearSelection
+                        Node myBuilding = BuildingController.buildProductionBuilding(xPos, zPos, 
+                                int_buildingType, int_sizeBuilding);
+                       
                         stopBuilding();
+                        buildSucessfull(myBuilding);
                         
-                        //Sound
-                        mSoundManager.playUISound("placeBuilding");
-                        //PlaceInMap
-                        mMaphandler.placeBuilding((int) mousePositionWorld.x, (int) mousePositionWorld.z);
-                        inGameInputs.ressourcesChanged();
                     } else {
                         System.out.println("Bauen verweigert");
                     }
                 }
-
-
                 if (results.size() <= 0) {
                     System.out.println("No Selection");
                 } else {
                     results.clear();
                 }
             } else if (name.equals("moveMouse")) {
-                CollisionResults results = checkColision();
-
-                if ((results.size() > 0) && selection != null) {
-                    Geometry target = results.getClosestCollision().getGeometry();
-                    mousePositionWorld.set(target.getWorldTranslation());
-                    checkFieldType((int) mousePositionWorld.x, (int) mousePositionWorld.z);
-                }
+                setMousePosition(xPos, zPos);
             }
         }
     };
+    
+    private void buildSucessfull(Node myBuilding){
+        computeBuilding(myBuilding);
+        playSoundEffect(SoundManager.PLACE_BUILDING);
+        updateRessources(); 
+    }
+    
+    private void computeBuilding(Node myBuilding){
+        System.out.println("GameState: computeBuilding " + myBuilding.getName());
+        buildings.attachChild(myBuilding);
+        mMaphandler.placeBuilding((int) mousePositionWorld.x, (int) mousePositionWorld.z);
+    }
+    
+    private void updateRessources(){
+        switch(int_buildingType){
+            case GameContainer.ADAM_BUILDING:
+                if(int_sizeBuilding == GameContainer.ADAMSMALL){
+                    gameSimulation.reduceRessources(GameContainer.COSTADAMSMALL);
+                }else if(int_sizeBuilding == GameContainer.ADAMMIDDLE){
+                    gameSimulation.reduceRessources(GameContainer.COSTADAMMIDDLE);
+                }else{
+                    gameSimulation.reduceRessources(GameContainer.COSTADAMBIG);
+                }
+                break;
+            case GameContainer.KYTHOS_BUILDING:
+                if(int_sizeBuilding == GameContainer.KYTHOSSMALL){
+                    gameSimulation.reduceRessources(GameContainer.COSTKYTHOSSMALL);
+                }else if(int_sizeBuilding == GameContainer.KYTHOSMIDDLE){
+                    gameSimulation.reduceRessources(GameContainer.COSTKYTHOSMIDDLE);
+                }else{
+                    gameSimulation.reduceRessources(GameContainer.COSTKYTHOSBIG);
+                }
+                break;
+            case GameContainer.MARA_BUILDING:
+                if(int_sizeBuilding == GameContainer.MARASMALL){
+                    gameSimulation.reduceRessources(GameContainer.COSTMARASMALL);
+                }else if(int_sizeBuilding == GameContainer.MARAMIDDLE){
+                    gameSimulation.reduceRessources(GameContainer.COSTMARAMIDDLE);
+                }else{
+                    gameSimulation.reduceRessources(GameContainer.COSTMARABIG);
+                }
+                break;
+        }
+        inGameInputs.ressourcesChanged();
+    }
+    
+    private void setMousePosition(int xPos, int zPos){
+        CollisionResults results = checkColision();
+                if ((results.size() > 0) && selection != null) {
+                    Geometry target = results.getClosestCollision().getGeometry();
+                    mousePositionWorld.set(target.getWorldTranslation());
+                    checkFieldType(xPos, zPos);
+                }
+    }
 
-    public void handleBuildSelection(char typeRoom, int size) {
-
+    public void handleBuildSelection(int typeRoom, int size) {
         System.out.println("HandleBuildSelection");
 
         String loadingString = "production".concat(String.valueOf(size));
-        //String loadingStringMaterial;
+
         setSizeAndType(typeRoom, size);
+        
         switch (typeRoom) {
-            case 'a':
-                System.out.println("ADAM" + loadingString);
-                
+            case GameContainer.ADAM_BUILDING:
                 typeBuildingRoom = ValuesTerrain.HALLOFANARCHY;
                 System.out.println("ADAMMATERIAL:");
-
-
                 PlayerRessources.selectedBuilding = mMeshContainer.adamHall.get(loadingString).clone();
                 loadSelectedMaterial("adamBuilding_", size);
-
-
-
                 break;
 
-            case 'k':
-                System.out.println("KYTHOS" + loadingString);
+            case GameContainer.KYTHOS_BUILDING:
                 typeBuildingRoom = ValuesTerrain.CAVEOFBEAST;
                 loadSelectedMaterial("kythosBuilding_", size);
                 PlayerRessources.selectedBuilding = mMeshContainer.caveOfTheBeast.get(loadingString).clone();
-
                 break;
 
-            case 'm':
-                System.out.println("MARA" + loadingString);
+            case GameContainer.MARA_BUILDING:
                 typeBuildingRoom = ValuesTerrain.TOMBOFMEMORY;
                 PlayerRessources.selectedBuilding = mMeshContainer.tombOfMemory.get(loadingString).clone();
-
                 break;
-
         }
         PlayerRessources.selectionRoom = 0;
         initBuildSelection();
-
-
     }
 
     private void loadSelectedMaterial(String type, int size) {
-        
         PlayerRessources.loadingStringMaterial = GameContainer.materialAdress.concat(type + String.valueOf(size) + ".j3m");
     }
-    private void setSizeAndType(char type,int size)
+    
+    private void setSizeAndType(int type,int size)
     {
-       this.sizeBuilding=size;
-       this.charBuildingType=type;
+       this.int_sizeBuilding = size;
+       this.int_buildingType = type;
     }
+    
     private void initBuildSelection() {
-        System.out.println("initBuildingSelection");
         PlayerRessources.selectedBuilding.addLight(directionLight);
         PlayerRessources.selectedBuilding.addLight(cameraLight);
         selection = PlayerRessources.selectedBuilding;
@@ -531,54 +536,41 @@ public class GameState extends AbstractAppState {
         if (selection != null) {
             marker.attachChild(selection);
         } else {
-            System.err.println("ERROR DETECTED!");
+            return;
         }
     }
 
     private CollisionResults checkColision() {
         CollisionResults results = new CollisionResults();
 
-        //System.out.println("MOUSEMOVE");
         Vector2f click2D = inputManager.getCursorPosition();
         Vector3f click3D = cam.getWorldCoordinates(new Vector2f(click2D.x, click2D.y), 0f);
         Vector3f dir = cam.getWorldCoordinates(new Vector2f(click2D.x, click2D.y), 1f).subtractLocal(click3D).normalizeLocal();
 
         Ray ray = new Ray(click3D, dir);
         pickAble.collideWith(ray, results);
-        Vector3f pt = new Vector3f();
+
         for (int i = 0; i < results.size(); i++) {
-
-            // (For each “hit”, we know distance, impact point, geometry.)
-            float dist = results.getCollision(i).getDistance();
-            pt = results.getCollision(i).getContactPoint();
-            String target = results.getCollision(i).getGeometry().getName();
-
-            //System.out.println("Selection #" + i + ": " + target + " at " + pt + ", " + dist + " WU away.");
 
         }
         return results;
     }
 
     private boolean checkFieldType(int x, int y) {
+        boolean isFieldValid;
         int cellType = mMaphandler.getCellType((int) mousePositionWorld.x, (int) mousePositionWorld.z);
-        System.out.println("CellType:" + cellType);
-
+        Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
+        
         if ((cellType == typeBuildingRoom) && mMaphandler.getPlacesBuildingAt(x, y)) {
-            System.out.println("Bauerlaubnis erteilt");
-            Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
             mat.setColor("Color", ColorRGBA.Green);
-            selection.setMaterial(mat);
-
-
-            return true;
+            isFieldValid = true;
         } else {
-            System.out.println("Bauerlaubnis verweigert");
-            Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
             mat.setColor("Color", ColorRGBA.Red);
-            selection.setMaterial(mat);
-            return false;
+            isFieldValid = false;
         }
-
+        
+        selection.setMaterial(mat);
+        return isFieldValid;
     }
 
     public void stopBuilding() {
@@ -588,8 +580,22 @@ public class GameState extends AbstractAppState {
         marker.detachAllChildren();
     }
     
-    public void playSoundEffect(String name)
+    public void playSoundEffect(int whichSound)
     {
-        mSoundManager.playUISound("click");
+        switch(whichSound){
+            case SoundManager.PLACE_BUILDING:
+                mSoundManager.playUISound("placeBuilding");
+                break;
+            case SoundManager.CLICK:
+                mSoundManager.playUISound("click");
+                break;
+        }
+    }
+
+    protected void setUpUnit() {
+       System.out.println("GameState: setUpUnit");
+       Node mySlave = UnitController.createSlave(19, 20);
+       creatures.attachChild(mySlave);
+       
     }
 }

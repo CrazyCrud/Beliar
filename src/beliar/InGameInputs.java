@@ -193,11 +193,13 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
                 }}.build(nifty, screen, thirdRowTop);
     }
 
-    private void setupArmyIcons(){        
+    private void setupArmyIcons(){    
+        System.out.println("InGameInputs: setupArmyIcons");
         menuState = MENU_ARMY;
         
         Element menuText = screen.findElementByName("menuText");
         menuText.getRenderer(TextRenderer.class).setText("Verfügbarer Einheiten");
+        myGameState.setUpUnit();
     }
     
     public void onOptions(){
@@ -208,14 +210,12 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
     }
     
     public void onBuildPath(){
-        myGameState.playSoundEffect("click");
-        System.out.println("Build a fucking path to get out of here");
-        PlayerRessources.selectionRoom=ValuesTerrain.HALL;
-        
+        myGameState.playSoundEffect(SoundManager.CLICK);
+        PlayerRessources.selectionRoom = ValuesTerrain.HALL;
     }  
        
     public void buildAdamMenu(){
-        myGameState.playSoundEffect("click");
+        myGameState.playSoundEffect(SoundManager.CLICK);
         switch(menuState){
             case MENU_BUILD:
                 setupBuildingIcons(ADAM);
@@ -237,7 +237,7 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
     }
     
     public void buildKythosMenu(){
-        myGameState.playSoundEffect("click");
+        myGameState.playSoundEffect(SoundManager.CLICK);
         switch(menuState){
             case MENU_BUILD:
                 setupRoomName(KYTHOS);
@@ -259,7 +259,7 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
     }
     
     public void buildMaraMenu(){
-        myGameState.playSoundEffect("click");
+        myGameState.playSoundEffect(SoundManager.CLICK);
         switch(menuState){
             case MENU_BUILD:
                 setupRoomName(MARA);
@@ -406,56 +406,51 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
     }
     
     public void buildAdamBuilding(String whichLevel){
-        myGameState.playSoundEffect("click");
-        char adamChar = 'a';
-        
+        myGameState.playSoundEffect(SoundManager.CLICK);        
         
         switch(Integer.parseInt(whichLevel)){
             case BUILDING_LEVEL_ONE:
                 System.out.println("Adam-Building Stufe 1");
-                // Hier Adam-Building Stufe 1
                 PlayerRessources.selectionRoom=0;
-                myGameState.handleBuildSelection(adamChar, BUILDING_LEVEL_ONE);
+                myGameState.handleBuildSelection(GameContainer.ADAM_BUILDING, BUILDING_LEVEL_ONE);
                 updateRessources(ADAM, BUILDING_LEVEL_ONE);
                 return;
             case BUILDING_LEVEL_TWO:
-                // Hier Adam-Building Stufe 2
                  System.out.println("Adam-Building Stufe 2");
                  PlayerRessources.selectionRoom=0;
-                myGameState.handleBuildSelection(adamChar, BUILDING_LEVEL_TWO);
+                myGameState.handleBuildSelection(GameContainer.ADAM_BUILDING, BUILDING_LEVEL_TWO);
                 updateRessources(ADAM, BUILDING_LEVEL_TWO);
                 return;
             case BUILDING_LEVEL_THREE:
                  System.out.println("Adam-Building Stufe 3");
                  PlayerRessources.selectionRoom=0;
-                myGameState.handleBuildSelection(adamChar, BUILDING_LEVEL_THREE);
+                myGameState.handleBuildSelection(GameContainer.ADAM_BUILDING, BUILDING_LEVEL_THREE);
                 updateRessources(ADAM, BUILDING_LEVEL_THREE);
                 return;
         }
     }
     
     public void buildKythosBuilding(String whichLevel){
-        myGameState.playSoundEffect("click");
-        char kythosChar = 'k';
+        myGameState.playSoundEffect(SoundManager.CLICK);
         
         switch(Integer.parseInt(whichLevel)){
             case BUILDING_LEVEL_ONE:
                 updateRessources(KYTHOS, BUILDING_LEVEL_ONE);
-                myGameState.handleBuildSelection(kythosChar, BUILDING_LEVEL_ONE);
+                myGameState.handleBuildSelection(GameContainer.KYTHOS_BUILDING, BUILDING_LEVEL_ONE);
                 return;
             case BUILDING_LEVEL_TWO:
                 updateRessources(KYTHOS, BUILDING_LEVEL_TWO);
-                myGameState.handleBuildSelection(kythosChar, BUILDING_LEVEL_TWO);
+                myGameState.handleBuildSelection(GameContainer.KYTHOS_BUILDING, BUILDING_LEVEL_TWO);
                 return;
             case BUILDING_LEVEL_THREE:
                 updateRessources(KYTHOS, BUILDING_LEVEL_THREE);
-                myGameState.handleBuildSelection(kythosChar, BUILDING_LEVEL_THREE);
+                myGameState.handleBuildSelection(GameContainer.KYTHOS_BUILDING, BUILDING_LEVEL_THREE);
                 return;
         }
     }
     
     public void buildMaraBuilding(String whichLevel){
-        myGameState.playSoundEffect("click");
+        myGameState.playSoundEffect(SoundManager.CLICK);
         switch(Integer.parseInt(whichLevel)){
             case BUILDING_LEVEL_ONE:
                 updateRessources(MARA, BUILDING_LEVEL_ONE);

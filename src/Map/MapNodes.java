@@ -64,35 +64,35 @@ public class MapNodes {
             for(y = 0; y < mapLength; y++){
                 Node node = node_mapNodes[x][y];
                 if((x - 1) > -1){
-                    node.setEdge(node_mapNodes[x - 1][y], int_map[x - 1][y]);
+                    node.setEdge(node_mapNodes[x - 1][y], int_map[x - 1][y] + 1);
                 }
                 if((x + 1) < mapLength){
-                    node.setEdge(node_mapNodes[x + 1][y], int_map[x + 1][y]);
+                    node.setEdge(node_mapNodes[x + 1][y], int_map[x + 1][y] + 1);
                 }
                 if((y - 1) > -1){
-                    node.setEdge(node_mapNodes[x][y - 1], int_map[x][y - 1]);
+                    node.setEdge(node_mapNodes[x][y - 1], int_map[x][y - 1] + 1);
                 }
                 if((y + 1) < mapLength){
-                    node.setEdge(node_mapNodes[x][y + 1], int_map[x][y + 1]);
+                    node.setEdge(node_mapNodes[x][y + 1], int_map[x][y + 1] + 1);
                 }
                 if((x - 1) > -1 && (y - 1) > -1){
-                    node.setEdge(node_mapNodes[x - 1][y - 1], int_map[x - 1][y - 1]);
+                    node.setEdge(node_mapNodes[x - 1][y - 1], int_map[x - 1][y - 1] + 1);
                 }
                 if((x + 1) < mapLength && (y - 1) > -1){
-                    node.setEdge(node_mapNodes[x + 1][y - 1], int_map[x + 1][y - 1]);
+                    node.setEdge(node_mapNodes[x + 1][y - 1], int_map[x + 1][y - 1] + 1);
                 }
                 if((x - 1) > -1 && (y + 1) < mapLength){
-                    node.setEdge(node_mapNodes[x - 1][y + 1], int_map[x - 1][y + 1]);
+                    node.setEdge(node_mapNodes[x - 1][y + 1], int_map[x - 1][y + 1] + 1);
                 }
                 if((x + 1) < mapLength && (y + 1) < mapLength){
-                    node.setEdge(node_mapNodes[x + 1][y + 1], int_map[x + 1][y + 1]);
+                    node.setEdge(node_mapNodes[x + 1][y + 1], int_map[x + 1][y + 1] + 1);
                 }
             }
         }
     }
     
     private boolean isNodeEmpty(int x, int y){
-        return node_mapNodes[y][x] == null ? true : false;
+        return node_mapNodes[x][y] == null ? true : false;
     }
     
     public Node [][] getMapNodes(){
@@ -100,6 +100,16 @@ public class MapNodes {
     }
     
     public Node getNode(int x, int y){
-        return node_mapNodes[y][x];
+        if(x > node_mapNodes.length - 1){
+            x = node_mapNodes.length - 1;
+        }else if(x < 0){
+            x = 0;
+        }
+        if(y > node_mapNodes.length - 1){
+            y = node_mapNodes.length - 1;
+        }else if(y < 0){
+            y = 0;
+        }
+        return node_mapNodes[x][y];
     }
 }

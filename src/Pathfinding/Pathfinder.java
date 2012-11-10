@@ -17,39 +17,44 @@ import java.util.TreeSet;
  * @author andministrator
  */
 public class Pathfinder {
-    protected final TreeSet<Node> frontline;
-    private final Set<Node> visited;
-    private final Map<Node, Float> accumulatedWeight;
+    protected final TreeSet<Node> set_frontline;
+    private final Set<Node> set_visited;
+    private final Map<Node, Float> map_accumulatedWeight;
     
     public Pathfinder(){
-        frontline = new TreeSet<Node>(new NodeComparator((this)));
-        visited = new HashSet<Node>();
-        accumulatedWeight = new HashMap<Node,Float>();
+        set_frontline = new TreeSet<Node>(new NodeComparator((this)));
+        set_visited = new HashSet<Node>();
+        map_accumulatedWeight = new HashMap<Node,Float>();
     }
     
-    public List<Node> search(Node start, Filter<Node> target){
-        this.frontline.add(start);
+    public List<Node> search(Node start, Node target){
+        reset();
         
-        while(!this.frontline.isEmpty()){
+        this.set_frontline.add(start);
+        
+        while(!this.set_frontline.isEmpty()){
             Node found = this.step(target);
             
             if(found != null){
+                System.out.println("Node found: " + found.getXPos() + ", " + found.getYPos());
                 return this.getPath(found);
             }
         } 
         return null;
     }
     
-    private Node step(Filter<Node> target){
-        Node head = frontline.pollFirst();
+    private Node step(Node target){
+        Node head = set_frontline.pollFirst();
         
         if(head == null){
             return null;
         }
         
+        System.out.println("Current node: " + head.getXPos() + ", " + head.getYPos());
+        
         this.visit(head);
         
-        if(target.accept(head)){
+        if(head == target){
             return head;
         }
         
@@ -65,9 +70,9 @@ public class Pathfinder {
                 continue;
             }
             
-            this.frontline.remove(edge.destination);
+            this.set_frontline.remove(edge.destination);
             this.setAccumulatedWeight(edge.destination, current);
-            this.frontline.add(edge.destination);
+            this.set_frontline.add(edge.destination);
         }
         
         return null;
@@ -105,19 +110,25 @@ public class Pathfinder {
     }
     
     private void visit(Node node){
-        visited.add(node);
+        set_visited.add(node);
     }
     
     private boolean isVisited(Node node){
-        return this.visited.contains(node);
+        return this.set_visited.contains(node);
     }
     
     private void setAccumulatedWeight(Node node, float weight){
-        accumulatedWeight.put(node, Float.valueOf(weight));
+        map_accumulatedWeight.put(node, Float.valueOf(weight));
     }
     
     protected float getAccumulatedWeight(Node node){
-        Float weight = accumulatedWeight.get(node);
+        Float weight = map_accumulatedWeight.get(node);
         return weight == null ? 0.0f : weight.floatValue();
+    }
+    
+    private void reset(){
+        set_frontline.clear();
+        set_visited.clear();
+        map_accumulatedWeight.clear();
     }
 }

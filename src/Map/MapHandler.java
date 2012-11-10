@@ -4,6 +4,7 @@
  */
 package Map;
 
+import Pathfinding.Test;
 import beliar.MeshContainer;
 import beliar.ValuesTerrain;
 import com.google.gson.JsonArray;
@@ -49,6 +50,8 @@ public class MapHandler {
         initMap();
         wirteMap();
         writeMapNodes();
+        
+        Test.checkPath();
     }
 
     private void readMapFile(String levelName) {
