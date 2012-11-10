@@ -54,19 +54,17 @@ public class SlaveAnimationControl extends AbstractControl{
             if(spatial == null || walkControl == null){
                 return;
             }
-            
-            if(walkControl.isMoving()){
+            if(!(spatial.getControl(GameObjectControl.class).isAlive())){
+                if(!("Die".equals(animChannel.getAnimationName()))){
+                     setAnimation(DIE_ANIM);                   
+                }
+            }else if(walkControl.isMoving()){
                 if(!("Idle".equals(animChannel.getAnimationName()))){
                     setAnimation(IDLE_ANIM);
                 }
             }else{
                 if(!("Walk".equals(animChannel.getAnimationName()))){
                     setAnimation(WALK_ANIM);
-                }
-            }
-            if(!(spatial.getControl(GameObjectControl.class).isAlive())){
-                if(!("Die".equals(animChannel.getAnimationName()))){
-                     setAnimation(DIE_ANIM);                   
                 }
             }
         }
