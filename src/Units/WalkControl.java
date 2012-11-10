@@ -63,5 +63,9 @@ public class WalkControl extends AbstractControl{
         clone.setSpatial(spatial);
         return clone;
     }
+
+    protected boolean isWalking() {
+        return true;
+    }
     
 }

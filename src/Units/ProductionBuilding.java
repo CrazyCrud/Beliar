@@ -42,7 +42,7 @@ public class ProductionBuilding extends Building {
                 //geo_building = (Geometry) assetManager.loadModel("Scenes/adamHall/buildings/adamBuilding_" + 
                 //        int_size + ".j3o");
                 node_building = (Node) assetManager.loadModel("Models/AdamHall/adamBuilding_" + int_size + 
-                        "/adamBuilding_" + int_size + ".mesh.xml");
+                        "/adamBuilding_" + int_size + ".j3o");
                 node_building.setMaterial(assetManager.loadMaterial("Materials/adamBuilding_" + int_size + ".j3m"));
                 break;
             case GameContainer.KYTHOS_BUILDING:

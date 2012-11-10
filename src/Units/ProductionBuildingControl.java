@@ -71,7 +71,7 @@ public class ProductionBuildingControl extends AbstractControl{
     
     protected void setActive(boolean isActive) {
         this.bool_isActive = isActive;
-        notifyAnimationControl();
+        //notifyAnimationControl();
     }
     
     protected boolean isActive(){

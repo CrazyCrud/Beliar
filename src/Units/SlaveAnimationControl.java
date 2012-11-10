@@ -20,9 +20,13 @@ import com.jme3.scene.control.Control;
 public class SlaveAnimationControl extends AbstractControl{
 
     protected boolean bool_enabled;
+    protected static final int WALK_ANIM = 0;
+    protected static final int IDLE_ANIM = 1;
+    protected static final int BUILD_ANIM = 2;
+    protected static final int DIE_ANIM = 3;
     protected AnimControl animControl;
     protected AnimChannel animChannel;
-    protected CharacterControl characterControl;
+    protected WalkControl walkControl;
     
     public SlaveAnimationControl(){
         // nothing to do here...
@@ -37,10 +41,10 @@ public class SlaveAnimationControl extends AbstractControl{
         }
         
         animControl = spatial.getControl(AnimControl.class);
-        characterControl = spatial.getControl(CharacterControl.class);
+        walkControl = spatial.getControl(WalkControl.class);
         
-        if(animControl != null && characterControl != null){
-            bool_enabled = true;
+        if(animControl != null && walkControl != null){
+            animControl.setEnabled(true);
             animChannel = animControl.createChannel();
         }
     }
@@ -48,28 +52,46 @@ public class SlaveAnimationControl extends AbstractControl{
     @Override
     protected void controlUpdate(float tpf) {
         if(isEnabled()){
-            if(characterControl == null){
+            if(spatial == null || walkControl == null){
                 return;
             }
             
-            if(characterControl.getWalkDirection().length() == 0){
+            if(walkControl.isWalking()){
                 if(!("Idle".equals(animChannel.getAnimationName()))){
-                    animChannel.setAnim("Idle", GameObjectValues.BLEND_TIME);
-                    animChannel.setLoopMode(LoopMode.Loop);
+                    setAnimation(IDLE_ANIM);
                 }
             }else{
                 if(!("Walk".equals(animChannel.getAnimationName()))){
-                    animChannel.setAnim("Walk", GameObjectValues.BLEND_TIME);
-                    animChannel.setLoopMode(LoopMode.Loop);
+                    setAnimation(WALK_ANIM);
                 }
             }
             if(!(spatial.getControl(GameObjectControl.class).isAlive())){
                 if(!("Die".equals(animChannel.getAnimationName()))){
-                    animChannel.setAnim("Die", GameObjectValues.BLEND_TIME);
-                    animChannel.setLoopMode(LoopMode.DontLoop);
+                     setAnimation(DIE_ANIM);                   
                 }
             }
         }
+    }
+    
+    protected void setAnimation(int whichAnim){
+        animChannel.setSpeed(0.5f);
+        animChannel.setLoopMode(LoopMode.Loop); 
+        switch(whichAnim){
+            case WALK_ANIM:
+                animChannel.setAnim("Walk", GameObjectValues.BLEND_TIME);
+                animChannel.setSpeed(walkControl.getSpeed());
+                break;
+            case IDLE_ANIM:
+                animChannel.setAnim("Idle", GameObjectValues.BLEND_TIME);
+                break;
+            case BUILD_ANIM:
+                animChannel.setAnim("Build", GameObjectValues.BLEND_TIME);
+                break;
+            case DIE_ANIM:
+                animChannel.setAnim("Die", GameObjectValues.BLEND_TIME);
+                animChannel.setLoopMode(LoopMode.DontLoop); 
+                break;
+        }        
     }
     
     public Control cloneForSpatial(Spatial spatial) {

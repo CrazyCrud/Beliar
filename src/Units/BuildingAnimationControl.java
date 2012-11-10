@@ -22,6 +22,9 @@ public class BuildingAnimationControl extends AbstractControl{
     protected AnimChannel animChannel;
     protected ProductionBuildingControl buildingControl;
     
+    protected static final int WORK_ANIM = 0;
+    protected static final int IDLE_ANIM = 1;
+    
     public BuildingAnimationControl(){
         // nothing to do here...
     }
@@ -45,22 +48,41 @@ public class BuildingAnimationControl extends AbstractControl{
 
     @Override
     protected void controlUpdate(float tpf) {
-        if(spatial == null){
+        if(spatial == null || buildingControl == null){
             return;
         }
         if(isEnabled()){
-
+            if(buildingControl.isActive()){
+                if(!("work".equals(animChannel.getAnimationName()))){
+                    setAnimation(WORK_ANIM);
+                } 
+            }else{
+                if(!("idle".equals(animChannel.getAnimationName()))){
+                    setAnimation(IDLE_ANIM);
+                }
+            }
         }
+    }
+    
+    private void setAnimation(int whichAnimation){
+        switch(whichAnimation){
+            case WORK_ANIM:
+                animChannel.setAnim("work", GameObjectValues.BLEND_TIME);
+                break;
+            case IDLE_ANIM:
+                animChannel.setAnim("idle", GameObjectValues.BLEND_TIME);
+                break;
+        }
+        animChannel.setLoopMode(LoopMode.Loop);
+        animChannel.setSpeed(0.5f);
     }
     
     protected void setAnimation() {
         if(buildingControl.isActive()){
-                System.out.println("BuildingAnimationControl: update(work) Animation of " + spatial.getName());
                 animChannel.setAnim("work", GameObjectValues.BLEND_TIME);
             }else{
-                System.out.println("BuildingAnimationControl: update(idle) Animation of " + spatial.getName());
                 animChannel.setAnim("idle", GameObjectValues.BLEND_TIME);
-            }
+        }
         animChannel.setLoopMode(LoopMode.Loop);
         animChannel.setSpeed(0.5f);
     }
