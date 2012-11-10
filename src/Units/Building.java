@@ -10,7 +10,8 @@ package Units;
  */
 public abstract class Building extends GameObject{
 
-    public Building(int healthPoints, int posX, int posY){
-        super(healthPoints, posX, posY);
+    public Building(int healthPoints, int posX, int posZ){
+        super(healthPoints, posX, posZ);
+        System.out.println("Building: set at " + posX + ", " + posZ);
     }    
 }

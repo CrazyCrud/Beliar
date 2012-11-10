@@ -19,7 +19,6 @@ import com.jme3.scene.control.Control;
  */
 public class SlaveAnimationControl extends AbstractControl{
 
-    protected boolean bool_enabled;
     protected static final int WALK_ANIM = 0;
     protected static final int IDLE_ANIM = 1;
     protected static final int BUILD_ANIM = 2;
@@ -56,7 +55,7 @@ public class SlaveAnimationControl extends AbstractControl{
                 return;
             }
             
-            if(walkControl.isWalking()){
+            if(walkControl.isMoving()){
                 if(!("Idle".equals(animChannel.getAnimationName()))){
                     setAnimation(IDLE_ANIM);
                 }
