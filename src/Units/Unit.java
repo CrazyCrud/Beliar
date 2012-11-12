@@ -10,12 +10,13 @@ package Units;
  */
 public abstract class Unit extends GameObject{
 
-    protected int int_speed;
+    protected int int_speed, int_orientation;
 
     public Unit(int healtPoint, int posX, int posY, int speed) {
         super(healtPoint, posX, posY);
   
         this.int_speed = speed;
+        this.int_orientation = GameObjectValues.NO_DIRECTION_CHANGE;
     }
     
     @Override
@@ -34,6 +35,7 @@ public abstract class Unit extends GameObject{
         }
         super.initControllerValues();
         spatial.getControl(WalkControl.class).setSpeed(int_speed);
+        spatial.getControl(WalkControl.class).setDirection(int_orientation);
     }
     
     @Override

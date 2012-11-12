@@ -4,6 +4,8 @@
  */
 package Units;
 
+import com.jme3.math.Vector3f;
+
 /**
  *
  * @author andministrator
@@ -40,4 +42,17 @@ public class GameObjectValues {
     
     //Movement
     public static final float MOVEMENT_PERIOD = 100.0f;
+    
+    //Orientation
+    public static final String ORIENTATION_KEY = "Orientation";
+    public static final int NORTH = 0;
+    public static final int EAST = 1;
+    public static final int SOUTH = 2;
+    public static final int WEST = 3;
+    public static final int NORTH_EAST = 4;
+    public static final int SOUTH_EAST = 5;
+    public static final int SOUTH_WEST = 6;
+    public static final int NORTH_WEST = 7;
+    public static final int NO_DIRECTION_CHANGE = 8;
+    public static final Vector3f UP_VECTOR = new Vector3f(0f, 1f, 0f);
 }

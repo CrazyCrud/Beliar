@@ -7,7 +7,7 @@ package Units;
 import com.jme3.animation.AnimChannel;
 import com.jme3.animation.AnimControl;
 import com.jme3.animation.LoopMode;
-import com.jme3.bullet.control.CharacterControl;
+import com.jme3.math.Vector3f;
 import com.jme3.renderer.RenderManager;
 import com.jme3.renderer.ViewPort;
 import com.jme3.scene.Spatial;
@@ -89,6 +89,30 @@ public class SlaveAnimationControl extends AbstractControl{
                 animChannel.setLoopMode(LoopMode.DontLoop); 
                 break;
         }        
+    }
+    
+    private void setOrientation(){
+        int orientation = spatial.getUserData(GameObjectValues.ORIENTATION_KEY);
+        switch(orientation){
+            case GameObjectValues.NORTH:
+                break;
+            case GameObjectValues.EAST:
+                break;  
+            case GameObjectValues.SOUTH:
+                break;
+            case GameObjectValues.WEST:
+                break;
+            case GameObjectValues.NORTH_EAST:
+                break;
+            case GameObjectValues.SOUTH_EAST:
+                break;
+            case GameObjectValues.SOUTH_WEST:
+                break;
+            case GameObjectValues.NORTH_WEST:
+                break;
+            case GameObjectValues.NO_DIRECTION_CHANGE:
+                break;
+        }
     }
     
     public Control cloneForSpatial(Spatial spatial) {
