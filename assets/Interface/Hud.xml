@@ -26,9 +26,10 @@
                            align="center" width="100%h" height="60%">
                            <interact onClick="onDoNothing()"/> 
                         </image>
-                        <panel width="100%h" height="30%" align="center" childLayout="horizontal">
+                        <panel width="70%" height="30%" 
+                                align="center" childLayout="center">
                             <control name="label" id="adamLabel" color="#A0522D" 
-                                text="0" width="100%h" height="100%" />
+                                valign="bottom" align="center" text="0" width="100%" height="100%" />
                         </panel>
                     </panel>
                     <panel childLayout="vertical" width="10%" height="100%">
@@ -36,9 +37,9 @@
                                align="center" width="100%h" height="60%">
                                <interact onClick="onDoNothing()"/> 
                         </image>
-                        <panel width="100%h" height="30%" align="center" childLayout="horizontal">
+                        <panel width="70%" height="30%" align="center" childLayout="center">
                             <control name="label" id="kythosLabel" color="#A0522D" 
-                                text="0" width="100%h" height="100%" />
+                                valign="bottom" align="center" text="0" width="100%" height="100%" />
                         </panel>
                     </panel>
                     <panel childLayout="vertical" width="10%" height="100%"> 
@@ -46,9 +47,9 @@
                                align="center" width="100%h" height="60%">
                                <interact onClick="onDoNothing()"/> 
                         </image>
-                        <panel width="100%h" height="30%" align="center" childLayout="horizontal">
+                        <panel width="70%" height="30%" align="center" childLayout="center">
                             <control name="label" id="maraLabel" color="#A0522D" 
-                                text="0" width="100%h" height="100%" />
+                                valign="bottom" align="center" text="0" width="100%" height="100%" />
                         </panel>
                     </panel>
                 </panel>

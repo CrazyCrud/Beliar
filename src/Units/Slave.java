@@ -15,7 +15,6 @@ import com.jme3.scene.Spatial;
  */
 public class Slave extends Unit{
     private Node node_slave;
-    private Geometry geo_slave;
     
     public Slave(int posX, int posZ){
         super(GameObjectValues.HEALTH_VALUE_SLAVE, posX, posZ, GameObjectValues.SPEED_VALUE_SLAVE);

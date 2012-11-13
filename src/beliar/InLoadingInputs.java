@@ -86,8 +86,8 @@ public class InLoadingInputs extends AbstractAppState implements ScreenControlle
         try{
             File txtFile = new File("assets/Interface/Text/Dante.txt");
             FileInputStream inputStream = new FileInputStream(txtFile);
-            InputStreamReader streamReader = new InputStreamReader(inputStream, Charset.forName("ISO-8859-1"));
-
+            //InputStreamReader streamReader = new InputStreamReader(inputStream, Charset.forName("ISO-8859-1"));
+            InputStreamReader streamReader = new InputStreamReader(inputStream, "UTF-8");
             BufferedReader bfReader = new BufferedReader(streamReader);
             String nextLine = bfReader.readLine();
            

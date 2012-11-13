@@ -12,8 +12,8 @@ public abstract class Unit extends GameObject{
 
     protected int int_speed, int_orientation;
 
-    public Unit(int healtPoint, int posX, int posY, int speed) {
-        super(healtPoint, posX, posY);
+    public Unit(int healtPoint, int posX, int posZ, int speed) {
+        super(healtPoint, posX, posZ);
   
         this.int_speed = speed;
         this.int_orientation = GameObjectValues.NO_DIRECTION_CHANGE;

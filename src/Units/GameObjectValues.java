@@ -12,10 +12,16 @@ import com.jme3.math.Vector3f;
  */
 public class GameObjectValues {
     
-    //Warrior types
+    //Warrior
     public static final int MELEE = 0;
+    public static final int ATTACK_DAMAGE_MELEE = 10;
     public static final int RANGERS = 1;
+    public static final int ATTACK_DAMAGE_RANGER = 10;
     public static final int MAGICIAN = 2;
+    public static final int ATTACK_DAMAGE_MAGICIAN = 10;
+    public static final String ATTACK_DAMAGE_KEY = "AttackDamage";
+    public static final String CRITICAL_STRIKE_KEY = "CriticalStrike";
+    public static final String WARRIOR_TYPE_KEY = "WarriorType";
     
     //Health
     public static final String HEALTH_KEY = "HEALTH";
