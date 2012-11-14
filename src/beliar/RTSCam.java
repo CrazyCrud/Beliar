@@ -125,6 +125,19 @@ public final class RTSCam implements Control, ActionListener {
             int dir = direction[i];
             switch (dir) {
             case -1:
+                /*
+                if(i == Degree.SIDE.ordinal()){
+                    if(position.x > GameContainer.MAP_SIZE - 1 || position.x < 0){
+                        accelPeriod[i] = 0;
+                        break;
+                    }
+                }
+                if(i == Degree.FWD.ordinal()){
+                    if(position.z > GameContainer.MAP_SIZE - 1 || position.z < 0){
+                        accelPeriod[i] = 0;
+                        break;
+                    }
+                }*/
                 accelPeriod[i] = clamp(-maxAccelPeriod[i],accelPeriod[i]-(tpf + GameContainer.ZOOM_FACTOR), 
                         accelPeriod[i]);
                 if(i == Degree.DISTANCE.ordinal()){
@@ -145,6 +158,20 @@ public final class RTSCam implements Control, ActionListener {
                 }
                 break;
             case 1:
+                /*
+                if(i == Degree.SIDE.ordinal()){
+                    if(position.x > GameContainer.MAP_SIZE - 1 || position.x < 0){
+                        accelPeriod[i] = 0;
+                        break;
+                    }
+                }
+                if(i == Degree.FWD.ordinal()){
+                    if(position.z > GameContainer.MAP_SIZE - 1 || position.z < 0){
+                        accelPeriod[i] = 0;
+                        break;
+                    }
+                }
+                 * */
                 accelPeriod[i] = clamp(accelPeriod[i],accelPeriod[i] + (tpf + GameContainer.ZOOM_FACTOR)
                         ,maxAccelPeriod[i]);
                 if(i == Degree.DISTANCE.ordinal()){
@@ -172,7 +199,8 @@ public final class RTSCam implements Control, ActionListener {
         position.x = center.x + (float)(distance * Math.cos(tilt) * Math.sin(rot));
         position.y = center.y + (float)(distance * Math.sin(tilt));
         position.z = center.z + (float)(distance * Math.cos(tilt) * Math.cos(rot));
-
+        //clampPosition();
+        System.out.println("Position: " + position.x + ", " + position.z);
         cam.setLocation(position);
         cam.lookAt(center, new Vector3f(0,1,0));
     }
@@ -185,6 +213,19 @@ public final class RTSCam implements Control, ActionListener {
             return max;
         } else {
             return value;
+        }
+    }
+    
+    private void clampPosition(){
+        if(position.x > GameContainer.MAP_SIZE){
+            position.x = center.x + GameContainer.MAP_SIZE;
+        }else if(position.x < 0){
+            position.x = center.x;
+        }
+        if(position.z > GameContainer.MAP_SIZE){
+            position.z = center.z + GameContainer.MAP_SIZE;
+        }else if(position.z < 0){
+            position.z = center.z;
         }
     }
      

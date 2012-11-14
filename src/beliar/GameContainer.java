@@ -7,11 +7,10 @@ import com.jme3.scene.Node;
 
 public class GameContainer {
     
-    //Adresses
+        //Adresses
         public final static String materialAdress = "Materials/";
     
-    
-    //Prices BUILDINGS //ADAM//KYTHOS//MARA
+        //Prices BUILDINGS //ADAM//KYTHOS//MARA
         public static final int ADAM_BUILDING = 1;
         public static final int KYTHOS_BUILDING = 2;
         public static final int MARA_BUILDING = 3;
@@ -62,6 +61,7 @@ public class GameContainer {
 	
 	public final static int healthCentreRengeneration = 1;
         
+        public static int MAP_SIZE = 64;
         public static int SCROLLING_OFFET = 20;
         public static float ZOOM_FACTOR = 0.1f;
         public static int SCREEN_WIDTH, SCREEN_HEIGHT;
