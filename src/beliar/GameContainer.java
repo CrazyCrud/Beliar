@@ -62,7 +62,8 @@ public class GameContainer {
 	
 	public final static int healthCentreRengeneration = 1;
         
-        public static int SCROLLING_OFFET = 50;
+        public static int SCROLLING_OFFET = 20;
+        public static float ZOOM_FACTOR = 0.1f;
         public static int SCREEN_WIDTH, SCREEN_HEIGHT;
         
         private Node rootNode;

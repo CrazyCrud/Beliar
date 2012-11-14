@@ -5,8 +5,11 @@ import com.jme3.export.JmeExporter;
 import com.jme3.export.JmeImporter;
 import com.jme3.input.InputManager;
 import com.jme3.input.KeyInput;
+import com.jme3.input.MouseInput;
 import com.jme3.input.controls.ActionListener;
 import com.jme3.input.controls.KeyTrigger;
+import com.jme3.input.controls.MouseAxisTrigger;
+import com.jme3.input.controls.MouseButtonTrigger;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
 import com.jme3.renderer.RenderManager;
@@ -80,12 +83,12 @@ public final class RTSCam implements Control, ActionListener {
         inputManager.addMapping("+SIDE", new KeyTrigger(KeyInput.KEY_D));
         inputManager.addMapping("+FWD", new KeyTrigger(KeyInput.KEY_S));
         inputManager.addMapping("-FWD", new KeyTrigger(KeyInput.KEY_W));
-        inputManager.addMapping("+ROTATE", new KeyTrigger(KeyInput.KEY_Q));
-        inputManager.addMapping("-ROTATE", new KeyTrigger(KeyInput.KEY_E));
+        inputManager.addMapping("+ROTATE", new MouseButtonTrigger(MouseInput.BUTTON_MIDDLE));
+        inputManager.addMapping("-ROTATE", new MouseButtonTrigger(MouseInput.BUTTON_MIDDLE));
         inputManager.addMapping("+TILT", new KeyTrigger(KeyInput.KEY_R));
         inputManager.addMapping("-TILT", new KeyTrigger(KeyInput.KEY_F));
-        inputManager.addMapping("-DISTANCE", new KeyTrigger(KeyInput.KEY_Z));
-        inputManager.addMapping("+DISTANCE", new KeyTrigger(KeyInput.KEY_X));
+        inputManager.addMapping("-DISTANCE", new MouseAxisTrigger(MouseInput.AXIS_WHEEL, false));
+        inputManager.addMapping("+DISTANCE", new MouseAxisTrigger(MouseInput.AXIS_WHEEL, true));
  
         inputManager.addListener(this, mappings);
         inputManager.setCursorVisible(true);
@@ -122,7 +125,11 @@ public final class RTSCam implements Control, ActionListener {
             int dir = direction[i];
             switch (dir) {
             case -1:
-                accelPeriod[i] = clamp(-maxAccelPeriod[i],accelPeriod[i]-tpf,accelPeriod[i]);
+                accelPeriod[i] = clamp(-maxAccelPeriod[i],accelPeriod[i]-(tpf + GameContainer.ZOOM_FACTOR), 
+                        accelPeriod[i]);
+                if(i == Degree.DISTANCE.ordinal()){
+                    direction[i] = 0;
+                }
                 break;
             case 0:
                 if (accelPeriod[i] != 0) {
@@ -138,7 +145,11 @@ public final class RTSCam implements Control, ActionListener {
                 }
                 break;
             case 1:
-                accelPeriod[i] = clamp(accelPeriod[i],accelPeriod[i]+tpf,maxAccelPeriod[i]);
+                accelPeriod[i] = clamp(accelPeriod[i],accelPeriod[i] + (tpf + GameContainer.ZOOM_FACTOR)
+                        ,maxAccelPeriod[i]);
+                if(i == Degree.DISTANCE.ordinal()){
+                    direction[i] = 0;
+                }
                 break;
             }
              
@@ -161,8 +172,7 @@ public final class RTSCam implements Control, ActionListener {
         position.x = center.x + (float)(distance * Math.cos(tilt) * Math.sin(rot));
         position.y = center.y + (float)(distance * Math.sin(tilt));
         position.z = center.z + (float)(distance * Math.cos(tilt) * Math.cos(rot));
- 
-        System.out.println("RTSCam: update() " + position.x + ", " + position.z); 
+
         cam.setLocation(position);
         cam.lookAt(center, new Vector3f(0,1,0));
     }
@@ -209,6 +219,7 @@ public final class RTSCam implements Control, ActionListener {
     }
  
     public void onAction(String name, boolean isPressed, float tpf) {
+        System.out.println("RTSCam: onAction() " + name + ", " + isPressed);
         int press = isPressed ? 1 : 0;
          
         char sign = name.charAt(0);
@@ -217,7 +228,6 @@ public final class RTSCam implements Control, ActionListener {
         } else if (sign != '+') {
             return;
         }
-        System.out.println("RTSCam: onAction() " + name);
         Degree deg = Degree.valueOf(name.substring(1));
         direction[deg.ordinal()] = press;
     }
