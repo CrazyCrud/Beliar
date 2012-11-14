@@ -8,10 +8,10 @@
         </layer>
         <layer id="foreground" backgroundColor="#0000" childLayout="vertical">
             <panel id="top_panel" width="100%" height="12%" childLayout="absolute" > 
-                <image filename="Images/leiste.png" x="28px" y="12px" 
-                    height="27%" width="27%"/>
-                <panel x="0" y="0" childLayout="horizontal" width="85%" height="90%" align="left">
-                    <panel childLayout="vertical" width="10%" height="100%">
+                <image filename="Images/leiste.png" x="28px" y="25px" 
+                    height="27%" width="20%"/>
+                <panel x="0" y="10px" childLayout="horizontal" width="85%" height="90%" align="left">
+                    <panel childLayout="vertical" width="8%" height="100%">
                         <image id="darknessIcon" filename="Images/darkness_icon.png" valign="top" 
                                align="center" width="100%h" height="70%">
                                <interact onClick="onDoNothing()"/> 
@@ -21,7 +21,8 @@
                                  text="0" width="100%h" height="100%" />
                         </panel>
                     </panel>
-                    <panel childLayout="vertical" width="10%" height="100%">
+                    <panel childLayout="vertical" width="7%" height="100%">
+                        <panel width="100%" height="6%"></panel>
                         <image id="adamIcon" filename="Images/adam_icon.png" valign="top" 
                            align="center" width="100%h" height="60%">
                            <interact onClick="onDoNothing()"/> 
@@ -32,7 +33,8 @@
                                 valign="bottom" align="center" text="0" width="100%" height="100%" />
                         </panel>
                     </panel>
-                    <panel childLayout="vertical" width="10%" height="100%">
+                    <panel childLayout="vertical" width="7%" height="100%">
+                        <panel width="100%" height="6%"></panel>
                         <image id="kythosIcon" filename="Images/kythos_icon.png" valign="top" 
                                align="center" width="100%h" height="60%">
                                <interact onClick="onDoNothing()"/> 
@@ -42,7 +44,8 @@
                                 valign="bottom" align="center" text="0" width="100%" height="100%" />
                         </panel>
                     </panel>
-                    <panel childLayout="vertical" width="10%" height="100%"> 
+                    <panel childLayout="vertical" width="7%" height="100%"> 
+                        <panel width="100%" height="6%"></panel>
                         <image id="maraIcon" filename="Images/mara_icon.png" valign="top" 
                                align="center" width="100%h" height="60%">
                                <interact onClick="onDoNothing()"/> 

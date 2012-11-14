@@ -114,12 +114,10 @@ public final class RTSCam implements Control, ActionListener {
     }
  
     public boolean isEnabled() {
- 
         return true;
     }
  
     public void update(final float tpf) {
- 
         for (int i = 0; i < direction.length; i++) {
             int dir = direction[i];
             switch (dir) {
@@ -145,8 +143,7 @@ public final class RTSCam implements Control, ActionListener {
             }
              
         }
-         
- 
+
         distance += maxSpeed[DISTANCE] * accelPeriod[DISTANCE] * tpf;
         tilt += maxSpeed[TILT] * accelPeriod[TILT] * tpf;
         rot += maxSpeed[ROTATE] * accelPeriod[ROTATE] * tpf;
@@ -165,11 +162,9 @@ public final class RTSCam implements Control, ActionListener {
         position.y = center.y + (float)(distance * Math.sin(tilt));
         position.z = center.z + (float)(distance * Math.cos(tilt) * Math.cos(rot));
  
-         
+        System.out.println("RTSCam: update() " + position.x + ", " + position.z); 
         cam.setLocation(position);
         cam.lookAt(center, new Vector3f(0,1,0));
-        
- 
     }
      
      
@@ -222,8 +217,28 @@ public final class RTSCam implements Control, ActionListener {
         } else if (sign != '+') {
             return;
         }
-         
+        System.out.println("RTSCam: onAction() " + name);
         Degree deg = Degree.valueOf(name.substring(1));
+        direction[deg.ordinal()] = press;
+    }
+    
+    public void moveCamera(String name){    
+        int press = 1;
+        char sign = name.charAt(0);
+        Degree deg;
+        if(sign == '-') {
+            deg = Degree.valueOf(name.substring(1));
+            press = -press;
+        }else if(sign == '+'){
+            deg = Degree.valueOf(name.substring(1));
+        }else{
+            press = 0;
+            deg = Degree.SIDE;
+            direction[deg.ordinal()] = press;
+            deg = Degree.FWD;
+            direction[deg.ordinal()] = press;
+            return;
+        }
         direction[deg.ordinal()] = press;
     }
 }

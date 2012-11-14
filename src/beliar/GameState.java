@@ -7,8 +7,6 @@ package beliar;
 import Map.MapHandler;
 import Units.BuildingController;
 import Units.UnitController;
-import com.jme3.animation.AnimChannel;
-import com.jme3.animation.AnimControl;
 import com.jme3.app.Application;
 import com.jme3.app.state.AbstractAppState;
 import com.jme3.app.state.AppStateManager;
@@ -33,7 +31,6 @@ import com.jme3.math.ColorRGBA;
 import com.jme3.math.Ray;
 import com.jme3.math.Vector2f;
 import com.jme3.math.Vector3f;
-import com.jme3.niftygui.NiftyJmeDisplay;
 import com.jme3.post.FilterPostProcessor;
 import com.jme3.post.filters.FogFilter;
 import com.jme3.renderer.Camera;
@@ -45,7 +42,6 @@ import com.jme3.scene.debug.Arrow;
 import com.jme3.scene.debug.Grid;
 import com.jme3.shadow.PssmShadowRenderer;
 import Map.MapController;
-import de.lessvoid.nifty.Nifty;
 
 /**
  *
@@ -71,10 +67,8 @@ public class GameState extends AbstractAppState {
     private Spatial selection;
     private Vector3f mousePositionWorld = new Vector3f(0, 0, 0);
     private int typeBuildingRoom = 0;
-    //Animation
-    private AnimChannel channel;
-    private AnimControl control;
-    //GAME
+
+    //Game
     private InGameInputs inGameInputs;
     private GameSimulation gameSimulation;
     private Node pickAble;
@@ -99,9 +93,7 @@ public class GameState extends AbstractAppState {
     private int int_buildingType = 0;
     private int int_sizeBuilding = 0;
     
-    //INPUT
-    private NiftyJmeDisplay niftyDisplay;
-    private Nifty nifty;
+    //Input
     private ScreenManager screenManager;
 
     public GameState(AppStateManager stateManager, SimpleApplication app) {
@@ -186,19 +178,25 @@ public class GameState extends AbstractAppState {
     @Override
     public void update(float tpf) {
         if (isEnabled()) {
-            Vector3f position = rtsCam.getPosition();
-
-            position.x += 3;
-            position.z -= 2;
-            cameraLight.setPosition(position);
-            inGameInputs.ressourcesChanged();
-
+            setCameraLight();
+            computeScrolling();
+            ressourceChanged();
             if (selection != null) {
                 selection.setLocalTranslation(mousePositionWorld);
             }
-
         } else {
         }
+    }
+    
+    private void setCameraLight(){
+        Vector3f position = rtsCam.getPosition();
+        position.x += 3;
+        position.z -= 2;
+        cameraLight.setPosition(position);
+    }
+    
+    private void ressourceChanged(){
+        inGameInputs.ressourcesChanged();
     }
 
     public void initializeGame() {
@@ -214,16 +212,12 @@ public class GameState extends AbstractAppState {
         System.out.println("GameState: initGame()");
         initCamera();
         initKeys();
-
         initLight();
-
         initSceneNodes();
         initMeshLibary();
-
         initMap();
         initScene();
         initSound();
-
         attachGrid(new Vector3f(0, 0, 0), 1024, ColorRGBA.Blue);
         attachCoordinateAxes(new Vector3f(-1, 0, -1));
     }
@@ -476,6 +470,30 @@ public class GameState extends AbstractAppState {
                 break;
         }
         inGameInputs.ressourcesChanged();
+    }
+    
+    private void computeScrolling(){
+        Vector2f mousePosition = inputManager.getCursorPosition();
+        int xPos = (int)mousePosition.x;
+        int yPos = (int)mousePosition.y;
+        boolean scrolling = false;
+        if(xPos > (GameContainer.SCREEN_WIDTH - GameContainer.SCROLLING_OFFET)){
+            scrolling = true;
+            rtsCam.moveCamera("+SIDE");
+        }else if(xPos < (0 + GameContainer.SCROLLING_OFFET)){
+            scrolling = true;
+            rtsCam.moveCamera("-SIDE");
+        }
+        if(yPos > (GameContainer.SCREEN_HEIGHT - GameContainer.SCROLLING_OFFET)){
+            scrolling = true;
+            rtsCam.moveCamera("-FWD");
+        }else if(yPos < (0 + GameContainer.SCROLLING_OFFET)){
+            scrolling = true;
+            rtsCam.moveCamera("+FWD");
+        }  
+        if(!scrolling){
+            rtsCam.moveCamera("REMAIN");
+        }
     }
     
     private void setMousePosition(int xPos, int zPos){

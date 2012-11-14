@@ -169,7 +169,8 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
                 }}.build(nifty, screen, firstRowTop);
         
         new ImageBuilder("adamRoom"){{
-            filename("Images/adam_room.png");
+            //filename("Images/adam_room.png");
+            filename("Images/Adam.png");
             height("95%");
             width("100%h");
             alignCenter();
@@ -177,7 +178,8 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
                 }}.build(nifty, screen, thirdRowTop);
         
         new ImageBuilder("kythosRoom"){{
-            filename("Images/kythos_room.png");
+            //filename("Images/kythos_room.png");
+            filename("Images/Kythos.png");
             height("95%");
             width("100%h");
             alignCenter();
@@ -185,7 +187,8 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
                 }}.build(nifty, screen, thirdRowTop);
         
         new ImageBuilder("maraRoom"){{
-            filename("Images/mara_room.png");
+            //filename("Images/mara_room.png");
+            filename("Images/Mara.png");
             height("95%");
             width("100%h");
             alignCenter();

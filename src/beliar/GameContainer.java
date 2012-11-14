@@ -62,6 +62,8 @@ public class GameContainer {
 	
 	public final static int healthCentreRengeneration = 1;
         
+        public static int SCROLLING_OFFET = 50;
+        public static int SCREEN_WIDTH, SCREEN_HEIGHT;
         
         private Node rootNode;
         private Application app;
@@ -122,6 +124,8 @@ public class GameContainer {
         public void setDimensions(int width, int height){
             this.screenWidth = width;
             this.screenHeight = height;
+            SCREEN_WIDTH = this.screenWidth;
+            SCREEN_HEIGHT = this.screenHeight;
         }
         
         public int getScreenWidth(){
