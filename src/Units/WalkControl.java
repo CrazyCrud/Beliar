@@ -49,6 +49,7 @@ public class WalkControl extends AbstractControl{
         node_target = MapController.getNode(xPos, zPos);
         list_path = (List)pathFinder.search(node_start, node_target);
         if(list_path != null){
+            list_path.remove(0);
             setMoving(true);
         }else{
             setMoving(false);
@@ -80,6 +81,7 @@ public class WalkControl extends AbstractControl{
         if(isEnabled()){
             if(isMoving()){
                 setOrientation();
+                walkInsideTile();
                 if(isTimeToMove()){
                     setPosition();
                     resetTimer();
@@ -111,6 +113,30 @@ public class WalkControl extends AbstractControl{
         int newZPos = nextNode.getYPos();
         spatial.lookAt(new Vector3f((float)newXPos, (float)GameObjectValues.Y_POSITION_UNITS, (float)newZPos), 
                 GameObjectValues.UP_VECTOR);
+    }
+    
+    private void walkInsideTile(){
+        if(list_path.isEmpty()){
+            return;
+        }
+        Node nextNode = list_path.get(0);
+        int xPos = node_current.getXPos();
+        int zPos = node_current.getYPos();
+        int newXPos = nextNode.getXPos();
+        int newZPos = nextNode.getYPos();
+        float tileMovement = 0.0125f;
+        
+        // Erster Wert bewegt das Spatial vertikal, der dritte Wert horizontal
+        if(newXPos > xPos){
+            spatial.move(new Vector3f(tileMovement, (float)GameObjectValues.Y_POSITION_UNITS, 0f));
+        }else if(newXPos < xPos){
+            spatial.move(new Vector3f(-tileMovement, (float)GameObjectValues.Y_POSITION_UNITS, 0f));
+        }
+        if(newZPos > zPos){
+            spatial.move(new Vector3f(0f, (float)GameObjectValues.Y_POSITION_UNITS, tileMovement));
+        }else if(newZPos < zPos){
+            spatial.move(new Vector3f(0f, (float)GameObjectValues.Y_POSITION_UNITS, -tileMovement));
+        }
     }
     
     private void setPosition(){

@@ -42,14 +42,14 @@ public class GameObjectValues {
     public static final int SOULUSE_PER_PRODUCTION = 2;
     public static final int PROGRESS_PERCENT_PER_TICK = 1;
     public static final float Y_POSITION_BUILDINGS = 0f;
-    public static final float Y_POSITION_UNITS = 1.5f;
+    public static final float Y_POSITION_UNITS = 0f;
 
     
     //Animation
     public static final float BLEND_TIME = 0.7f;
     
     //Movement
-    public static final float MOVEMENT_PERIOD = 100.0f;
+    public static final float MOVEMENT_PERIOD = 80.0f;
     
     //Orientation
     public static final String ORIENTATION_KEY = "Orientation";

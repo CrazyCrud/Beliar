@@ -612,8 +612,8 @@ public class GameState extends AbstractAppState {
 
     protected void setUpUnit() {
        System.out.println("GameState: setUpUnit");
-       Node mySlave = UnitController.createSlave(3, 8);
+       Node mySlave = UnitController.createSlave(5, 8);
        creatures.attachChild(mySlave);   
-       UnitController.moveUnitTo(mySlave, 5, 8);
+       UnitController.moveUnitTo(mySlave, 9, 8);
     }
 }

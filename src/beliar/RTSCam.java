@@ -125,19 +125,6 @@ public final class RTSCam implements Control, ActionListener {
             int dir = direction[i];
             switch (dir) {
             case -1:
-                /*
-                if(i == Degree.SIDE.ordinal()){
-                    if(position.x > GameContainer.MAP_SIZE - 1 || position.x < 0){
-                        accelPeriod[i] = 0;
-                        break;
-                    }
-                }
-                if(i == Degree.FWD.ordinal()){
-                    if(position.z > GameContainer.MAP_SIZE - 1 || position.z < 0){
-                        accelPeriod[i] = 0;
-                        break;
-                    }
-                }*/
                 accelPeriod[i] = clamp(-maxAccelPeriod[i],accelPeriod[i]-(tpf + GameContainer.ZOOM_FACTOR), 
                         accelPeriod[i]);
                 if(i == Degree.DISTANCE.ordinal()){
@@ -158,22 +145,8 @@ public final class RTSCam implements Control, ActionListener {
                 }
                 break;
             case 1:
-                /*
-                if(i == Degree.SIDE.ordinal()){
-                    if(position.x > GameContainer.MAP_SIZE - 1 || position.x < 0){
-                        accelPeriod[i] = 0;
-                        break;
-                    }
-                }
-                if(i == Degree.FWD.ordinal()){
-                    if(position.z > GameContainer.MAP_SIZE - 1 || position.z < 0){
-                        accelPeriod[i] = 0;
-                        break;
-                    }
-                }
-                 * */
                 accelPeriod[i] = clamp(accelPeriod[i],accelPeriod[i] + (tpf + GameContainer.ZOOM_FACTOR)
-                        ,maxAccelPeriod[i]);
+                        , maxAccelPeriod[i]);
                 if(i == Degree.DISTANCE.ordinal()){
                     direction[i] = 0;
                 }

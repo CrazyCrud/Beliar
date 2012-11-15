@@ -59,12 +59,12 @@ public class SlaveAnimationControl extends AbstractControl{
                      setAnimation(DIE_ANIM);                   
                 }
             }else if(walkControl.isMoving()){
-                if(!("Idle".equals(animChannel.getAnimationName()))){
-                    setAnimation(IDLE_ANIM);
-                }
-            }else{
                 if(!("Walk".equals(animChannel.getAnimationName()))){
                     setAnimation(WALK_ANIM);
+                }
+            }else{     
+                if(!("Idle".equals(animChannel.getAnimationName()))){
+                    setAnimation(IDLE_ANIM);
                 }
             }
         }

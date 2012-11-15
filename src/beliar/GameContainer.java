@@ -63,7 +63,7 @@ public class GameContainer {
         
         public static int MAP_SIZE = 64;
         public static int SCROLLING_OFFET = 20;
-        public static float ZOOM_FACTOR = 0.1f;
+        public static float ZOOM_FACTOR = 0.01f;
         public static int SCREEN_WIDTH, SCREEN_HEIGHT;
         
         private Node rootNode;
