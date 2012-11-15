@@ -65,14 +65,17 @@ public class Pathfinder {
             
             float last = this.getAccumulatedWeight(edge.destination);
             float current = this.getAccumulatedWeight(head) + edge.weight;
-            
+            System.out.println("Pathfinder: step() weights: " + current + ", " + last);
+
             if(last != 0.0f && last < current){
+                System.out.println("Pathfinder: step() weight last" + last);
                 continue;
             }
-            
-            this.set_frontline.remove(edge.destination);
-            this.setAccumulatedWeight(edge.destination, current);
-            this.set_frontline.add(edge.destination);
+            if(current < 100000){
+                this.set_frontline.remove(edge.destination);
+                this.setAccumulatedWeight(edge.destination, current);
+                this.set_frontline.add(edge.destination);
+            }
         }
         
         return null;

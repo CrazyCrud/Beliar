@@ -173,7 +173,6 @@ public final class RTSCam implements Control, ActionListener {
         position.y = center.y + (float)(distance * Math.sin(tilt));
         position.z = center.z + (float)(distance * Math.cos(tilt) * Math.cos(rot));
         //clampPosition();
-        System.out.println("Position: " + position.x + ", " + position.z);
         cam.setLocation(position);
         cam.lookAt(center, new Vector3f(0,1,0));
     }

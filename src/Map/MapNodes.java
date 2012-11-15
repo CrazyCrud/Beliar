@@ -14,6 +14,7 @@ public class MapNodes {
     private static MapNodes instance;
     private int [][] int_map;
     private Node [][] node_mapNodes;
+    private static final int MAX_WEIGHT = 100000;
     
     private MapNodes(){
         // nothing to do here...
@@ -64,17 +65,34 @@ public class MapNodes {
             for(y = 0; y < mapLength; y++){
                 Node node = node_mapNodes[x][y];
                 if((x - 1) > -1){
-                    node.setEdge(node_mapNodes[x - 1][y], int_map[x - 1][y] + 1);
+                    if(int_map[x - 1][y] != 1){
+                        node.setEdge(node_mapNodes[x - 1][y], MAX_WEIGHT);
+                    }else{
+                        node.setEdge(node_mapNodes[x - 1][y], int_map[x - 1][y] + 1);
+                    }
                 }
                 if((x + 1) < mapLength){
-                    node.setEdge(node_mapNodes[x + 1][y], int_map[x + 1][y] + 1);
+                    if(int_map[x + 1][y] != 1){
+                        node.setEdge(node_mapNodes[x + 1][y], MAX_WEIGHT);
+                    }else{
+                        node.setEdge(node_mapNodes[x + 1][y], int_map[x + 1][y] + 1);
+                    }          
                 }
                 if((y - 1) > -1){
-                    node.setEdge(node_mapNodes[x][y - 1], int_map[x][y - 1] + 1);
+                    if(int_map[x][y - 1] != 1){
+                        node.setEdge(node_mapNodes[x][y - 1], MAX_WEIGHT);
+                    }else{
+                        node.setEdge(node_mapNodes[x][y - 1], int_map[x][y - 1] + 1);
+                    } 
                 }
                 if((y + 1) < mapLength){
-                    node.setEdge(node_mapNodes[x][y + 1], int_map[x][y + 1] + 1);
+                    if(int_map[x][y + 1] != 1){
+                        node.setEdge(node_mapNodes[x][y + 1], MAX_WEIGHT);
+                    }else{
+                        node.setEdge(node_mapNodes[x][y + 1], int_map[x][y + 1] + 1);
+                    }    
                 }
+                /*
                 if((x - 1) > -1 && (y - 1) > -1){
                     node.setEdge(node_mapNodes[x - 1][y - 1], int_map[x - 1][y - 1] + 1);
                 }
@@ -87,6 +105,7 @@ public class MapNodes {
                 if((x + 1) < mapLength && (y + 1) < mapLength){
                     node.setEdge(node_mapNodes[x + 1][y + 1], int_map[x + 1][y + 1] + 1);
                 }
+                 * */
             }
         }
     }
