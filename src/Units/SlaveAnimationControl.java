@@ -7,7 +7,6 @@ package Units;
 import com.jme3.animation.AnimChannel;
 import com.jme3.animation.AnimControl;
 import com.jme3.animation.LoopMode;
-import com.jme3.math.Vector3f;
 import com.jme3.renderer.RenderManager;
 import com.jme3.renderer.ViewPort;
 import com.jme3.scene.Spatial;
@@ -59,19 +58,19 @@ public class SlaveAnimationControl extends AbstractControl{
                      setAnimation(DIE_ANIM);                   
                 }
             }else if(walkControl.isMoving()){
-                if(!("Idle".equals(animChannel.getAnimationName()))){
-                    setAnimation(IDLE_ANIM);
-                }
-            }else{
                 if(!("Walk".equals(animChannel.getAnimationName()))){
                     setAnimation(WALK_ANIM);
+                }
+            }else{
+                if(!("Idle".equals(animChannel.getAnimationName()))){
+                    setAnimation(IDLE_ANIM);
                 }
             }
         }
     }
     
     protected void setAnimation(int whichAnim){
-        animChannel.setSpeed(0.5f);
+        animChannel.setSpeed(1.0f);
         animChannel.setLoopMode(LoopMode.Loop); 
         switch(whichAnim){
             case WALK_ANIM:

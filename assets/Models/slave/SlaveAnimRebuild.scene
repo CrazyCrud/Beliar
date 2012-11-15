@@ -1,0 +1,34 @@
+<scene exported_by="Martin" formatVersion="1.0.1" previous_export_time="1352967380.844" export_time="1352967392.932" >
+	<nodes >
+		<node name="Armature" uuid="97e5e6277024dc7d67c993527abdd928" >
+			<position y="0.293915" x="-0.002625" z="0.006007" />
+			<rotation qy="0.000000" qx="0.000000" qz="-0.000000" qw="1.000000" />
+			<scale y="1.000000" x="1.000000" z="1.000000" />
+			<game >
+				<sensors />
+				<actuators />
+			</game>
+		</node>
+		<node name="slave" uuid="9e6c0ca8ab44d0fa2695538fe258dded" >
+			<position y="0.237553" x="-0.000819" z="0.008090" />
+			<rotation qy="0.000000" qx="0.000000" qz="-0.000000" qw="1.000000" />
+			<scale y="1.000000" x="1.000000" z="1.000000" />
+			<game >
+				<sensors />
+				<actuators />
+			</game>
+			<entity anisotropic_friction="False" lock_trans_y="False" damping_trans="0.03999999910593033" damping_rot="0.10000000149011612" inertia_tensor="0.4000000059604645" actor="False" velocity_min="0.0" lock_trans_z="False" physics_type="STATIC" lock_trans_x="False" meshFile="slave.mesh" friction_y="1.0" friction_x="1.0" friction_z="1.0" velocity_max="0.0" ghost="False" name="slave" mass_radius="1.0" mass="1.0" lock_rot_x="False" lock_rot_y="False" lock_rot_z="False" />
+		</node>
+	</nodes>
+	<externals >
+		<item type="material" >
+			<file name="D:\Dropbox\Dropbox\Beliar_Developer\3D\slave.material" />
+		</item>
+	</externals>
+	<environment >
+		<colourBackground r="0.0" b="0.0" g="0.0" />
+		<colourAmbient r="0.0" b="0.0" g="0.0" />
+		<colourDiffuse r="0.0" b="0.0" g="0.0" />
+		<fog expDensity="0.0" linearStart="1.0" colourG="0.0" colourB="0.0" colourR="0.0" linearEnd="11.0" mode="exp" />
+	</environment>
+</scene>

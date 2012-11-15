@@ -43,4 +43,8 @@ public abstract class Unit extends GameObject{
         super.removeGameObject();
         spatial.removeControl(WalkControl.class);
     }
+    
+    protected void moveTo(int xPos, int zPos){
+        spatial.getControl(WalkControl.class).findPath(xPos, zPos);
+    }
 }

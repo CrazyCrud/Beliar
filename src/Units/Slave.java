@@ -5,7 +5,6 @@
 package Units;
 
 import com.jme3.math.Vector3f;
-import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 
@@ -19,7 +18,7 @@ public class Slave extends Unit{
     public Slave(int posX, int posZ){
         super(GameObjectValues.HEALTH_VALUE_SLAVE, posX, posZ, GameObjectValues.SPEED_VALUE_SLAVE);
         System.out.println("Slave: Constructor at " + posX + ", " + posZ);
-        createSlave(new Vector3f(posX, GameObjectValues.Y_POSITION, posZ));
+        createSlave(new Vector3f(posX, GameObjectValues.Y_POSITION_UNITS, posZ));
     }
     
     private void createSlave(Vector3f spwanLocation){
@@ -30,7 +29,7 @@ public class Slave extends Unit{
     private void setUpSpatial(Vector3f spwanLocation){
         //geo_slave = (Geometry) assetManager.loadModel("Models/slave/slave.mesh.xml");
         //geo_slave.setLocalTranslation(spwanLocation);
-        node_slave = (Node) assetManager.loadModel("Models/slave/slave.mesh.xml");
+        node_slave = (Node) assetManager.loadModel("Models/slave/slave.j3o");
         node_slave.setMaterial(assetManager.loadMaterial("Materials/slave.j3m"));
         node_slave.setLocalTranslation(spwanLocation);
         //node_slave.attachChild(geo_slave);
