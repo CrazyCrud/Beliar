@@ -32,4 +32,9 @@ public class UnitController {
     public static ArrayList<Unit> getUnits(){
         return UnitModel.getInstance().getUnits();
     }
+    
+    public static void moveUnitTo(Node unit, int xPos, int zPos){
+        UnitModel.getInstance().moveUnitTo(unit, xPos, zPos);
+    }
+
 }

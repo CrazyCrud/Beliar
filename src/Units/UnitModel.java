@@ -84,4 +84,8 @@ public class UnitModel {
     protected ArrayList<Unit> getUnits(){
         return list_units;
     }
+    
+    protected void moveUnitTo(Node unit, int xPos, int zPos){
+        unit.getControl(WalkControl.class).findPath(xPos, zPos);
+    }
 }
