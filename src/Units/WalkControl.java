@@ -109,7 +109,7 @@ public class WalkControl extends AbstractControl{
         Node nextNode = list_path.get(0);
         int newXPos = nextNode.getXPos();
         int newZPos = nextNode.getYPos();
-        spatial.lookAt(new Vector3f((float)newXPos, (float)GameObjectValues.Y_POSITION_BUILDINGS, (float)newZPos), 
+        spatial.lookAt(new Vector3f((float)newXPos, (float)GameObjectValues.Y_POSITION, (float)newZPos), 
                 GameObjectValues.UP_VECTOR);
     }
     
@@ -123,14 +123,11 @@ public class WalkControl extends AbstractControl{
         Node nextNode = list_path.get(0);
         int newXPos = nextNode.getXPos();
         int newZPos = nextNode.getYPos();
-        
-        System.out.println("Walkcontrol: setPosition() to " + newXPos + ", " + newZPos);
-        
         node_current = nextNode;
         spatial.getControl(GameObjectControl.class).setPosX(newXPos);
         spatial.getControl(GameObjectControl.class).setPosY(newZPos);
         spatial.getControl(GameObjectControl.class).setLocation(new Vector3f(newXPos, 
-                GameObjectValues.Y_POSITION_UNITS, newZPos));
+                GameObjectValues.Y_POSITION, newZPos));
         list_path.remove(nextNode);
     }
     

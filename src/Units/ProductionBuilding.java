@@ -60,7 +60,7 @@ public class ProductionBuilding extends Building {
                 node_building.setMaterial(assetManager.loadMaterial("Materials/maraBuilding_" + int_size + ".j3m"));
                 break;
         }
-        node_building.setLocalTranslation(new Vector3f(int_posX, GameObjectValues.Y_POSITION_BUILDINGS, int_posZ));
+        node_building.setLocalTranslation(new Vector3f(int_posX, GameObjectValues.Y_POSITION, int_posZ));
         //node_building.attachChild(geo_building);
         spatial = (Spatial) node_building;  
     }

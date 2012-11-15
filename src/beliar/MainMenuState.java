@@ -48,7 +48,7 @@ public class MainMenuState extends AbstractAppState{
             System.out.println("MainMenuState: setEnabled");
             showInput();
             initAudio();
-            playAudio();
+          //  playAudio();
         }else{
             stopAudio();
             inMainMenuInputs.setEnabled(false);
@@ -75,7 +75,7 @@ public class MainMenuState extends AbstractAppState{
         if(isEnabled()){
             Status menuThemeStatus = menuTheme.getStatus();
             if(menuThemeStatus == AudioNode.Status.Stopped){
-                menuTheme.play();
+               // menuTheme.play();
                 System.out.println("AudioNode is stopped");
             }
         }else{
