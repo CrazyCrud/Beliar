@@ -33,8 +33,11 @@ public class UnitController {
         return UnitModel.getInstance().getUnits();
     }
     
+    public static boolean isSlaveAvailable(){
+        return UnitModel.getInstance().getSlaveNumbers() > 0 ? true : false;
+    } 
+    
     public static void moveUnitTo(Node unit, int xPos, int zPos){
         UnitModel.getInstance().moveUnitTo(unit, xPos, zPos);
     }
-
 }

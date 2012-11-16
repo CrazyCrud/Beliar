@@ -7,7 +7,6 @@ package Units;
 import com.jme3.animation.AnimChannel;
 import com.jme3.animation.AnimControl;
 import com.jme3.animation.LoopMode;
-import com.jme3.math.Vector3f;
 import com.jme3.renderer.RenderManager;
 import com.jme3.renderer.ViewPort;
 import com.jme3.scene.Spatial;
@@ -26,6 +25,7 @@ public class SlaveAnimationControl extends AbstractControl{
     protected AnimControl animControl;
     protected AnimChannel animChannel;
     protected WalkControl walkControl;
+    protected SlaveCharacterControl charControl;
     
     public SlaveAnimationControl(){
         // nothing to do here...
@@ -41,8 +41,9 @@ public class SlaveAnimationControl extends AbstractControl{
         
         animControl = spatial.getControl(AnimControl.class);
         walkControl = spatial.getControl(WalkControl.class);
+        charControl = spatial.getControl(SlaveCharacterControl.class);
         
-        if(animControl != null && walkControl != null){
+        if(animControl != null && walkControl != null && charControl != null){
             animControl.setEnabled(true);
             animChannel = animControl.createChannel();
         }
@@ -51,7 +52,7 @@ public class SlaveAnimationControl extends AbstractControl{
     @Override
     protected void controlUpdate(float tpf) {
         if(isEnabled()){
-            if(spatial == null || walkControl == null){
+            if(spatial == null || walkControl == null || charControl == null){
                 return;
             }
             if(!(spatial.getControl(GameObjectControl.class).isAlive())){
@@ -62,7 +63,12 @@ public class SlaveAnimationControl extends AbstractControl{
                 if(!("Walk".equals(animChannel.getAnimationName()))){
                     setAnimation(WALK_ANIM);
                 }
-            }else{     
+            }else if(charControl.isIsBuilding()){
+                if(!("Build".equals(animChannel.getAnimationName()))){
+                    setAnimation(BUILD_ANIM);
+                }
+            }
+            else{     
                 if(!("Idle".equals(animChannel.getAnimationName()))){
                     setAnimation(IDLE_ANIM);
                 }

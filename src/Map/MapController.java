@@ -30,4 +30,8 @@ public final class MapController {
     public static Node getNode(int x, int y){
         return MapNodes.getInstance().getNode(x, y);
     }
+    
+    public static void setHallwayAt(int xPos, int zPos){
+        MapNodes.getInstance().changeEdge(xPos, zPos, 1.0f);
+    }
 }

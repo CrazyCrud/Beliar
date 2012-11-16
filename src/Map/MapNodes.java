@@ -58,38 +58,38 @@ public class MapNodes {
 
     private void setEdges() {
         System.out.println("MapNodes: setEdges");
-        int x, y;
+        int x, z;
         int mapLength = int_map.length;
         
         for(x = 0; x < mapLength; x++){
-            for(y = 0; y < mapLength; y++){
-                Node node = node_mapNodes[x][y];
+            for(z = 0; z < mapLength; z++){
+                Node node = node_mapNodes[x][z];
                 if((x - 1) > -1){
-                    if(int_map[x - 1][y] != 1){
-                        node.setEdge(node_mapNodes[x - 1][y], MAX_WEIGHT);
+                    if(int_map[x - 1][z] != 1){
+                        node.setEdge(node_mapNodes[x - 1][z], MAX_WEIGHT);
                     }else{
-                        node.setEdge(node_mapNodes[x - 1][y], int_map[x - 1][y] + 1);
+                        node.setEdge(node_mapNodes[x - 1][z], int_map[x - 1][z] + 1);
                     }
                 }
                 if((x + 1) < mapLength){
-                    if(int_map[x + 1][y] != 1){
-                        node.setEdge(node_mapNodes[x + 1][y], MAX_WEIGHT);
+                    if(int_map[x + 1][z] != 1){
+                        node.setEdge(node_mapNodes[x + 1][z], MAX_WEIGHT);
                     }else{
-                        node.setEdge(node_mapNodes[x + 1][y], int_map[x + 1][y] + 1);
+                        node.setEdge(node_mapNodes[x + 1][z], int_map[x + 1][z] + 1);
                     }          
                 }
-                if((y - 1) > -1){
-                    if(int_map[x][y - 1] != 1){
-                        node.setEdge(node_mapNodes[x][y - 1], MAX_WEIGHT);
+                if((z - 1) > -1){
+                    if(int_map[x][z - 1] != 1){
+                        node.setEdge(node_mapNodes[x][z - 1], MAX_WEIGHT);
                     }else{
-                        node.setEdge(node_mapNodes[x][y - 1], int_map[x][y - 1] + 1);
+                        node.setEdge(node_mapNodes[x][z - 1], int_map[x][z - 1] + 1);
                     } 
                 }
-                if((y + 1) < mapLength){
-                    if(int_map[x][y + 1] != 1){
-                        node.setEdge(node_mapNodes[x][y + 1], MAX_WEIGHT);
+                if((z + 1) < mapLength){
+                    if(int_map[x][z + 1] != 1){
+                        node.setEdge(node_mapNodes[x][z + 1], MAX_WEIGHT);
                     }else{
-                        node.setEdge(node_mapNodes[x][y + 1], int_map[x][y + 1] + 1);
+                        node.setEdge(node_mapNodes[x][z + 1], int_map[x][z + 1] + 1);
                     }    
                 }
                 /*
@@ -107,6 +107,26 @@ public class MapNodes {
                 }
                  * */
             }
+        }
+    }
+    
+    protected void changeEdge(int x, int z, float weight){
+        System.out.println("MapNodes: changeEdge");
+        int mapLength = int_map.length;
+        if(isNodeEmpty(x, z)){
+            node_mapNodes[x][z] = new Node(x, z);
+        }
+        if((x - 1) > -1){
+            node_mapNodes[x - 1][z].changeEdge(node_mapNodes[x][z], weight);
+        }
+        if((x + 1) < mapLength){
+            node_mapNodes[x + 1][z].changeEdge(node_mapNodes[x][z], weight);
+        }
+        if((z - 1) > -1){
+            node_mapNodes[x][z - 1].changeEdge(node_mapNodes[x][z], weight);
+        }
+        if((z + 1) < mapLength){
+            node_mapNodes[x][z + 1].changeEdge(node_mapNodes[x][z], weight);
         }
     }
     

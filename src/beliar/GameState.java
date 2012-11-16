@@ -131,10 +131,7 @@ public class GameState extends AbstractAppState {
     @Override
     public void initialize(AppStateManager stateManager, Application app) {
         System.out.println("GameState: initialize()");
-
         super.initialize(stateManager, app);
-
-
     }
 
     @Override
@@ -145,7 +142,6 @@ public class GameState extends AbstractAppState {
             showInput();
         } else {
             System.out.println("GameState: setEnabled(false)");
-
         }
     }
 
@@ -238,11 +234,8 @@ public class GameState extends AbstractAppState {
 
         System.out.println("InitCamera");
         flyCam.setEnabled(false);
-
-
         rtsCam.registerWithInput(inputManager);
         rtsCam.setCenter(new Vector3f(20, 0.5f, 20));
-
 
         //Fog
         fpp = new FilterPostProcessor(assetManager);
@@ -252,7 +245,6 @@ public class GameState extends AbstractAppState {
         fog.setFogDensity(5.5f);
         fpp.addFilter(fog);
         viewPort.addProcessor(fpp);
-
     }
 
     private void initLight() {
@@ -275,7 +267,6 @@ public class GameState extends AbstractAppState {
         cameraLight.setName("CameraLight");
         cameraLight.setRadius(radiusCameraLight);
         localRootNode.addLight(cameraLight);
-
 
         //Shadow
         shadowMaker = new PssmShadowRenderer(assetManager, 1024, 3);
@@ -369,7 +360,6 @@ public class GameState extends AbstractAppState {
                 new MouseAxisTrigger(mouseInput.AXIS_X, true),
                 new MouseAxisTrigger(mouseInput.AXIS_Y, true));
 
-
         inputManager.addListener(actionListener, "pick target");
         inputManager.addListener(actionListener, "moveMouse");
     }
@@ -384,7 +374,7 @@ public class GameState extends AbstractAppState {
                 CollisionResults results = checkColision();
 
                 if ((results.size() > 0) && (PlayerRessources.selectionRoom > 0)) {
-                   
+                   System.out.println("GameState: onAnalog(): Build a hallway");
                     Geometry target = results.getClosestCollision().getGeometry();
 
                     com.jme3.math.Transform transformation = target.getWorldTransform();

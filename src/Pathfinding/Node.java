@@ -46,6 +46,20 @@ public class Node {
         destination.addBacktrack(edge);
     }
     
+    public void changeEdge(Node destination, float newWeight){
+        Edge edgeToChange = null;
+        for(Edge edge: edges){
+            if(destination == edge.destination){
+                edgeToChange = edge;
+                break;
+            }
+        }
+        if(edgeToChange == null){
+            return;
+        }
+        edgeToChange.weight = newWeight;
+    }
+    
     public int getXPos(){
         return x;
     }

@@ -176,7 +176,7 @@ public class MapHandler {
     }
 
     public void handleBuilding(Vector3f position, int type) {
-        //System.out.println("HandleBuilding");
+        System.out.println("MapHandler: handleBuilding()");
 
         if (terrainMap[(int) position.x][(int) position.z] == 0) {
             //System.out.println("Bauen gestattet!");
@@ -192,14 +192,11 @@ public class MapHandler {
             for (int i = -1; i <= 1; i++) {
                 for (int j = -1; j <= 1; j++) {
                     checkNeighboursAt(posX + i, posY + j);
-                    //System.out.println("output:" + output);
                     if (output != null) {
                         mapNode.attachChild(output);
                     }
                 }
             }
-
-
         } else {
             //System.out.println("Bereits Gebaut!");
         }
@@ -419,8 +416,12 @@ public class MapHandler {
         return positionBuildings[x][y];
     }
 
-    private void setCellType(int x, int y, int type) {
-        terrainMap[x][y] = type;
+    private void setCellType(int x, int z, int type) {
+        System.out.println("MapHandler: setCellType() type: " + type);
+        terrainMap[x][z] = type;
+        if(type == ValuesTerrain.HALL){
+            MapController.setHallwayAt(x, z);
+        }
     }
 
     public int getCellType(int x, int y) {

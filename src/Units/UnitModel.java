@@ -16,6 +16,7 @@ public class UnitModel {
     
     private static UnitModel unitModel;
     private ArrayList<Unit> list_units;
+     private ArrayList<Slave> list_slaves;
     private Node node_slaveUnits, node_warriorUnits;
     
     private UnitModel(){
@@ -32,6 +33,7 @@ public class UnitModel {
     
     private void initValues(){
         list_units = new ArrayList<Unit>();
+        list_slaves = new ArrayList<Slave>();
     }
     
     private void initUnitNodes(){
@@ -41,7 +43,8 @@ public class UnitModel {
     
     protected Node createSlave(int posX, int posZ){
         Slave slave = new Slave(posX, posZ);
-        list_units.add(slave);
+        list_slaves.add(slave);
+        attachSlaveUnit((Node)slave.getSpatial());
         return (Node)slave.getSpatial();
     }
     

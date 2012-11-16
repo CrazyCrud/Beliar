@@ -11,7 +11,7 @@ package Pathfinding;
 public class Edge {
     
     protected final Node source, destination;
-    protected final float weight;
+    protected float weight;
     
     public Edge(Node source, Node destination, float weight){
         this.source = source;

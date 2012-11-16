@@ -43,7 +43,7 @@ public class GameObjectValues {
     public static final int PROGRESS_PERCENT_PER_TICK = 1;
     public static final float Y_POSITION_BUILDINGS = 0f;
     public static final float Y_POSITION_UNITS = 0f;
-
+    public static final float CONSTRUCTION_TIME = 500.0f;
     
     //Animation
     public static final float BLEND_TIME = 0.7f;

@@ -5,7 +5,6 @@
 package Units;
 
 import com.jme3.math.Vector3f;
-import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 
@@ -45,8 +44,8 @@ public class Slave extends Unit{
     @Override
     protected void addControllers(){
         super.addControllers();
-        node_slave.addControl(new SlaveAnimationControl());
         node_slave.addControl(new SlaveCharacterControl());
+        node_slave.addControl(new SlaveAnimationControl());
     }
     
     @Override

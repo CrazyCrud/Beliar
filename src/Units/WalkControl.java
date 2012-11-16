@@ -42,18 +42,25 @@ public class WalkControl extends AbstractControl{
         return spatial.getUserData(GameObjectValues.SPEED_KEY);
     }
     
-    protected void findPath(int xPos, int zPos){
+    protected boolean findPath(int xPos, int zPos){
+        boolean isTargetAccessible = isTargetAccessible(xPos, zPos);
+        if(isTargetAccessible){
+            list_path.remove(0);
+            setMoving(true);
+            return true;
+        }else{
+            setMoving(false);
+            return false;
+        }
+    }
+    
+    private boolean isTargetAccessible(int xPos, int zPos){
         node_start = MapController.getNode(spatial.getControl(GameObjectControl.class).getPosX(), 
                 spatial.getControl(GameObjectControl.class).getPosY());
         node_current = node_start;
         node_target = MapController.getNode(xPos, zPos);
         list_path = (List)pathFinder.search(node_start, node_target);
-        if(list_path != null){
-            list_path.remove(0);
-            setMoving(true);
-        }else{
-            setMoving(false);
-        }
+        return list_path == null ? false : true;
     }
     
     protected boolean isMoving(){
