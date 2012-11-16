@@ -34,10 +34,14 @@ public class UnitController {
     }
     
     public static boolean isSlaveAvailable(){
-        return UnitModel.getInstance().getSlaveNumbers() > 0 ? true : false;
+        return UnitModel.getInstance().isSlaveAvailable();
     } 
     
     public static void moveUnitTo(Node unit, int xPos, int zPos){
         UnitModel.getInstance().moveUnitTo(unit, xPos, zPos);
+    }
+    
+    public static void orderSlaveToBuild(int xPos, int zPos){
+        UnitModel.getInstance().orderSlaveToBuild(xPos, zPos);
     }
 }

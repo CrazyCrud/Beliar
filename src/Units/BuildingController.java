@@ -14,6 +14,7 @@ import java.util.ArrayList;
 public class BuildingController {
     public static Node buildProductionBuilding(int posX, int posZ, int type, 
             int buildingSize){
+        UnitController.orderSlaveToBuild(posZ, posZ);
         return BuildingModel.getInstance().buildProductionBuilding(posX, posZ, 
                 type, buildingSize);
     }

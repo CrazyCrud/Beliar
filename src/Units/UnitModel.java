@@ -61,7 +61,9 @@ public class UnitModel {
     }
     
     private void attachSlaveUnit(Node slave){
+        System.out.println("UnitModel attachSlaveUnit()");
         this.node_slaveUnits.attachChild(slave);
+        System.out.println("UnitModel attachSlaveUnit() : " + node_slaveUnits.getChildren().size());
     }
     
     private void attachWarriorUnit(Node warrior){
@@ -88,7 +90,19 @@ public class UnitModel {
         return list_units;
     }
     
+    protected boolean isSlaveAvailable() {
+        return getSlaveNumbers() > 0 ? true : false;
+    }
+    
     protected void moveUnitTo(Node unit, int xPos, int zPos){
         unit.getControl(WalkControl.class).findPath(xPos, zPos);
+    }
+
+    protected void orderSlaveToBuild(int xPos, int zPos) {
+        if(isSlaveAvailable()){
+            System.out.println("UnitModel: Slave available to build");
+        }else{
+            System.out.println("UnitModel: No slave available to build");
+        }
     }
 }
