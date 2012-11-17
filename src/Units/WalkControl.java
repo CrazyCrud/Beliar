@@ -56,7 +56,7 @@ public class WalkControl extends AbstractControl{
     
     private boolean isTargetAccessible(int xPos, int zPos){
         node_start = MapController.getNode(spatial.getControl(GameObjectControl.class).getPosX(), 
-                spatial.getControl(GameObjectControl.class).getPosY());
+                spatial.getControl(GameObjectControl.class).getPosZ());
         node_current = node_start;
         node_target = MapController.getNode(xPos, zPos);
         list_path = (List)pathFinder.search(node_start, node_target);
@@ -158,7 +158,7 @@ public class WalkControl extends AbstractControl{
         int newZPos = nextNode.getYPos();
         node_current = nextNode;
         spatial.getControl(GameObjectControl.class).setPosX(newXPos);
-        spatial.getControl(GameObjectControl.class).setPosY(newZPos);
+        spatial.getControl(GameObjectControl.class).setPosZ(newZPos);
         spatial.getControl(GameObjectControl.class).setLocation(new Vector3f(newXPos, 
                 GameObjectValues.Y_POSITION_UNITS, newZPos));
         list_path.remove(nextNode);

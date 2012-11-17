@@ -37,11 +37,11 @@ public class UnitController {
         return UnitModel.getInstance().isSlaveAvailable();
     } 
     
-    public static void moveUnitTo(Node unit, int xPos, int zPos){
-        UnitModel.getInstance().moveUnitTo(unit, xPos, zPos);
+    public static Node getSlave(){
+        return UnitModel.getInstance().getSlave();
     }
     
-    public static void orderSlaveToBuild(int xPos, int zPos){
-        UnitModel.getInstance().orderSlaveToBuild(xPos, zPos);
+    public static void moveUnitTo(Node unit, int xPos, int zPos){
+        UnitModel.getInstance().moveUnitTo(unit, xPos, zPos);
     }
 }

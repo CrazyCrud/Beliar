@@ -33,5 +33,6 @@ public final class MapController {
     
     public static void setHallwayAt(int xPos, int zPos){
         MapNodes.getInstance().changeEdge(xPos, zPos, 1.0f);
+        MapNodes.getInstance().changeType(xPos, zPos, 1);
     }
 }

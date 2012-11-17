@@ -374,7 +374,6 @@ public class GameState extends AbstractAppState {
                 CollisionResults results = checkColision();
 
                 if ((results.size() > 0) && (PlayerRessources.selectionRoom > 0)) {
-                   System.out.println("GameState: onAnalog(): Build a hallway");
                     Geometry target = results.getClosestCollision().getGeometry();
 
                     com.jme3.math.Transform transformation = target.getWorldTransform();
@@ -400,7 +399,7 @@ public class GameState extends AbstractAppState {
                                 int_buildingType, int_sizeBuilding);
                        
                         stopBuilding();
-                        buildSucessfull(myBuilding);
+                        //buildSucessfull(myBuilding);
                         
                     } else {
                         System.out.println("Bauen verweigert");
@@ -417,7 +416,10 @@ public class GameState extends AbstractAppState {
         }
     };
     
-    private void buildSucessfull(Node myBuilding){
+    public void buildSucessfull(Node myBuilding){
+        if(myBuilding == null){
+            return;
+        }
         computeBuilding(myBuilding);
         playSoundEffect(SoundManager.PLACE_BUILDING);
         updateRessources(); 
@@ -604,7 +606,7 @@ public class GameState extends AbstractAppState {
        System.out.println("GameState: setUpUnit");
        Node mySlave = UnitController.createSlave(5, 8);
        creatures.attachChild(mySlave);   
-       //UnitController.moveUnitTo(mySlave, 9, 8);
-       UnitController.moveUnitTo(mySlave, 5, 20);
+       //UnitController.moveUnitTo(mySlave, 10, 11);
+       //UnitController.moveUnitTo(mySlave, 5, 20);
     }
 }

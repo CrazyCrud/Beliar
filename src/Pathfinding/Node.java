@@ -14,12 +14,14 @@ import java.util.List;
 public class Node {
     
     protected final int x, y;
+    protected int type;
     private List<Edge> edges;
     private List<Edge> backtracks;
     
-    public Node(int x, int y){
+    public Node(int x, int y, int type){
         this.x = x;
         this.y = y;
+        this.type = type;
         this.edges = new ArrayList<Edge>();
         this.backtracks = new ArrayList<Edge>();
     }
@@ -44,6 +46,10 @@ public class Node {
         Edge edge = new Edge(this, destination, weight);
         edges.add(edge);
         destination.addBacktrack(edge);
+    }
+    
+    public void changeType(int type){
+        this.type = type;
     }
     
     public void changeEdge(Node destination, float newWeight){

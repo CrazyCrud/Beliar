@@ -16,7 +16,7 @@ public class UnitModel {
     
     private static UnitModel unitModel;
     private ArrayList<Unit> list_units;
-     private ArrayList<Slave> list_slaves;
+    private ArrayList<Slave> list_slaves;
     private Node node_slaveUnits, node_warriorUnits;
     
     private UnitModel(){
@@ -74,8 +74,23 @@ public class UnitModel {
         return node_slaveUnits.getChildren();
     }
     
+    protected Node getSlave(){
+        if(isSlaveAvailable()){
+            for(Slave slave: list_slaves){
+                if(slave.getSpatial().getControl(SlaveCharacterControl.class).hasOrder()){
+                    continue;
+                }else{
+                    return (Node)slave.getSpatial();
+                }
+            }
+            return (Node)list_slaves.get(0).getSpatial();
+        }
+        return null;
+    }
+    
     protected int getSlaveNumbers(){
-        return node_slaveUnits.getChildren().size();
+        //return node_slaveUnits.getChildren().size();
+        return list_slaves.size();
     }
     
     protected List<Spatial> getWarriors(){
@@ -96,13 +111,5 @@ public class UnitModel {
     
     protected void moveUnitTo(Node unit, int xPos, int zPos){
         unit.getControl(WalkControl.class).findPath(xPos, zPos);
-    }
-
-    protected void orderSlaveToBuild(int xPos, int zPos) {
-        if(isSlaveAvailable()){
-            System.out.println("UnitModel: Slave available to build");
-        }else{
-            System.out.println("UnitModel: No slave available to build");
-        }
     }
 }

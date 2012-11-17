@@ -40,7 +40,7 @@ public abstract class GameObject {
         }
         spatial.getControl(GameObjectControl.class).setHealth(int_healthPoints);
         spatial.getControl(GameObjectControl.class).setPosX(int_posX);
-        spatial.getControl(GameObjectControl.class).setPosY(int_posZ);
+        spatial.getControl(GameObjectControl.class).setPosZ(int_posZ);
     }
     
     protected Spatial getSpatial() {

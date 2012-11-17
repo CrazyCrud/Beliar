@@ -34,7 +34,7 @@ public class GameObjectValues {
     
     //Position
     public static final String POSX_KEY = "PosX";
-    public static final String POSY_KEY = "PosY";
+    public static final String POSZ_KEY = "PosY";
     
     //Building
     public static final String BUILDING_TYPE = "TYPE";
@@ -43,7 +43,7 @@ public class GameObjectValues {
     public static final int PROGRESS_PERCENT_PER_TICK = 1;
     public static final float Y_POSITION_BUILDINGS = 0f;
     public static final float Y_POSITION_UNITS = 0f;
-    public static final float CONSTRUCTION_TIME = 500.0f;
+    public static final float CONSTRUCTION_TIME = 20.0f;
     
     //Animation
     public static final float BLEND_TIME = 0.7f;

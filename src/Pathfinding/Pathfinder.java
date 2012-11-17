@@ -30,17 +30,26 @@ public class Pathfinder {
     public List<Node> search(Node start, Node target){
         reset();
         
+        if(!isAccessible(target)){
+            System.out.println("Pathfinder: search() target not accessible");
+            return null;
+        }
+        
         this.set_frontline.add(start);
         
         while(!this.set_frontline.isEmpty()){
             Node found = this.step(target);
             
             if(found != null){
-                System.out.println("Node found: " + found.getXPos() + ", " + found.getYPos());
+                System.out.println("Pathfinder: search() Node found " + found.getXPos() + ", " + found.getYPos());
                 return this.getPath(found);
             }
         } 
         return null;
+    }
+    
+    private boolean isAccessible(Node target){
+        return target.type == 1 ? true : false;
     }
     
     private Node step(Node target){
@@ -49,8 +58,7 @@ public class Pathfinder {
         if(head == null){
             return null;
         }
-        
-        System.out.println("Current node: " + head.getXPos() + ", " + head.getYPos());
+        //System.out.println("Pathinder: step() current node: " + head.getXPos() + ", " + head.getYPos());
         
         this.visit(head);
         
@@ -62,22 +70,21 @@ public class Pathfinder {
             if(this.isVisited(edge.destination)){
                 continue;
             }
-            
             float last = this.getAccumulatedWeight(edge.destination);
             float current = this.getAccumulatedWeight(head) + edge.weight;
-            System.out.println("Pathfinder: step() weights: " + current + ", " + last);
+            //System.out.println("Pathfinder: step() node " + edge.destination.x + ", " + edge.destination.y);
+            //System.out.println("Pathfinder: step() weights: " + current + ", " + last);
 
             if(last != 0.0f && last < current){
-                System.out.println("Pathfinder: step() weight last" + last);
                 continue;
             }
-            if(current < 100000){
+            if(current < 1000){
                 this.set_frontline.remove(edge.destination);
                 this.setAccumulatedWeight(edge.destination, current);
                 this.set_frontline.add(edge.destination);
+                //System.out.println("Pathfinder: step() frontline " + edge.destination.x + ", " + edge.destination.y);
             }
         }
-        
         return null;
     }
 

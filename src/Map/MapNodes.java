@@ -51,7 +51,7 @@ public class MapNodes {
         
         for(x = 0; x < mapLength; x++){
             for(y = 0; y < mapLength; y++){
-                node_mapNodes[x][y] = new Node(x, y);
+                node_mapNodes[x][y] = new Node(x, y, int_map[x][y]);
             }
         }
     }
@@ -68,28 +68,28 @@ public class MapNodes {
                     if(int_map[x - 1][z] != 1){
                         node.setEdge(node_mapNodes[x - 1][z], MAX_WEIGHT);
                     }else{
-                        node.setEdge(node_mapNodes[x - 1][z], int_map[x - 1][z] + 1);
+                        node.setEdge(node_mapNodes[x - 1][z], int_map[x - 1][z]);
                     }
                 }
                 if((x + 1) < mapLength){
                     if(int_map[x + 1][z] != 1){
                         node.setEdge(node_mapNodes[x + 1][z], MAX_WEIGHT);
                     }else{
-                        node.setEdge(node_mapNodes[x + 1][z], int_map[x + 1][z] + 1);
+                        node.setEdge(node_mapNodes[x + 1][z], int_map[x + 1][z]);
                     }          
                 }
                 if((z - 1) > -1){
                     if(int_map[x][z - 1] != 1){
                         node.setEdge(node_mapNodes[x][z - 1], MAX_WEIGHT);
                     }else{
-                        node.setEdge(node_mapNodes[x][z - 1], int_map[x][z - 1] + 1);
+                        node.setEdge(node_mapNodes[x][z - 1], int_map[x][z - 1]);
                     } 
                 }
                 if((z + 1) < mapLength){
                     if(int_map[x][z + 1] != 1){
                         node.setEdge(node_mapNodes[x][z + 1], MAX_WEIGHT);
                     }else{
-                        node.setEdge(node_mapNodes[x][z + 1], int_map[x][z + 1] + 1);
+                        node.setEdge(node_mapNodes[x][z + 1], int_map[x][z + 1]);
                     }    
                 }
                 /*
@@ -114,7 +114,7 @@ public class MapNodes {
         System.out.println("MapNodes: changeEdge");
         int mapLength = int_map.length;
         if(isNodeEmpty(x, z)){
-            node_mapNodes[x][z] = new Node(x, z);
+            //node_mapNodes[x][z] = new Node(x, z);
         }
         if((x - 1) > -1){
             node_mapNodes[x - 1][z].changeEdge(node_mapNodes[x][z], weight);
@@ -128,6 +128,10 @@ public class MapNodes {
         if((z + 1) < mapLength){
             node_mapNodes[x][z + 1].changeEdge(node_mapNodes[x][z], weight);
         }
+    }
+    
+    protected void changeType(int x, int z, int type){
+        node_mapNodes[x][z].changeType(type);
     }
     
     private boolean isNodeEmpty(int x, int y){

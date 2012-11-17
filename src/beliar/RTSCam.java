@@ -232,7 +232,6 @@ public final class RTSCam implements Control, ActionListener {
     }
  
     public void onAction(String name, boolean isPressed, float tpf) {
-        System.out.println("RTSCam: onAction() " + name + ", " + isPressed);
         int press = isPressed ? 1 : 0;
          
         char sign = name.charAt(0);

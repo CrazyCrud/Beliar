@@ -49,12 +49,12 @@ public class GameObjectControl extends AbstractControl{
         return spatial.getUserData(GameObjectValues.POSX_KEY);
     }
 
-    public void setPosY(int posZ) {
-        spatial.setUserData(GameObjectValues.POSY_KEY, posZ);
+    public void setPosZ(int posZ) {
+        spatial.setUserData(GameObjectValues.POSZ_KEY, posZ);
     }
     
-    public int getPosY() {
-        return spatial.getUserData(GameObjectValues.POSY_KEY);
+    public int getPosZ() {
+        return spatial.getUserData(GameObjectValues.POSZ_KEY);
     }
      
     @Override

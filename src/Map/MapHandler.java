@@ -4,7 +4,6 @@
  */
 package Map;
 
-import Pathfinding.Test;
 import beliar.MeshContainer;
 import beliar.ValuesTerrain;
 import com.google.gson.JsonArray;
@@ -50,8 +49,6 @@ public class MapHandler {
         initMap();
         wirteMap();
         writeMapNodes();
-        
-        Test.checkPath();
     }
 
     private void readMapFile(String levelName) {
@@ -419,7 +416,8 @@ public class MapHandler {
     private void setCellType(int x, int z, int type) {
         System.out.println("MapHandler: setCellType() type: " + type);
         terrainMap[x][z] = type;
-        if(type == ValuesTerrain.HALL){
+        if(type == ValuesTerrain.HALL || type == ValuesTerrain.HALLOFANARCHY || type == ValuesTerrain.TOMBOFMEMORY ||
+                type == ValuesTerrain.CAVEOFBEAST){
             MapController.setHallwayAt(x, z);
         }
     }
