@@ -1,10 +1,12 @@
 Material Fire : Common/MatDefs/Misc/Particle.j3md {
     MaterialParameters {
-        Texture : Repeat Textures/Particles/flame.png
-        Softness : 0.1
-        GlowColor : 1.0 1.0 1.0 1.0
-        Quadratic : 0.1
-        DepthTexture : Repeat Textures/Particles/flame.png
+        Texture : Textures/Particles/flame.png
+        Softness : 1.0
+        GlowColor : 1.0 0.2 0.4 1.0
+        Quadratic : 1.0
+        DepthTexture : Textures/Particles/flame.png
+        PointSprite : true
+        GlowMap : Textures/Particles/flame.png
     }
     AdditionalRenderState {
       FaceCull Back
@@ -12,7 +14,7 @@ Material Fire : Common/MatDefs/Misc/Particle.j3md {
       DepthWrite On
       PolyOffset 0.0 0.0
       AlphaTestFalloff 0.0
-      Blend Off
+      Blend ModulateX2
       PointSprite Off
       ColorWrite On
       DepthTest On
