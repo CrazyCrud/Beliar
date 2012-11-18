@@ -1,0 +1,13 @@
+Material My Material : Common/MatDefs/Light/Lighting.j3md {
+     MaterialParameters {
+        UseAlpha : true
+        Diffuse : 1.0 0.8 0.0 1.0
+        DiffuseMap : Textures/Particles/maraparticle.png
+        AlphaMap : Textures/Particles/maraparticle.png
+     }
+    AdditionalRenderState {
+      Blend Additive
+      FaceCull Back
+      AlphaTestFalloff 0.06
+    }
+}

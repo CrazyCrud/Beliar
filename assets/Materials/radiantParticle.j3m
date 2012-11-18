@@ -1,0 +1,9 @@
+Material My Material : Common/MatDefs/Light/Lighting.j3md {
+     MaterialParameters {
+        AlphaMap : Textures/Particles/shockwave.png
+        UseAlpha : true
+     }
+    AdditionalRenderState {
+        Blend Alpha
+    }
+}

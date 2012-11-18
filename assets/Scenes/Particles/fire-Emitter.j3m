@@ -1,12 +1,11 @@
 Material Fire : Common/MatDefs/Misc/Particle.j3md {
     MaterialParameters {
-        Texture : Textures/Particles/flame.png
+        Texture : Textures/Particles/flameAlpha.png
         Softness : 1.0
         GlowColor : 1.0 0.2 0.4 1.0
         Quadratic : 1.0
-        DepthTexture : Textures/Particles/flame.png
+        DepthTexture : Textures/Particles/flameAlpha.png
         PointSprite : true
-        GlowMap : Textures/Particles/flame.png
     }
     AdditionalRenderState {
       FaceCull Back

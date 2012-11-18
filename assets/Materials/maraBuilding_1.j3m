@@ -1,0 +1,7 @@
+Material maraBuilding_1 : Common/MatDefs/Light/Lighting.j3md {
+     MaterialParameters {
+        DiffuseMap : Textures/Mara_1.png
+     }
+    AdditionalRenderState {
+    }
+}
