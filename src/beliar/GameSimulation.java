@@ -207,22 +207,22 @@ public class GameSimulation extends AbstractAppState{
         return false;
     }
 
-    private boolean isQuest1Completed() {
-        if(PlayerRessources.adam > 2000 && PlayerRessources.kythos > 1500 && PlayerRessources.mara > 1000){
+    protected boolean isQuest1Completed() {
+        if(PlayerRessources.adam > 1000 && PlayerRessources.kythos > 600 && PlayerRessources.mara > 600){
             return true;
         }
         return false;
     }
 
-    private boolean isQuest2Completed() {
+    protected boolean isQuest2Completed() {
         if(UnitController.getUnits().size() > 20){
             return true;
         }
         return false;
     }
 
-    private boolean isQuest3Completed() {
-        if(PlayerRessources.darkness > 100){
+    protected boolean isQuest3Completed() {
+        if(PlayerRessources.darkness > 50){
             return true;
         }
         return false;

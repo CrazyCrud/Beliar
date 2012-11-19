@@ -13,7 +13,7 @@ public class PlayerRessources {
 	
 	public static int adam = 200;
 	public static int kythos = 100;
-	public static int mara=10;
+	public static int mara = 10;
 	
 	public static int darkness=10;
 	public static int healthCentre = 100;

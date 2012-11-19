@@ -10,12 +10,14 @@ import com.jme3.app.state.AbstractAppState;
 import com.jme3.app.state.AppStateManager;
 import de.lessvoid.nifty.Nifty;
 import de.lessvoid.nifty.builder.ImageBuilder;
+import de.lessvoid.nifty.builder.TextBuilder;
 import de.lessvoid.nifty.controls.Menu;
 import de.lessvoid.nifty.controls.MenuItemActivatedEvent;
 import de.lessvoid.nifty.elements.Element;
 import de.lessvoid.nifty.screen.Screen;
 import de.lessvoid.nifty.screen.ScreenController;
 import de.lessvoid.nifty.elements.render.TextRenderer;
+import de.lessvoid.nifty.spi.render.RenderFont;
 import de.lessvoid.nifty.tools.SizeValue;
 import java.util.List;
 import org.bushe.swing.event.EventTopicSubscriber;
@@ -227,6 +229,7 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
         
         Element menuText = screen.findElementByName("menuText");
         menuText.getRenderer(TextRenderer.class).setText("Deine Aufgaben");
+        setUpQuestText();
     }
     
     public void onOptions(){
@@ -443,8 +446,8 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
                 updateRessources(ADAM, BUILDING_LEVEL_ONE);
                 return;
             case BUILDING_LEVEL_TWO:
-                 System.out.println("Adam-Building Stufe 2");
-                 PlayerRessources.selectionRoom=0;
+                System.out.println("Adam-Building Stufe 2");
+                PlayerRessources.selectionRoom=0;
                 myGameState.handleBuildSelection(GameContainer.ADAM_BUILDING, GameContainer.ADAM_MIDDLE_SIZE);
                 updateRessources(ADAM, BUILDING_LEVEL_TWO);
                 return;
@@ -490,6 +493,33 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
             case BUILDING_LEVEL_THREE:
                 updateRessources(MARA, BUILDING_LEVEL_THREE);
                 return;
+        }
+    }
+    
+    private void setUpQuestText(){
+        TextBuilder tb = new TextBuilder("QuestBuilder");
+        tb.childLayoutAbsoluteInside();
+        tb.textHAlignLeft();
+        tb.textVAlignCenter();
+        tb.wrap(true);
+        tb.width("100px");
+        tb.height("5px");
+        tb.font("Interface/Fonts/gill_16.fnt");
+        Element textQuest1 = tb.build(nifty, screen, firstRowTop);
+        textQuest1.setConstraintX(new SizeValue(0 + "px"));
+        textQuest1.setConstraintY(new SizeValue(0 + "px"));
+        Element textQuest2 = tb.build(nifty, screen, secondRowTop);
+        textQuest2.setConstraintX(new SizeValue(0 + "px"));
+        textQuest2.setConstraintY(new SizeValue(0 + "px"));
+        Element textQuest3 = tb.build(nifty, screen, thirdRowTop);
+        textQuest3.setConstraintX(new SizeValue(0 + "px"));
+        textQuest3.setConstraintY(new SizeValue(0 + "px"));
+        textQuest1.getRenderer(TextRenderer.class).setText(GameContainer.getInstance().getQuests(GameContainer.QUEST_1));
+        if(app.getStateManager().getState(GameSimulation.class).isQuest1Completed()){
+            textQuest2.getRenderer(TextRenderer.class).setText(GameContainer.getInstance().getQuests(GameContainer.QUEST_2));
+            if(app.getStateManager().getState(GameSimulation.class).isQuest2Completed()){
+                textQuest3.getRenderer(TextRenderer.class).setText(GameContainer.getInstance().getQuests(GameContainer.QUEST_3));
+            }
         }
     }
     

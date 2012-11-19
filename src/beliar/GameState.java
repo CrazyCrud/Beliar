@@ -335,13 +335,14 @@ public class GameState extends AbstractAppState {
             String nextLine = bfReader.readLine();
            
             while(nextLine != null){
-                nextLine = bfReader.readLine();
+                System.out.println("GameState: initQuests " + nextLine);
                 GameContainer.getInstance().addQuest(nextLine);
+                nextLine = bfReader.readLine();
             }
             
             bfReader.close();
         }catch(Exception e){
-            
+
         }
     }
 

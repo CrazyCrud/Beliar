@@ -155,4 +155,11 @@ public class GameContainer {
         public void addQuest(String quest){
             list_quests.addLast(quest);
         }
+        
+        public String getQuests(int whichQuest){
+            if(whichQuest > -1 && whichQuest < list_quests.size()){
+                return list_quests.get(whichQuest);
+            }
+            return null;
+        }
 }
