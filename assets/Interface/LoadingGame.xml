@@ -2,11 +2,11 @@
 <nifty xmlns="http://nifty-gui.sourceforge.net/nifty-1.3.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nifty-gui.sourceforge.net/nifty-1.3.xsd http://nifty-gui.sourceforge.net/nifty-1.3.xsd">
     <useControls filename="nifty-default-controls.xml" />
     <controlDefinition name = "loadingbar" controller = "beliar.InLoadingInputs">
-        <image filename="Images/loadbar_border.png" childLayout="absolute" 
+            <image filename="Images/loadbar_border.png" childLayout="absolute" 
                 imageMode="resize:15,2,15,15,15,2,15,2,15,2,15,15">
-            <image id="progressbar" x="0" y="0" filename="Images/loadbar.png" width="32px" height="100%"
-                       imageMode="resize:15,2,15,15,15,2,15,2,15,2,15,15" />
-        </image>
+                <image id="progressbar" x="0" y="0" filename="Images/loadbar.png" width="32px" height="100%"
+                           imageMode="resize:15,2,15,15,15,2,15,2,15,2,15,15" />
+            </image>
     </controlDefinition>
     <screen id="loadingGame" controller="beliar.InLoadingInputs">
         <layer id="background" backgroundColor="#000f" childLayout="center">
@@ -22,15 +22,20 @@
             </panel>
             <panel id="mid_panel" height="50%" width="80%h" childLayout="center"
                 align="center">
-                <panel width="80%" height="100%" childLayout="vertical">
+                <panel width="100%" height="100%" childLayout="vertical">
                     <panel width="100%" height="40%"></panel>
-                    <panel id = "loadingpanel" childLayout="vertical" align="center" 
-                            valign="center" height="32px" width="100%">
-                        <control name="loadingbar" align="center" valign="center" width="100%" height="100%" />
+                    <panel width="100%" height="80px" childLayout="absolute" align="center" valign="center">
+                        <panel x="30px" y="8px" id="loadingpanel" childLayout="vertical" align="center" 
+                                valign="center" height="32px" width="80%">
+                            <control name="loadingbar" align="center" valign="center" width="100%" height="100%" />
+                        </panel>
+                        <panel x="0px" y="0px" childLayout="center" align="center" valign="center" 
+                            height="45px" width="100%">
+                            <image filename="Images/loadingbar_border2.png" width="100%" height="100%"/>
+                        </panel>
                     </panel>
-                    <panel width="100%" height="5%" align="center" childLayout="center">
-                        <text text="Loading..." font="Interface/Fonts/gill_16.fnt" width="80%" height="80%"
-                            textHAlign="center"/>
+                    <panel width="100%" height="18%" align="center" childLayout="center">
+                        <image filename="Images/loading.png" width="80%" height="100%"/>
                     </panel>
                     <panel width="100%" height="20%"></panel>
                     <panel align="center" valign="bottom" width="100%" height="30%" 
