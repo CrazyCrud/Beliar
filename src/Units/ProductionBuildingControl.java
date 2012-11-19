@@ -23,7 +23,6 @@ public class ProductionBuildingControl extends AbstractControl{
     @Override
     protected void controlUpdate(float tpf) {
         if(isEnabled()){
-            System.out.println("BuildingControl: update()");
             if(bool_isActive) {
                 if(int_percentStatus < 100 && int_percentStatus > 0) {
                     progressProduction();
@@ -90,27 +89,27 @@ public class ProductionBuildingControl extends AbstractControl{
             case GameContainer.ADAM_BUILDING:
                 switch(size)
                 {
-                    case 0: return GameContainer.ADAMSMALL;
-                    case 1: return GameContainer.ADAMMIDDLE;
-                    case 2: return GameContainer.ADAMBIG;
+                    case 0: return GameContainer.ADAM_SMALL_SIZE;
+                    case 1: return GameContainer.ADAM_MIDDLE_SIZE;
+                    case 2: return GameContainer.ADAM_BIG_SIZE;
                 }
                 break;
                 
            case GameContainer.KYTHOS_BUILDING:
                 switch(size)
                 {
-                    case 0: return GameContainer.KYTHOSSMALL;
-                    case 1: return GameContainer.KYTHOSMIDDLE;
-                    case 2: return GameContainer.KYTHOSBIG;
+                    case 0: return GameContainer.KYTHOS_SMALL_SIZE;
+                    case 1: return GameContainer.KYTHOS_MIDDLE_SIZE;
+                    case 2: return GameContainer.KYTHOS_BIG_SIZE;
                 }
                 break;
                                 
           case GameContainer.MARA_BUILDING:
                 switch(size)
                 {
-                    case 0: return GameContainer.MARASMALL;
-                    case 1: return GameContainer.MARAMIDDLE;
-                    case 2: return GameContainer.MARABIG;
+                    case 0: return GameContainer.MARA_SMALL_SIZE;
+                    case 1: return GameContainer.MARA_MIDDLE_SIZE;
+                    case 2: return GameContainer.MARA_BIG_SIZE;
                 }
                 break;
         }

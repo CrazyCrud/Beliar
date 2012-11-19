@@ -17,7 +17,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
-import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,11 +30,7 @@ public class InLoadingInputs extends AbstractAppState implements ScreenControlle
     private Application app;
     private Nifty nifty;
     private Element citation, progressBar;
-    
-    private String dante1 = "Die Not der Menschen, die da unten zittern, "
-            + "verfäbrt mir das Gesicht, und Mitleid ist, was du als Furcht verstehst.";
-    private String dante2 = "Ich bin der Eingang in die Stadt der Schmerzen, "
-            + "ich bin der Eingang in das ewige Leid.";
+
     private List<String> danteQuotes = new ArrayList<String>();
     
     public InLoadingInputs(AppStateManager stateManager, Application app){

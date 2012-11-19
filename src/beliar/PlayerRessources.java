@@ -1,8 +1,6 @@
 package beliar;
 
 import Units.ProductionBuilding;
-import Units.Unit;
-import com.jme3.material.Material;
 import com.jme3.scene.Spatial;
 import java.util.ArrayList;
 
@@ -13,8 +11,8 @@ public class PlayerRessources {
 	public static int populationLimit =0;
 	public static int populationCount=0;
 	
-	public static int adam=10000;
-	public static int kythos=500;
+	public static int adam = 200;
+	public static int kythos = 100;
 	public static int mara=10;
 	
 	public static int darkness=10;
@@ -44,7 +42,7 @@ public class PlayerRessources {
         //Production
         public static int percentAdam=30;
         public static int percentKythos=30;
-        public static int perventMara=30;
+        public static int percentMara=30;
         public static int slavesToBuild=0;
         
         //SelectionRoom/Build

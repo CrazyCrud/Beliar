@@ -23,6 +23,10 @@ public class BuildingController {
         }
     }
     
+    public static void addProductionBuilding(ProductionBuilding building){
+        BuildingModel.getInstance().addProductionBuilding(building);
+    }
+    
     public static ArrayList<ProductionBuilding> getProductionBuildings(){
         return BuildingModel.getInstance().getProductionBuildings();
     }

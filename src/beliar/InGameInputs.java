@@ -47,6 +47,7 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
     private static final int BUILD_KYTHOS = 5;
     private static final int BUILD_MARA = 6;
     private static final int MENU_ARMY = 10;
+    private static final int MENU_QUESTS = 20;
 
     
     private static final int BUILDING_LEVEL_ONE = 1;
@@ -132,7 +133,7 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
         public void onArmy(){
         System.out.println("onArmy: " + menuState);
         if(menu.isVisible()){ 
-            if(menuState < MENU_ARMY){
+            if(menuState < MENU_ARMY || menuState >= MENU_QUESTS){
                 System.out.println("onArmy: menuState < MENU_ARMY");
                 clearMenu();
                 setupArmyIcons();
@@ -148,6 +149,19 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
         
     public void onQuest(){
         System.out.println("onQuest");
+        if(menu.isVisible()){ 
+            if(menuState < MENU_QUESTS){
+                System.out.println("onQuest: menuState < MENU_QUEST");
+                clearMenu();
+                setupQuests();
+            }else{
+                menu.hide();
+                clearMenu();
+            } 
+        } else{
+            menu.show();
+            setupQuests();
+        }
     }
     
     private void setupBuildIcons(){
@@ -205,6 +219,14 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
         Element menuText = screen.findElementByName("menuText");
         menuText.getRenderer(TextRenderer.class).setText("Verfügbarer Einheiten");
         myGameState.setUpUnit();
+    }
+    
+    private void setupQuests(){
+        System.out.println("InGameInputs: setupQuests");
+        menuState = MENU_QUESTS;
+        
+        Element menuText = screen.findElementByName("menuText");
+        menuText.getRenderer(TextRenderer.class).setText("Deine Aufgaben");
     }
     
     public void onOptions(){
@@ -417,19 +439,19 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
             case BUILDING_LEVEL_ONE:
                 System.out.println("Adam-Building Stufe 1");
                 PlayerRessources.selectionRoom=0;
-                myGameState.handleBuildSelection(GameContainer.ADAM_BUILDING, BUILDING_LEVEL_ONE);
+                myGameState.handleBuildSelection(GameContainer.ADAM_BUILDING, GameContainer.ADAM_SMALL_SIZE);
                 updateRessources(ADAM, BUILDING_LEVEL_ONE);
                 return;
             case BUILDING_LEVEL_TWO:
                  System.out.println("Adam-Building Stufe 2");
                  PlayerRessources.selectionRoom=0;
-                myGameState.handleBuildSelection(GameContainer.ADAM_BUILDING, BUILDING_LEVEL_TWO);
+                myGameState.handleBuildSelection(GameContainer.ADAM_BUILDING, GameContainer.ADAM_MIDDLE_SIZE);
                 updateRessources(ADAM, BUILDING_LEVEL_TWO);
                 return;
             case BUILDING_LEVEL_THREE:
                  System.out.println("Adam-Building Stufe 3");
                  PlayerRessources.selectionRoom=0;
-                myGameState.handleBuildSelection(GameContainer.ADAM_BUILDING, BUILDING_LEVEL_THREE);
+                myGameState.handleBuildSelection(GameContainer.ADAM_BUILDING, GameContainer.ADAM_BIG_SIZE);
                 updateRessources(ADAM, BUILDING_LEVEL_THREE);
                 return;
         }
@@ -441,15 +463,15 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
         switch(Integer.parseInt(whichLevel)){
             case BUILDING_LEVEL_ONE:
                 updateRessources(KYTHOS, BUILDING_LEVEL_ONE);
-                myGameState.handleBuildSelection(GameContainer.KYTHOS_BUILDING, BUILDING_LEVEL_ONE);
+                myGameState.handleBuildSelection(GameContainer.KYTHOS_BUILDING, GameContainer.KYTHOS_SMALL_SIZE);
                 return;
             case BUILDING_LEVEL_TWO:
                 updateRessources(KYTHOS, BUILDING_LEVEL_TWO);
-                myGameState.handleBuildSelection(GameContainer.KYTHOS_BUILDING, BUILDING_LEVEL_TWO);
+                myGameState.handleBuildSelection(GameContainer.KYTHOS_BUILDING, GameContainer.KYTHOS_MIDDLE_SIZE);
                 return;
             case BUILDING_LEVEL_THREE:
                 updateRessources(KYTHOS, BUILDING_LEVEL_THREE);
-                myGameState.handleBuildSelection(GameContainer.KYTHOS_BUILDING, BUILDING_LEVEL_THREE);
+                myGameState.handleBuildSelection(GameContainer.KYTHOS_BUILDING, GameContainer.KYTHOS_BIG_SIZE);
                 return;
         }
     }
@@ -459,11 +481,11 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
         switch(Integer.parseInt(whichLevel)){
             case BUILDING_LEVEL_ONE:
                 updateRessources(MARA, BUILDING_LEVEL_ONE);
-                myGameState.handleBuildSelection(GameContainer.MARA_BUILDING, BUILDING_LEVEL_ONE);
+                myGameState.handleBuildSelection(GameContainer.MARA_BUILDING, GameContainer.MARA_SMALL_SIZE);
                 return;
             case BUILDING_LEVEL_TWO:
                 updateRessources(MARA, BUILDING_LEVEL_TWO);
-                myGameState.handleBuildSelection(GameContainer.MARA_BUILDING, BUILDING_LEVEL_TWO);
+                myGameState.handleBuildSelection(GameContainer.MARA_BUILDING, GameContainer.MARA_MIDDLE_SIZE);
                 return;
             case BUILDING_LEVEL_THREE:
                 updateRessources(MARA, BUILDING_LEVEL_THREE);

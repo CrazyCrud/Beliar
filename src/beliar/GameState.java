@@ -43,6 +43,10 @@ import com.jme3.scene.debug.Arrow;
 import com.jme3.scene.debug.Grid;
 import com.jme3.shadow.PssmShadowRenderer;
 import Map.MapController;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
 
 /**
  *
@@ -53,11 +57,7 @@ public class GameState extends AbstractAppState {
     private ViewPort viewPort;
     private Node rootNode;
     private Node localRootNode;
-    private Node guiNode;
     private AssetManager assetManager;
-    private Camera mCam;
-    private int scrollArea;
-    private int scrollSpeed;
     //Light&Shadow
     private DirectionalLight directionLight;
     private PointLight cameraLight;
@@ -78,17 +78,14 @@ public class GameState extends AbstractAppState {
     private Node mapNode;
     private Node marker;
     private RTSCam rtsCam;
-    private MapController mMapController;
     private MapHandler mMaphandler;
     private SoundManager mSoundManager;
     private SimpleApplication app;
     private MouseInput mouseInput;
     private InputManager inputManager;
-    private AudioRenderer audioRenderer;
     private AppStateManager stateManager;
     private Camera cam;
     private FlyByCamera flyCam;
-    private ViewPort guiViewPort;
     
     //DIRTY
     private int int_buildingType = 0;
@@ -102,11 +99,11 @@ public class GameState extends AbstractAppState {
         this.app = (SimpleApplication) ((SimpleApplication) app);
         this.rootNode = ((SimpleApplication) app).getRootNode();
         this.viewPort = ((SimpleApplication) app).getViewPort();
-        this.guiNode = ((SimpleApplication) app).getGuiNode();
+        //this.guiNode = ((SimpleApplication) app).getGuiNode();
         this.assetManager = ((SimpleApplication) app).getAssetManager();
         this.inputManager = ((SimpleApplication) app).getInputManager();
-        this.audioRenderer = ((SimpleApplication) app).getAudioRenderer();
-        this.guiViewPort = ((SimpleApplication) app).getGuiViewPort();
+        //this.audioRenderer = ((SimpleApplication) app).getAudioRenderer();
+        //this.guiViewPort = ((SimpleApplication) app).getGuiViewPort();
         this.cam = ((SimpleApplication) app).getCamera();
         this.flyCam = ((SimpleApplication) app).getFlyByCamera();
         this.stateManager = stateManager;
@@ -215,6 +212,7 @@ public class GameState extends AbstractAppState {
         initMap();
         initScene();
         initSound();
+        initQuests();
         attachGrid(new Vector3f(0, 0, 0), 1024, ColorRGBA.Blue);
         attachCoordinateAxes(new Vector3f(-1, 0, -1));
     }
@@ -327,6 +325,25 @@ public class GameState extends AbstractAppState {
         localRootNode.attachChild(pickAble);
         localRootNode.attachChild(creatures);
     }
+    
+    private void initQuests(){
+        try{
+            File txtFile = new File("assets/Interface/Text/Quests.txt");
+            FileInputStream inputStream = new FileInputStream(txtFile);
+            InputStreamReader streamReader = new InputStreamReader(inputStream, "UTF-8");
+            BufferedReader bfReader = new BufferedReader(streamReader);
+            String nextLine = bfReader.readLine();
+           
+            while(nextLine != null){
+                nextLine = bfReader.readLine();
+                GameContainer.getInstance().addQuest(nextLine);
+            }
+            
+            bfReader.close();
+        }catch(Exception e){
+            
+        }
+    }
 
     private void attachCoordinateAxes(Vector3f pos) {
         Arrow arrow = new Arrow(Vector3f.UNIT_X);
@@ -437,27 +454,27 @@ public class GameState extends AbstractAppState {
     private void updateRessources(){
         switch(int_buildingType){
             case GameContainer.ADAM_BUILDING:
-                if(int_sizeBuilding == GameContainer.ADAMSMALL){
+                if(int_sizeBuilding == GameContainer.ADAM_SMALL_SIZE){
                     gameSimulation.reduceRessources(GameContainer.COSTADAMSMALL);
-                }else if(int_sizeBuilding == GameContainer.ADAMMIDDLE){
+                }else if(int_sizeBuilding == GameContainer.ADAM_MIDDLE_SIZE){
                     gameSimulation.reduceRessources(GameContainer.COSTADAMMIDDLE);
                 }else{
                     gameSimulation.reduceRessources(GameContainer.COSTADAMBIG);
                 }
                 break;
             case GameContainer.KYTHOS_BUILDING:
-                if(int_sizeBuilding == GameContainer.KYTHOSSMALL){
+                if(int_sizeBuilding == GameContainer.KYTHOS_SMALL_SIZE){
                     gameSimulation.reduceRessources(GameContainer.COSTKYTHOSSMALL);
-                }else if(int_sizeBuilding == GameContainer.KYTHOSMIDDLE){
+                }else if(int_sizeBuilding == GameContainer.KYTHOS_MIDDLE_SIZE){
                     gameSimulation.reduceRessources(GameContainer.COSTKYTHOSMIDDLE);
                 }else{
                     gameSimulation.reduceRessources(GameContainer.COSTKYTHOSBIG);
                 }
                 break;
             case GameContainer.MARA_BUILDING:
-                if(int_sizeBuilding == GameContainer.MARASMALL){
+                if(int_sizeBuilding == GameContainer.MARA_SMALL_SIZE){
                     gameSimulation.reduceRessources(GameContainer.COSTMARASMALL);
-                }else if(int_sizeBuilding == GameContainer.MARAMIDDLE){
+                }else if(int_sizeBuilding == GameContainer.MARA_MIDDLE_SIZE){
                     gameSimulation.reduceRessources(GameContainer.COSTMARAMIDDLE);
                 }else{
                     gameSimulation.reduceRessources(GameContainer.COSTMARABIG);
@@ -501,7 +518,7 @@ public class GameState extends AbstractAppState {
     }
 
     public void handleBuildSelection(int typeRoom, int size) {
-        System.out.println("HandleBuildSelection");
+        System.out.println("Gamestate: handleBuildSelection()");
 
         String loadingString = "production".concat(String.valueOf(size));
 

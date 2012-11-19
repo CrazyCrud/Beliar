@@ -2,6 +2,7 @@ package beliar;
 
 import Units.ProductionBuilding;
 import Units.BuildingController;
+import Units.UnitController;
 import com.jme3.app.Application;
 import com.jme3.app.SimpleApplication;
 import com.jme3.app.state.AbstractAppState;
@@ -44,6 +45,7 @@ public class GameSimulation extends AbstractAppState{
                 updateDisplay();
                 updateTimerSoulProduction(tpf);
                 updateTimerGoodsProduction(tpf);
+                checkForQuests();
             }else{
                 
             }           
@@ -120,27 +122,27 @@ public class GameSimulation extends AbstractAppState{
         int [] cost = {0,0,0};
         switch(whichBuilding){
             case GameContainer.ADAM_BUILDING:
-                if(size == GameContainer.ADAMSMALL){
+                if(size == GameContainer.ADAM_SMALL_SIZE){
                     cost = GameContainer.COSTADAMSMALL;
-                }else if(size == GameContainer.ADAMMIDDLE){
+                }else if(size == GameContainer.ADAM_MIDDLE_SIZE){
                     cost = GameContainer.COSTADAMMIDDLE;
                 }else{
                     cost = GameContainer.COSTADAMBIG;
                 }
                 break;
             case GameContainer.KYTHOS_BUILDING:
-                if(size == GameContainer.KYTHOSSMALL){
+                if(size == GameContainer.KYTHOS_SMALL_SIZE){
                     cost = GameContainer.COSTKYTHOSSMALL;
-                }else if(size == GameContainer.KYTHOSMIDDLE){
+                }else if(size == GameContainer.KYTHOS_MIDDLE_SIZE){
                     cost = GameContainer.COSTKYTHOSMIDDLE;
                 }else{
                     cost = GameContainer.COSTKYTHOSBIG;
                 }
                 break;
             case GameContainer.MARA_BUILDING:
-                if(size == GameContainer.MARASMALL){
+                if(size == GameContainer.MARA_SMALL_SIZE){
                     cost = GameContainer.COSTMARASMALL;
-                }else if(size == GameContainer.MARAMIDDLE){
+                }else if(size == GameContainer.MARA_MIDDLE_SIZE){
                     cost = GameContainer.COSTMARAMIDDLE;
                 }else{
                     cost = GameContainer.COSTMARABIG;
@@ -197,4 +199,32 @@ public class GameSimulation extends AbstractAppState{
             //System.out.println("SoulsCount"+PlayerRessources.soulsCount);
         }
       }
+
+    private boolean checkForQuests() {
+        if(isQuest1Completed() && isQuest2Completed() && isQuest3Completed()){
+            return true;
+        }
+        return false;
+    }
+
+    private boolean isQuest1Completed() {
+        if(PlayerRessources.adam > 2000 && PlayerRessources.kythos > 1500 && PlayerRessources.mara > 1000){
+            return true;
+        }
+        return false;
+    }
+
+    private boolean isQuest2Completed() {
+        if(UnitController.getUnits().size() > 20){
+            return true;
+        }
+        return false;
+    }
+
+    private boolean isQuest3Completed() {
+        if(PlayerRessources.darkness > 100){
+            return true;
+        }
+        return false;
+    }
 }

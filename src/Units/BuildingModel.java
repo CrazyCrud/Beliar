@@ -38,9 +38,12 @@ public class BuildingModel {
             int buildingSize){
         ProductionBuilding prodBuilding  = new ProductionBuilding(posX, posZ, 
             type, buildingSize);
-        //list_prodBuildings.add(prodBuilding);
-        slave.getControl(SlaveCharacterControl.class).build((Node)prodBuilding.getSpatial());
+        slave.getControl(SlaveCharacterControl.class).build(prodBuilding);
         return (Node) prodBuilding.getSpatial();
+    }
+    
+    protected void addProductionBuilding(ProductionBuilding building){
+        list_prodBuildings.add(building);
     }
     
     protected ArrayList<ProductionBuilding> getProductionBuildings(){

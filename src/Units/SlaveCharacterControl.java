@@ -21,7 +21,7 @@ import java.util.LinkedList;
 public class SlaveCharacterControl extends AbstractControl{
 
     private float float_buildTimer, float_moveTimer;
-    private LinkedList<Node> list_buildings = new LinkedList<Node>();
+    private LinkedList<Building> list_buildings = new LinkedList<Building>();
     private static final int BUILD_TIMER = 0;
     private static final int MOVE_TIMER = 1;
     private boolean isBuilding = false;
@@ -72,15 +72,15 @@ public class SlaveCharacterControl extends AbstractControl{
         return this.hasOrder;
     }
     
-    protected void build(Node building){
+    protected void build(Building building){
         System.out.println("SlaveCharacterControl: build()");
         list_buildings.addFirst(building);
     }
     
     private void walkToContruction(){
         if(!(spatial.getControl(WalkControl.class).isMoving())){
-            if(isBuildingAccessible(list_buildings.getLast().getControl(GameObjectControl.class).getPosX(),
-                list_buildings.getLast().getControl(GameObjectControl.class).getPosZ())){
+            if(isBuildingAccessible(list_buildings.getLast().getSpatial().getControl(GameObjectControl.class).getPosX(),
+                list_buildings.getLast().getSpatial().getControl(GameObjectControl.class).getPosZ())){
                 //TODO
             }else{
                 list_buildings.removeLast();
@@ -97,9 +97,9 @@ public class SlaveCharacterControl extends AbstractControl{
     }
     
     private boolean hasReachedBuilding(){
-        if(spatial.getControl(GameObjectControl.class).getPosX() == list_buildings.getLast().
+        if(spatial.getControl(GameObjectControl.class).getPosX() == list_buildings.getLast().getSpatial().
                 getControl(GameObjectControl.class).getPosX()){
-            if(spatial.getControl(GameObjectControl.class).getPosZ() == list_buildings.getLast().
+            if(spatial.getControl(GameObjectControl.class).getPosZ() == list_buildings.getLast().getSpatial().
                 getControl(GameObjectControl.class).getPosZ()){
                 return true;
             }
@@ -133,8 +133,14 @@ public class SlaveCharacterControl extends AbstractControl{
     }
     
     private void setBuilding(){
-        Node building = list_buildings.removeLast();
-        GameContainer.getInstance().getApplication().getStateManager().getState(GameState.class).buildSucessfull(building);
+        Building building = list_buildings.removeLast();
+        int type = building.getType();
+        if(type == GameContainer.ADAM_BUILDING || type == GameContainer.KYTHOS_BUILDING ||
+                type == GameContainer.MARA_BUILDING){
+            BuildingController.addProductionBuilding((ProductionBuilding)building);
+        }
+        GameContainer.getInstance().getApplication().getStateManager().getState(GameState.class).
+                buildSucessfull((Node)building.getSpatial());
     }
     
     private boolean anyBuildingLeft(){
