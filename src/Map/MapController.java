@@ -35,4 +35,9 @@ public final class MapController {
         MapNodes.getInstance().changeEdge(xPos, zPos, 1.0f);
         MapNodes.getInstance().changeType(xPos, zPos, 1);
     }
+    
+    public static void setBuilding(int xPos, int zPos){
+        MapNodes.getInstance().changeEdge(xPos, zPos, 10000.0f);
+        MapNodes.getInstance().changeType(xPos, zPos, 0);
+    }
 }

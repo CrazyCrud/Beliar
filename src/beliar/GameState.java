@@ -7,6 +7,7 @@ package beliar;
 import Map.MapHandler;
 import Units.BuildingController;
 import Units.UnitController;
+import Units.GameObjectControl;
 import com.jme3.app.Application;
 import com.jme3.app.state.AbstractAppState;
 import com.jme3.app.state.AppStateManager;
@@ -429,6 +430,8 @@ public class GameState extends AbstractAppState {
         System.out.println("GameState: computeBuilding " + myBuilding.getName());
         buildings.attachChild(myBuilding);
         mMaphandler.placeBuilding((int) mousePositionWorld.x, (int) mousePositionWorld.z);
+        MapController.setBuilding(myBuilding.getControl(GameObjectControl.class).getPosX(),
+                myBuilding.getControl(GameObjectControl.class).getPosZ());
     }
     
     private void updateRessources(){

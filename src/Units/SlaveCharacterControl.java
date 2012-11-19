@@ -20,8 +20,10 @@ import java.util.LinkedList;
  */
 public class SlaveCharacterControl extends AbstractControl{
 
-    private float float_timer;
+    private float float_buildTimer, float_moveTimer;
     private LinkedList<Node> list_buildings = new LinkedList<Node>();
+    private static final int BUILD_TIMER = 0;
+    private static final int MOVE_TIMER = 1;
     private boolean isBuilding = false;
     private boolean hasOrder = false;
     
@@ -32,12 +34,14 @@ public class SlaveCharacterControl extends AbstractControl{
             if(hasReachedBuilding()){
                 if(!(spatial.getControl(WalkControl.class).isMoving())){
                     buildConstruction(tpf);
+                    resetTimer(MOVE_TIMER);
                 }
             }else{
                 walkToContruction();
             }            
         }else{
             setHasOrder(false);
+            moveRandom();
         }
     }
 
@@ -105,22 +109,27 @@ public class SlaveCharacterControl extends AbstractControl{
 
     private void buildConstruction(float tpf) {
         setIsBuilding(true);
-        float_timer += tpf;
-        if(float_timer > GameObjectValues.CONSTRUCTION_TIME){
+        float_buildTimer += tpf;
+        if(float_buildTimer > GameObjectValues.CONSTRUCTION_TIME){
             System.out.println("SlaveCharacterControl buildConstruction() finished");
             buildingFinished();
         }
     }
     
     private void buildingFinished(){
-        resetTimer();
+        resetTimer(BUILD_TIMER);
         setHasOrder(false);
         setIsBuilding(false);
         setBuilding();
     }
     
-    private void resetTimer(){
-        float_timer = 0.0f;
+    private void resetTimer(int whichTimer){
+        if(whichTimer == BUILD_TIMER){
+            float_buildTimer = 0.0f;
+            return;
+        }else if(whichTimer == MOVE_TIMER){
+            float_moveTimer = 0.0f;
+        }        
     }
     
     private void setBuilding(){
@@ -130,5 +139,41 @@ public class SlaveCharacterControl extends AbstractControl{
     
     private boolean anyBuildingLeft(){
         return !(list_buildings.isEmpty()); 
+    }
+    
+    private void moveRandom(){
+        if(spatial.getControl(WalkControl.class).isMoving()){
+            return;
+        }else{
+            if(float_moveTimer != 0.0f){
+                float_moveTimer += 1.0f;
+                if(float_moveTimer > 1000.0f){
+                    resetTimer(MOVE_TIMER);
+                }
+                return;
+            }
+            float_moveTimer += 1.0f;
+            int x = spatial.getControl(GameObjectControl.class).getPosX();
+            int z = spatial.getControl(GameObjectControl.class).getPosZ();
+            int direction = (int)Math.round(Math.random() * 4);
+            switch(direction){
+                case 0:
+                    if(spatial.getControl(WalkControl.class).findPath(x - 1, z)){
+                        return;
+                    }
+                case 1:
+                    if(spatial.getControl(WalkControl.class).findPath(x + 1, z)){
+                        return;
+                    }
+                case 2:
+                    if(spatial.getControl(WalkControl.class).findPath(x, z + 1)){
+                        return;
+                    }
+                case 3:
+                    if(spatial.getControl(WalkControl.class).findPath(x, z - 1)){
+                        return;
+                    }
+            }
+        }
     }
 }

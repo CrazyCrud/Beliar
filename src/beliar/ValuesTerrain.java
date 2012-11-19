@@ -22,10 +22,10 @@ public final class ValuesTerrain {
 	public final static int CHAMBEROPLEASURE = 7;
 	public final static int FARM = 8;
 	
-        public final static int HELLCENTER= 9;
+        public final static int HELLCENTER = 9;
 	
         //ENVIROMENT
 	public final static int HOLY = 10;
-	public final static int SOULABYSS=11;
+	public final static int SOULABYSS = 11;
 	
 }
