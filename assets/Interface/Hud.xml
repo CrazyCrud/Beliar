@@ -204,6 +204,12 @@
                                     <interact onClick="onOptions()"/>    
                                 </image>
                             </panel>
+                            <panel width="20%" height="80%" childLayout="center">
+                                <image id="questIcon" filename="Images/quest_placeholder.png" valign="bottom" 
+                                    width="100%h" height="100%">
+                                    <interact onClick="onQuest()"/>    
+                                </image>
+                            </panel>
                         </panel>
                     </panel>
                 </panel>

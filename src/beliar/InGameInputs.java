@@ -145,6 +145,10 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
             setupArmyIcons();
         }
     }
+        
+    public void onQuest(){
+        System.out.println("onQuest");
+    }
     
     private void setupBuildIcons(){
         System.out.println("setupBuildIcons");
@@ -391,17 +395,17 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
             case ADAM:
                 // Adam-Raum anlegen
                 System.out.println("Build Adam Room");
-                PlayerRessources.selectionRoom=ValuesTerrain.HALLOFANARCHY;
+                PlayerRessources.selectionRoom = ValuesTerrain.HALLOFANARCHY;
                 break;
             case KYTHOS:
                 // Kythos-Raum anlegen
                 System.out.println("Build Kythos Room");
-                PlayerRessources.selectionRoom=ValuesTerrain.CAVEOFBEAST;
+                PlayerRessources.selectionRoom = ValuesTerrain.CAVEOFBEAST;
                 break;
             case MARA:
                 // Mara-Raum anlegen
                 System.out.println("Build Mara Room");
-                PlayerRessources.selectionRoom=ValuesTerrain.TOMBOFMEMORY;
+                PlayerRessources.selectionRoom = ValuesTerrain.TOMBOFMEMORY;
                 break;
         }
     }
@@ -455,9 +459,11 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
         switch(Integer.parseInt(whichLevel)){
             case BUILDING_LEVEL_ONE:
                 updateRessources(MARA, BUILDING_LEVEL_ONE);
+                myGameState.handleBuildSelection(GameContainer.MARA_BUILDING, BUILDING_LEVEL_ONE);
                 return;
             case BUILDING_LEVEL_TWO:
                 updateRessources(MARA, BUILDING_LEVEL_TWO);
+                myGameState.handleBuildSelection(GameContainer.MARA_BUILDING, BUILDING_LEVEL_TWO);
                 return;
             case BUILDING_LEVEL_THREE:
                 updateRessources(MARA, BUILDING_LEVEL_THREE);
