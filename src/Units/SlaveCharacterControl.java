@@ -12,6 +12,7 @@ import com.jme3.scene.control.AbstractControl;
 import com.jme3.scene.control.Control;
 import beliar.GameContainer;
 import beliar.GameState;
+import java.util.LinkedList;
 
 /**
  *
@@ -19,20 +20,24 @@ import beliar.GameState;
  */
 public class SlaveCharacterControl extends AbstractControl{
 
-    private Node node_building;
     private float float_timer;
+    private LinkedList<Node> list_buildings = new LinkedList<Node>();
     private boolean isBuilding = false;
     private boolean hasOrder = false;
-    private boolean isTargetAccessible = false;
     
     @Override
     protected void controlUpdate(float tpf) {
-        if(isEnabled()){
-            if(hasOrder){
-                    if(!(spatial.getControl(WalkControl.class).isMoving())){
-                        buildConstruction(tpf);
-                    }
-            }
+        if(anyBuildingLeft()){
+            setHasOrder(true);
+            if(hasReachedBuilding()){
+                if(!(spatial.getControl(WalkControl.class).isMoving())){
+                    buildConstruction(tpf);
+                }
+            }else{
+                walkToContruction();
+            }            
+        }else{
+            setHasOrder(false);
         }
     }
 
@@ -63,14 +68,39 @@ public class SlaveCharacterControl extends AbstractControl{
         return this.hasOrder;
     }
     
-    protected void setIsTargetAccessible(boolean isTargetAccessible) {
-        this.isTargetAccessible = isTargetAccessible;
-    }
-    
     protected void build(Node building){
         System.out.println("SlaveCharacterControl: build()");
-        this.node_building = building;
-        setHasOrder(true);
+        list_buildings.addFirst(building);
+    }
+    
+    private void walkToContruction(){
+        if(!(spatial.getControl(WalkControl.class).isMoving())){
+            if(isBuildingAccessible(list_buildings.getLast().getControl(GameObjectControl.class).getPosX(),
+                list_buildings.getLast().getControl(GameObjectControl.class).getPosZ())){
+                //TODO
+            }else{
+                list_buildings.removeLast();
+            }
+        } 
+    }
+    
+    private boolean isBuildingAccessible(int x, int z) {
+        if(spatial.getControl(WalkControl.class).findPath(x, z)){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    
+    private boolean hasReachedBuilding(){
+        if(spatial.getControl(GameObjectControl.class).getPosX() == list_buildings.getLast().
+                getControl(GameObjectControl.class).getPosX()){
+            if(spatial.getControl(GameObjectControl.class).getPosZ() == list_buildings.getLast().
+                getControl(GameObjectControl.class).getPosZ()){
+                return true;
+            }
+        }
+        return false;
     }
 
     private void buildConstruction(float tpf) {
@@ -86,7 +116,6 @@ public class SlaveCharacterControl extends AbstractControl{
         resetTimer();
         setHasOrder(false);
         setIsBuilding(false);
-        setIsTargetAccessible(false);
         setBuilding();
     }
     
@@ -95,6 +124,11 @@ public class SlaveCharacterControl extends AbstractControl{
     }
     
     private void setBuilding(){
-        GameContainer.getInstance().getApplication().getStateManager().getState(GameState.class).buildSucessfull(node_building);
+        Node building = list_buildings.removeLast();
+        GameContainer.getInstance().getApplication().getStateManager().getState(GameState.class).buildSucessfull(building);
+    }
+    
+    private boolean anyBuildingLeft(){
+        return !(list_buildings.isEmpty()); 
     }
 }

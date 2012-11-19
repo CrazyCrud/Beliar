@@ -114,7 +114,7 @@ public class Pathfinder {
             }
         }
         if(best == null){
-            throw new IllegalStateException();
+            
         }
         return best.source;
     }

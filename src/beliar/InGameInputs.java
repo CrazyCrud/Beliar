@@ -16,8 +16,6 @@ import de.lessvoid.nifty.elements.Element;
 import de.lessvoid.nifty.screen.Screen;
 import de.lessvoid.nifty.screen.ScreenController;
 import de.lessvoid.nifty.elements.render.TextRenderer;
-import de.lessvoid.nifty.elements.render.ImageRenderer;
-import de.lessvoid.nifty.render.NiftyImage;
 import de.lessvoid.nifty.tools.SizeValue;
 import java.util.List;
 import org.bushe.swing.event.EventTopicSubscriber;
@@ -334,7 +332,7 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
                     height("95%");
                     width("100%h");
                     alignCenter();
-                    interactOnClick("buildAdamBuilding(3)");   
+                    interactOnClick("onDoNothing()");   
                         }}.build(nifty, screen, secondRowTop);
                 return;
             case KYTHOS:
@@ -357,7 +355,7 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
                     height("95%");
                     width("100%h");
                     alignCenter();
-                    interactOnClick("buildKythosBuilding(3)");   
+                    interactOnClick("onDoNothing()");   
                         }}.build(nifty, screen, secondRowTop);
                 return;
             case MARA:
@@ -380,7 +378,7 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
                     height("95%");
                     width("100%h");
                     alignCenter();
-                    interactOnClick("buildMaraBuilding(3)");   
+                    interactOnClick("onDoNothing()");   
                         }}.build(nifty, screen, secondRowTop);
                 return;
         }

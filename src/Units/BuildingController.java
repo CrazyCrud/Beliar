@@ -18,12 +18,8 @@ public class BuildingController {
         if(slave == null){
             return null;
         }else{
-            if(slave.getControl(SlaveCharacterControl.class).hasOrder()){
-                return null;
-            }else{
-                return BuildingModel.getInstance().buildProductionBuilding(slave, posX, posZ, 
-                    type, buildingSize);
-            } 
+            return BuildingModel.getInstance().buildProductionBuilding(slave, posX, posZ, 
+                type, buildingSize);
         }
     }
     
