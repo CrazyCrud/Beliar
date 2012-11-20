@@ -4,6 +4,7 @@
  */
 package Units;
 
+import Map.MapController;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.RenderManager;
 import com.jme3.renderer.ViewPort;
@@ -34,6 +35,9 @@ public class GameObjectControl extends AbstractControl{
     }    
         
     public void setLocation(Vector3f newLocation){
+        Vector3f oldPosition = spatial.getLocalTranslation();
+        MapController.setNodeTo((int)oldPosition.x, (int)oldPosition.z, false);
+        MapController.setNodeTo((int)newLocation.x, (int)newLocation.z, true);
         spatial.setLocalTranslation(newLocation);
     }
     

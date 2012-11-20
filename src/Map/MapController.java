@@ -27,8 +27,16 @@ public final class MapController {
         MapNodes.getInstance().initializeMapNodes();
     }
     
-    public static Node getNode(int x, int y){
-        return MapNodes.getInstance().getNode(x, y);
+    public static Node getNode(int x, int z){
+        return MapNodes.getInstance().getNode(x, z);
+    }
+    
+    public static void setNodeTo(int x, int z, boolean isCovered){
+        MapNodes.getInstance().setNodeTo(x, z, isCovered);
+    }
+    
+    public static boolean isNodeCovered(int x, int z){
+        return  MapNodes.getInstance().isNodeCovered(x, z);
     }
     
     public static void setHallwayAt(int xPos, int zPos){

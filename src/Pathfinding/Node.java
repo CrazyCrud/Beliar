@@ -13,6 +13,7 @@ import java.util.List;
  */
 public class Node {
     
+    private boolean isCovered;
     protected final int x, y;
     protected int type;
     private List<Edge> edges;
@@ -22,6 +23,7 @@ public class Node {
         this.x = x;
         this.y = y;
         this.type = type;
+        this.isCovered = false;
         this.edges = new ArrayList<Edge>();
         this.backtracks = new ArrayList<Edge>();
     }
@@ -64,6 +66,14 @@ public class Node {
             return;
         }
         edgeToChange.weight = newWeight;
+    }
+    
+    public boolean isNodeCovered() {
+        return isCovered;
+    }
+
+    public void setIsCovered(boolean isCovered) {
+        this.isCovered = isCovered;
     }
     
     public int getXPos(){

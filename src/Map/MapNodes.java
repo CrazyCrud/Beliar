@@ -130,6 +130,14 @@ public class MapNodes {
         }
     }
     
+    protected void setNodeTo(int x, int z, boolean covered) {
+        node_mapNodes[x][z].setIsCovered(covered);
+    }
+    
+    protected boolean isNodeCovered(int x, int z) {
+        return node_mapNodes[x][z].isNodeCovered();
+    }
+    
     protected void changeType(int x, int z, int type){
         node_mapNodes[x][z].changeType(type);
     }

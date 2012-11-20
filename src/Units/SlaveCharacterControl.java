@@ -4,6 +4,7 @@
  */
 package Units;
 
+import Map.MapController;
 import com.jme3.renderer.RenderManager;
 import com.jme3.renderer.ViewPort;
 import com.jme3.scene.Node;
@@ -161,22 +162,30 @@ public class SlaveCharacterControl extends AbstractControl{
             float_moveTimer += 1.0f;
             int x = spatial.getControl(GameObjectControl.class).getPosX();
             int z = spatial.getControl(GameObjectControl.class).getPosZ();
-            int direction = (int)Math.round(Math.random() * 4);
+            int direction = (int)Math.round(Math.random() * 3);
             switch(direction){
                 case 0:
-                    if(spatial.getControl(WalkControl.class).findPath(x - 1, z)){
+                    if(MapController.isNodeCovered(x - 1, z)){
+                        return;
+                    }else if(spatial.getControl(WalkControl.class).findPath(x - 1, z)){
                         return;
                     }
                 case 1:
-                    if(spatial.getControl(WalkControl.class).findPath(x + 1, z)){
+                    if(MapController.isNodeCovered(x + 1, z)){
+                        return;
+                    }else if(spatial.getControl(WalkControl.class).findPath(x + 1, z)){
                         return;
                     }
                 case 2:
-                    if(spatial.getControl(WalkControl.class).findPath(x, z + 1)){
+                    if(MapController.isNodeCovered(x, z + 1)){
+                        return;
+                    }else if(spatial.getControl(WalkControl.class).findPath(x, z + 1)){
                         return;
                     }
                 case 3:
-                    if(spatial.getControl(WalkControl.class).findPath(x, z - 1)){
+                    if(MapController.isNodeCovered(x, z - 1)){
+                        return;
+                    }else if(spatial.getControl(WalkControl.class).findPath(x, z - 1)){
                         return;
                     }
             }
