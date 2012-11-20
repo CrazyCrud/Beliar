@@ -1,0 +1,30 @@
+Material maraRoom : Common/MatDefs/Light/Lighting.j3md {
+    MaterialParameters {
+        DiffuseMap : Textures/maraRoom.png
+        GlowColor : 0.2 0.8 1.0 1.0
+        Specular : 0.0 0.6 0.8 1.0
+        Diffuse : 0.64000005 0.64000005 0.64000005 1.0
+        UseMaterialColors : true
+        ParallaxHeight : 1.05
+        Ambient : 0.4 0.4 0.4 1.0
+        Shininess : 18.75
+        NormalMap : Textures/kythosWallN.png
+        HighQuality : true
+        VertexLighting : false
+        Minnaert : false
+        UseVertexColor : false
+        SteepParallax : false
+        LowQuality : false
+    }
+    AdditionalRenderState {
+      FaceCull Off
+      Wireframe Off
+      DepthWrite On
+      PolyOffset 0.0 0.0
+      AlphaTestFalloff 0.0
+      Blend Off
+      PointSprite Off
+      ColorWrite On
+      DepthTest On
+    }
+}

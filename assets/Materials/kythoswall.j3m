@@ -1,8 +1,8 @@
 Material kythosRoom : Common/MatDefs/Light/Lighting.j3md {
     MaterialParameters {
-        DiffuseMap : Textures/kythosWallC.png
+        DiffuseMap : Textures/kythosRoom.png
         GlowColor : 0.0 0.0 0.0 1.0
-        Specular : 0.7386364 0.49412644 0.43733066 1.0
+        Specular : 0.2 0.2 0.0 1.0
         Diffuse : 0.64000005 0.64000005 0.64000005 1.0
         UseMaterialColors : true
         ParallaxHeight : 1.05

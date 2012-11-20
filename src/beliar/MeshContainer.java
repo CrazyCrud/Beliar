@@ -38,6 +38,7 @@ public class MeshContainer {
         initLimbo();
         initHallOfAnarchy();
         initCaveOfTheBeast();
+        initTombOfMemories();
         initUnits();
         
        hellCenter = assetManager.loadModel("Scenes/hellcenter.j3o");
@@ -78,7 +79,7 @@ public class MeshContainer {
         adamHall.put("production3",        assetManager.loadModel("Scenes/adamHall/room/adamEnd.j3o"));
     }
     
-        private void initCaveOfTheBeast()
+    private void initCaveOfTheBeast()
     {
         //RoomParts
         caveOfTheBeast.put("straigt",    assetManager.loadModel("Scenes/kythosHall/room/kythosStraight.j3o"));
@@ -92,5 +93,17 @@ public class MeshContainer {
         caveOfTheBeast.put("production1",        assetManager.loadModel("Scenes/kythosHall/buildings/kythosBuilding_1.j3o"));
         caveOfTheBeast.put("production2",        assetManager.loadModel("Scenes/kythosHall/buildings/kythosBuilding_2.j3o"));
         caveOfTheBeast.put("production3",        assetManager.loadModel("Scenes/adamHall/room/adamEnd.j3o"));
+    }
+    
+    private void initTombOfMemories()
+    {
+        //RoomParts
+        tombOfMemory.put("straigt",    assetManager.loadModel("Scenes/maraHall/room/maraStraight.j3o"));
+        tombOfMemory.put("curve",      assetManager.loadModel("Scenes/maraHall/room/maraCurve.j3o"));
+        tombOfMemory.put("3cross",     assetManager.loadModel("Scenes/maraHall/room/mara3cross.j3o"));
+        tombOfMemory.put("4cross",     assetManager.loadModel("Scenes/maraHall/room/mara4cross.j3o"));
+        tombOfMemory.put("side",       assetManager.loadModel("Scenes/maraHall/room/maraSide.j3o"));
+        tombOfMemory.put("end",        assetManager.loadModel("Scenes/maraHall/room/maraEnd.j3o"));
+        
     }
 }
