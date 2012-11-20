@@ -132,6 +132,9 @@ public class WalkControl extends AbstractControl{
         int newXPos = nextNode.getXPos();
         int newZPos = nextNode.getYPos();
         float tileMovement = 0.0125f;
+        if(list_path.size() == 1){
+            //float_timer += getSpeed();
+        }
         
         // Erster Wert bewegt das Spatial vertikal, der dritte Wert horizontal
         if(newXPos > xPos){
