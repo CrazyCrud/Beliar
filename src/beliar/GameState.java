@@ -535,7 +535,6 @@ public class GameState extends AbstractAppState {
         switch (typeRoom) {
             case GameContainer.ADAM_BUILDING:
                 typeBuildingRoom = ValuesTerrain.HALLOFANARCHY;
-                System.out.println("ADAMMATERIAL:");
                 PlayerRessources.selectedBuilding = mMeshContainer.adamHall.get(loadingString).clone();
                 loadSelectedMaterial("adamBuilding_", size);
                 break;
@@ -544,16 +543,12 @@ public class GameState extends AbstractAppState {
                 typeBuildingRoom = ValuesTerrain.CAVEOFBEAST;
                 loadSelectedMaterial("kythosBuilding_", size);
                 PlayerRessources.selectedBuilding = mMeshContainer.caveOfTheBeast.get(loadingString).clone();
-                System.out.println("GameState: handleBuildingSelection() KythosBuilding " + 
-                        PlayerRessources.selectedBuilding);
                 break;
 
             case GameContainer.MARA_BUILDING:
                 typeBuildingRoom = ValuesTerrain.TOMBOFMEMORY;
                 loadSelectedMaterial("maraBuilding_", size);
                 PlayerRessources.selectedBuilding = mMeshContainer.tombOfMemory.get(loadingString).clone();
-                System.out.println("GameState: handleBuildingSelection() MaraBuilding " + 
-                        PlayerRessources.selectedBuilding);
                 break;
         }
         PlayerRessources.selectionRoom = 0;
@@ -563,7 +558,6 @@ public class GameState extends AbstractAppState {
     private void loadSelectedMaterial(String type, int size) {
         PlayerRessources.loadingStringMaterial = GameContainer.materialAdress.concat(type + 
                 String.valueOf(size) + ".j3m");
-        System.out.println("GameState: loadSelectedMaterial()" + PlayerRessources.loadingStringMaterial);
     }
     
     private void setSizeAndType(int type,int size)

@@ -24,15 +24,13 @@ public class Slave extends Unit{
     private void createSlave(Vector3f spwanLocation){
         setUpSpatial(spwanLocation);
         setUpControllers();
+        positionSlave(spwanLocation);
     }
     
     private void setUpSpatial(Vector3f spwanLocation){
-        //geo_slave = (Geometry) assetManager.loadModel("Models/slave/slave.mesh.xml");
-        //geo_slave.setLocalTranslation(spwanLocation);
         node_slave = (Node) assetManager.loadModel("Models/slave/slave.mesh.xml");
         node_slave.setMaterial(assetManager.loadMaterial("Materials/slave.j3m"));
-        node_slave.setLocalTranslation(spwanLocation);
-        //node_slave.attachChild(geo_slave);
+        //node_slave.setLocalTranslation(spwanLocation);
         spatial = (Spatial) node_slave;  
     }
     
@@ -51,6 +49,10 @@ public class Slave extends Unit{
     @Override
     protected void initControllerValues() {
         super.initControllerValues();
+    }
+    
+    private void positionSlave(Vector3f spwanLocation){
+        spatial.getControl(GameObjectControl.class).setLocation(spwanLocation);
     }
     
     @Override

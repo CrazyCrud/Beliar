@@ -35,7 +35,7 @@ public class SlaveCharacterControl extends AbstractControl{
             if(hasReachedBuilding()){
                 if(!(spatial.getControl(WalkControl.class).isMoving())){
                     buildConstruction(tpf);
-                    resetTimer(MOVE_TIMER);
+                    // resetTimer(MOVE_TIMER);
                 }
             }else{
                 walkToContruction();
@@ -91,8 +91,10 @@ public class SlaveCharacterControl extends AbstractControl{
     
     private boolean isBuildingAccessible(int x, int z) {
         if(spatial.getControl(WalkControl.class).findPath(x, z)){
+            System.out.println("SlaveCharacterControl : isBuildingReachable() true");
             return true;
         }else{
+            System.out.println("SlaveCharacterControl : isBuildingReachable() false");
             return false;
         }
     }
@@ -119,6 +121,7 @@ public class SlaveCharacterControl extends AbstractControl{
     
     private void buildingFinished(){
         resetTimer(BUILD_TIMER);
+        resetTimer(MOVE_TIMER);
         setHasOrder(false);
         setIsBuilding(false);
         setBuilding();
@@ -166,27 +169,31 @@ public class SlaveCharacterControl extends AbstractControl{
             switch(direction){
                 case 0:
                     if(MapController.isNodeCovered(x - 1, z)){
-                        return;
-                    }else if(spatial.getControl(WalkControl.class).findPath(x - 1, z)){
-                        return;
+                        break;
+                    }else{
+                        spatial.getControl(WalkControl.class).findPath(x - 1, z);
+                        break;
                     }
                 case 1:
                     if(MapController.isNodeCovered(x + 1, z)){
-                        return;
-                    }else if(spatial.getControl(WalkControl.class).findPath(x + 1, z)){
-                        return;
+                        break;
+                    }else{
+                        spatial.getControl(WalkControl.class).findPath(x + 1, z);
+                        break;
                     }
                 case 2:
                     if(MapController.isNodeCovered(x, z + 1)){
-                        return;
-                    }else if(spatial.getControl(WalkControl.class).findPath(x, z + 1)){
-                        return;
+                        break;
+                    }else{
+                        spatial.getControl(WalkControl.class).findPath(x, z + 1);
+                        break;
                     }
                 case 3:
                     if(MapController.isNodeCovered(x, z - 1)){
-                        return;
-                    }else if(spatial.getControl(WalkControl.class).findPath(x, z - 1)){
-                        return;
+                        break;
+                    }else{
+                        spatial.getControl(WalkControl.class).findPath(x, z - 1);
+                        break;
                     }
             }
         }

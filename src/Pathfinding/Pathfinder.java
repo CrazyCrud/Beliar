@@ -49,6 +49,7 @@ public class Pathfinder {
     }
     
     private boolean isAccessible(Node target){
+        System.out.println("Pathfinder: isaccessible() " + target.type);
         return target.type == 1 ? true : false;
     }
     

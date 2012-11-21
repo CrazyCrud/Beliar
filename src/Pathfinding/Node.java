@@ -51,6 +51,7 @@ public class Node {
     }
     
     public void changeType(int type){
+        System.out.println("Node: changeType() to " + type);
         this.type = type;
     }
     
