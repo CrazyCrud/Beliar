@@ -17,7 +17,6 @@ import de.lessvoid.nifty.elements.Element;
 import de.lessvoid.nifty.screen.Screen;
 import de.lessvoid.nifty.screen.ScreenController;
 import de.lessvoid.nifty.elements.render.TextRenderer;
-import de.lessvoid.nifty.spi.render.RenderFont;
 import de.lessvoid.nifty.tools.SizeValue;
 import java.util.List;
 import org.bushe.swing.event.EventTopicSubscriber;

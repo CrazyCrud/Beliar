@@ -209,6 +209,8 @@ public class MapHandler {
 
             case ValuesTerrain.HALLOFANARCHY:
                 return containerMapHandler.adamHall;
+            case ValuesTerrain.TOMBOFMEMORY:
+                return containerMapHandler.tombOfMemory;
         }
         return containerMapHandler.limbo;
     }
@@ -396,7 +398,7 @@ public class MapHandler {
 
 
             } catch (ArrayIndexOutOfBoundsException e) {
-                //System.out.println("Oh Dear!");
+                System.out.println("MapHandler: checkNeighbour() catch");
                 output = meshBox.get("4cross").clone();
                 output.setName(name + "" + x + "" + y);
             }

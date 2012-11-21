@@ -403,7 +403,8 @@ public class GameState extends AbstractAppState {
                     Geometry target = results.getClosestCollision().getGeometry();
 
                     com.jme3.math.Transform transformation = target.getWorldTransform();
-
+                    
+                    System.out.println("GameState: onAnalog() " + PlayerRessources.selectionRoom);
                     mMaphandler.handleBuilding(transformation.getTranslation(), PlayerRessources.selectionRoom);
                     mapNode.detachChild(target);
                     
@@ -421,14 +422,12 @@ public class GameState extends AbstractAppState {
                             return;
                         }
                         
-                        Node myBuilding = BuildingController.buildProductionBuilding(xPos, zPos, 
+                        BuildingController.buildProductionBuilding(xPos, zPos, 
                                 int_buildingType, int_sizeBuilding);
                        
-                        stopBuilding();
-                        //buildSucessfull(myBuilding);
-                        
+                        stopBuilding();                        
                     } else {
-                        System.out.println("Bauen verweigert");
+                        System.out.println("GameState: onAnalog() Bauen verweigert");
                     }
                 }
                 if (results.size() <= 0) {
@@ -544,11 +543,16 @@ public class GameState extends AbstractAppState {
                 typeBuildingRoom = ValuesTerrain.CAVEOFBEAST;
                 loadSelectedMaterial("kythosBuilding_", size);
                 PlayerRessources.selectedBuilding = mMeshContainer.caveOfTheBeast.get(loadingString).clone();
+                System.out.println("GameState: handleBuildingSelection() KythosBuilding " + 
+                        PlayerRessources.selectedBuilding);
                 break;
 
             case GameContainer.MARA_BUILDING:
                 typeBuildingRoom = ValuesTerrain.TOMBOFMEMORY;
+                loadSelectedMaterial("maraBuilding_", size);
                 PlayerRessources.selectedBuilding = mMeshContainer.tombOfMemory.get(loadingString).clone();
+                System.out.println("GameState: handleBuildingSelection() MaraBuilding " + 
+                        PlayerRessources.selectedBuilding);
                 break;
         }
         PlayerRessources.selectionRoom = 0;
@@ -556,7 +560,9 @@ public class GameState extends AbstractAppState {
     }
 
     private void loadSelectedMaterial(String type, int size) {
-        PlayerRessources.loadingStringMaterial = GameContainer.materialAdress.concat(type + String.valueOf(size) + ".j3m");
+        PlayerRessources.loadingStringMaterial = GameContainer.materialAdress.concat(type + 
+                String.valueOf(size) + ".j3m");
+        System.out.println("GameState: loadSelectedMaterial()" + PlayerRessources.loadingStringMaterial);
     }
     
     private void setSizeAndType(int type,int size)
