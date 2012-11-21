@@ -44,7 +44,7 @@ public class ProductionBuilding extends Building {
                 break;
             case GameContainer.MARA_BUILDING:
                 node_building = (Node) assetManager.loadModel("Models/maraBuilding_" + int_size + 
-                        "/maraBuilding_" + int_size + ".j3o");
+                        "/maraBuilding_" + int_size + ".mesh.j3o");
                 node_building.setMaterial(assetManager.loadMaterial("Materials/maraBuilding_" + int_size + ".j3m"));
                 break;
         }

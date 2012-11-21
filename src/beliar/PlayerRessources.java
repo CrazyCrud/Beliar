@@ -11,9 +11,9 @@ public class PlayerRessources {
 	public static int populationLimit =0;
 	public static int populationCount=0;
 	
-	public static int adam = 200;
-	public static int kythos = 100;
-	public static int mara = 10;
+	public static int adam = 600; // 200
+	public static int kythos = 600; // 100
+	public static int mara = 600; // 10
 	
 	public static int darkness=10;
 	public static int healthCentre = 100;

@@ -439,20 +439,20 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
         
         switch(Integer.parseInt(whichLevel)){
             case BUILDING_LEVEL_ONE:
-                System.out.println("Adam-Building Stufe 1");
-                PlayerRessources.selectionRoom=0;
+                setUpCosts(ADAM, BUILDING_LEVEL_ONE);
+                PlayerRessources.selectionRoom = 0;
                 myGameState.handleBuildSelection(GameContainer.ADAM_BUILDING, GameContainer.ADAM_SMALL_SIZE);
                 updateRessources(ADAM, BUILDING_LEVEL_ONE);
                 return;
             case BUILDING_LEVEL_TWO:
-                System.out.println("Adam-Building Stufe 2");
-                PlayerRessources.selectionRoom=0;
+                setUpCosts(ADAM, BUILDING_LEVEL_TWO);
+                PlayerRessources.selectionRoom = 0;
                 myGameState.handleBuildSelection(GameContainer.ADAM_BUILDING, GameContainer.ADAM_MIDDLE_SIZE);
                 updateRessources(ADAM, BUILDING_LEVEL_TWO);
                 return;
             case BUILDING_LEVEL_THREE:
-                 System.out.println("Adam-Building Stufe 3");
-                 PlayerRessources.selectionRoom=0;
+                setUpCosts(ADAM, BUILDING_LEVEL_THREE);
+                PlayerRessources.selectionRoom = 0;
                 myGameState.handleBuildSelection(GameContainer.ADAM_BUILDING, GameContainer.ADAM_BIG_SIZE);
                 updateRessources(ADAM, BUILDING_LEVEL_THREE);
                 return;
@@ -464,14 +464,20 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
         
         switch(Integer.parseInt(whichLevel)){
             case BUILDING_LEVEL_ONE:
+                PlayerRessources.selectionRoom = 0;
+                setUpCosts(KYTHOS, BUILDING_LEVEL_ONE);
                 updateRessources(KYTHOS, BUILDING_LEVEL_ONE);
                 myGameState.handleBuildSelection(GameContainer.KYTHOS_BUILDING, GameContainer.KYTHOS_SMALL_SIZE);
                 return;
             case BUILDING_LEVEL_TWO:
+                PlayerRessources.selectionRoom = 0;
+                setUpCosts(KYTHOS, BUILDING_LEVEL_TWO);
                 updateRessources(KYTHOS, BUILDING_LEVEL_TWO);
                 myGameState.handleBuildSelection(GameContainer.KYTHOS_BUILDING, GameContainer.KYTHOS_MIDDLE_SIZE);
                 return;
             case BUILDING_LEVEL_THREE:
+                PlayerRessources.selectionRoom = 0;
+                setUpCosts(KYTHOS, BUILDING_LEVEL_THREE);
                 updateRessources(KYTHOS, BUILDING_LEVEL_THREE);
                 myGameState.handleBuildSelection(GameContainer.KYTHOS_BUILDING, GameContainer.KYTHOS_BIG_SIZE);
                 return;
@@ -482,17 +488,101 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
         myGameState.playSoundEffect(SoundManager.CLICK);
         switch(Integer.parseInt(whichLevel)){
             case BUILDING_LEVEL_ONE:
+                PlayerRessources.selectionRoom = 0;
+                setUpCosts(MARA, BUILDING_LEVEL_ONE);
                 updateRessources(MARA, BUILDING_LEVEL_ONE);
                 myGameState.handleBuildSelection(GameContainer.MARA_BUILDING, GameContainer.MARA_SMALL_SIZE);
                 return;
             case BUILDING_LEVEL_TWO:
+                PlayerRessources.selectionRoom = 0;
+                setUpCosts(MARA, BUILDING_LEVEL_TWO);
                 updateRessources(MARA, BUILDING_LEVEL_TWO);
                 myGameState.handleBuildSelection(GameContainer.MARA_BUILDING, GameContainer.MARA_MIDDLE_SIZE);
                 return;
             case BUILDING_LEVEL_THREE:
+                PlayerRessources.selectionRoom = 0;
+                setUpCosts(MARA, BUILDING_LEVEL_THREE);
                 updateRessources(MARA, BUILDING_LEVEL_THREE);
                 return;
         }
+    }
+    
+    private void setUpCosts(int whichRoom, int whichLevel){
+        List<Element> visibleElements = secondRowBottom.getElements();
+        for(Element element : visibleElements){
+            element.markForRemoval();
+        }
+        secondRowBottom.layoutElements();
+        TextBuilder tb = new TextBuilder("CostBuilder");
+        tb.textVAlignCenter();
+        tb.textHAlignLeft();
+        tb.paddingRight("20px");
+        tb.alignLeft();
+        tb.width("100%h");
+        tb.height("100%");
+        tb.font("Interface/Fonts/gill_16.fnt");
+        Element textCostAdam;
+        Element textCostKythos;
+        Element textCostMara;
+        int [] cost = null; 
+        switch(whichRoom){
+            case ADAM:
+                if(whichLevel == BUILDING_LEVEL_ONE){
+                    cost = GameContainer.COSTADAMSMALL;
+                }else if(whichLevel == BUILDING_LEVEL_TWO){
+                    cost = GameContainer.COSTADAMMIDDLE;
+                }else{
+                    cost = GameContainer.COSTADAMBIG;
+                }
+                break;
+            case KYTHOS:
+                if(whichLevel == BUILDING_LEVEL_ONE){
+                    cost = GameContainer.COSTKYTHOSSMALL;
+                }else if(whichLevel == BUILDING_LEVEL_TWO){
+                    cost = GameContainer.COSTKYTHOSMIDDLE;
+                }else{
+                    cost = GameContainer.COSTKYTHOSBIG;
+                }
+                break;
+            case MARA:
+                if(whichLevel == BUILDING_LEVEL_ONE){
+                    cost = GameContainer.COSTMARASMALL;
+                }else if(whichLevel == BUILDING_LEVEL_TWO){
+                    cost = GameContainer.COSTMARAMIDDLE;
+                }else{
+                    cost = GameContainer.COSTMARABIG;
+                }
+                break;
+        }
+        new ImageBuilder("adamCost"){{
+        filename("Images/Adam.png");
+        height("95%");
+        width("100%h");
+        alignCenter();
+        interactOnClick("onDoNothing()");   
+            }}.build(nifty, screen, secondRowBottom);
+        textCostAdam = tb.build(nifty, screen, secondRowBottom);
+        textCostAdam.getRenderer(TextRenderer.class).setText("" + cost[0]);
+
+        new ImageBuilder("kythosCost"){{
+        filename("Images/Kythos.png");
+        height("95%");
+        width("100%h");
+        alignCenter();
+        interactOnClick("onDoNothing()");   
+            }}.build(nifty, screen, secondRowBottom);
+        textCostKythos = tb.build(nifty, screen, secondRowBottom);
+        textCostKythos.getRenderer(TextRenderer.class).setText("" + cost[1]);
+
+        new ImageBuilder("maraCost"){{
+        filename("Images/Mara.png");
+        height("95%");
+        width("100%h");
+        alignCenter();
+        interactOnClick("onDoNothing()");   
+            }}.build(nifty, screen, secondRowBottom);
+        textCostMara = tb.build(nifty, screen, secondRowBottom);
+        textCostMara.getRenderer(TextRenderer.class).setText("" + cost[2]);
     }
     
     private void setUpQuestText(){

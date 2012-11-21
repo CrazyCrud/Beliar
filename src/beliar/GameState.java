@@ -414,6 +414,8 @@ public class GameState extends AbstractAppState {
                     }
                 } 
                 else if ((results.size() > 0) && (selection != null)) {
+                    System.out.println("GameState onanalog() " + checkFieldType(xPos, zPos));
+                    System.out.println("GameState onanalog() " + gameSimulation.checkCostsBuilding(int_buildingType, int_sizeBuilding));
                     if ((checkFieldType(xPos, zPos) == true) && 
                             (gameSimulation.checkCostsBuilding(int_buildingType, int_sizeBuilding) == true)) {
                         selection = PlayerRessources.selectedBuilding;
