@@ -37,6 +37,7 @@ public class Main extends SimpleApplication{
             appSettings.setTitle("Beliar"); 
             appSettings.setWidth(1280);
             appSettings.setHeight(720);
+            appSettings.setResolution(1280, 720);
             
             try{
                 appSettings.setIcons(new BufferedImage[]{ 

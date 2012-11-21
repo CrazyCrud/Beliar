@@ -432,11 +432,12 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
                 PlayerRessources.selectionRoom = ValuesTerrain.TOMBOFMEMORY;
                 break;
         }
+        myGameState.clearSelection();
     }
     
     public void buildAdamBuilding(String whichLevel){
         myGameState.playSoundEffect(SoundManager.CLICK);        
-        
+        myGameState.clearSelection();
         switch(Integer.parseInt(whichLevel)){
             case BUILDING_LEVEL_ONE:
                 setUpCosts(ADAM, BUILDING_LEVEL_ONE);
@@ -461,7 +462,7 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
     
     public void buildKythosBuilding(String whichLevel){
         myGameState.playSoundEffect(SoundManager.CLICK);
-        
+        myGameState.clearSelection();
         switch(Integer.parseInt(whichLevel)){
             case BUILDING_LEVEL_ONE:
                 PlayerRessources.selectionRoom = 0;
@@ -486,6 +487,7 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
     
     public void buildMaraBuilding(String whichLevel){
         myGameState.playSoundEffect(SoundManager.CLICK);
+        myGameState.clearSelection();
         switch(Integer.parseInt(whichLevel)){
             case BUILDING_LEVEL_ONE:
                 PlayerRessources.selectionRoom = 0;

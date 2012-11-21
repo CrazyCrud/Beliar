@@ -14,7 +14,6 @@ import com.jme3.app.state.AppStateManager;
 import com.jme3.scene.Node;
 import com.jme3.app.SimpleApplication;
 import com.jme3.asset.AssetManager;
-import com.jme3.audio.AudioRenderer;
 import com.jme3.collision.CollisionResults;
 import com.jme3.input.FlyByCamera;
 import com.jme3.input.InputManager;
@@ -175,7 +174,6 @@ public class GameState extends AbstractAppState {
             setCameraLight();
             computeScrolling();
             ressourceChanged();
-            //playMusic();
             if (selection != null) {
                 selection.setLocalTranslation(mousePositionWorld);
             }
@@ -397,8 +395,9 @@ public class GameState extends AbstractAppState {
             
             if (name.equals("pick target")) {
 
+                
                 CollisionResults results = checkColision();
-
+                clearSelection();
                 if ((results.size() > 0) && (PlayerRessources.selectionRoom > 0)) {
                     Geometry target = results.getClosestCollision().getGeometry();
 
@@ -410,7 +409,7 @@ public class GameState extends AbstractAppState {
                     
                     if(PlayerRessources.selectedBuilding != null)
                     {
-                        stopBuilding();
+                        resetBuilding();
                     }
                 } 
                 else if ((results.size() > 0) && (selection != null)) {
@@ -427,7 +426,7 @@ public class GameState extends AbstractAppState {
                         BuildingController.buildProductionBuilding(xPos, zPos, 
                                 int_buildingType, int_sizeBuilding);
                        
-                        stopBuilding();                        
+                        resetBuilding();                        
                     } else {
                         System.out.println("GameState: onAnalog() Bauen verweigert");
                     }
@@ -619,10 +618,14 @@ public class GameState extends AbstractAppState {
         return isFieldValid;
     }
 
-    public void stopBuilding() {
+    public void resetBuilding() {
         selection = null;
         PlayerRessources.selectedBuilding = null;
         PlayerRessources.selectionRoom = 0;
+        marker.detachAllChildren();
+    }
+    
+    protected void clearSelection(){
         marker.detachAllChildren();
     }
     
