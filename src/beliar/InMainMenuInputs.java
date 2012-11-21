@@ -130,6 +130,7 @@ public class InMainMenuInputs extends AbstractAppState implements ScreenControll
   public void onOptions(){
       myState.playUISound("click");
       System.out.println("InMainMenuInputs: onOptions()");
+      stateManager.getState(MainMenuState.class).loadSettings();
   }
 
   public void onExitGame(){

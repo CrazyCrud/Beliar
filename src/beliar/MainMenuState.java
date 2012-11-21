@@ -25,6 +25,7 @@ public class MainMenuState extends AbstractAppState{
     private ScreenManager screenManager;
     
     private LoadingGameState loadingGameState;
+    private OptionState optionState;
     private Node rootNode;
     private AudioNode menuTheme;
     private AudioNode click;
@@ -94,6 +95,7 @@ public class MainMenuState extends AbstractAppState{
     private void initStates() {
         inMainMenuInputs = new InMainMenuInputs(stateManager, app,this);
         loadingGameState = new LoadingGameState(stateManager, app);
+        optionState = new OptionState(stateManager, app);
     }
     
     private void attachInput(){
@@ -128,8 +130,14 @@ public class MainMenuState extends AbstractAppState{
         //stateManager.detach(stateManager.getState(MainMenuState.class));
         stateManager.attach(loadingGameState);
         stateManager.getState(LoadingGameState.class).setEnabled(true);
-        
     } 
+    
+    public void loadSettings(){
+        //stateManager.getState(MainMenuState.class).setEnabled(false);
+        stateManager.getState(InMainMenuInputs.class).setEnabled(false);
+        stateManager.attach(optionState);
+        stateManager.getState(OptionState.class).setEnabled(true);
+    }
     
     public void playUISound(String name)
     {

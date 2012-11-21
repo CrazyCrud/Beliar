@@ -79,6 +79,12 @@ public class ScreenManager {
         nifty.gotoScreen("inMainMenuInputs");
     }
     
+    public void switchToOptionMenuScreen(ScreenController optionMenuInputs){
+        nifty.registerScreenController(optionMenuInputs);
+        nifty.addXml("Interface/OptionMenu.xml");
+        nifty.gotoScreen("inOptionInputs");
+    }
+    
     public void switchToLoadingScreen(ScreenController loadingScreen){
         nifty.registerScreenController(loadingScreen);
         nifty.addXml("Interface/LoadingGame.xml");
@@ -93,7 +99,7 @@ public class ScreenManager {
     
     public void switchToPauseScreen(ScreenController pauseInputs){
         nifty.registerScreenController(pauseInputs);
-        nifty.addXml("Interface/OptionsMenu.xml");
+        nifty.addXml("Interface/PauseMenu.xml");
         nifty.gotoScreen("inPauseInputs");
     }
 }

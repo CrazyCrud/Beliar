@@ -5,10 +5,8 @@ package beliar;
 import com.jme3.app.SimpleApplication;
 import com.jme3.input.MouseInput;
 import com.jme3.input.controls.MouseButtonTrigger;
-import com.jme3.niftygui.NiftyJmeDisplay;
 import com.jme3.renderer.RenderManager;
 import com.jme3.system.AppSettings;
-import de.lessvoid.nifty.Nifty;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -21,13 +19,6 @@ public class Main extends SimpleApplication{
 
     private ScreenManager screenManager;
     private MainMenuState mainMenuState;
-    private GameState gameState;
-    private PauseState pauseState;
-    private InGameInputs inGameInputs;
-    private InPauseInputs inPauseInputs;
-    private InMainMenuInputs inMainMenuInputs;
-    private NiftyJmeDisplay niftyDisplay;
-    private Nifty nifty;
     
     public static void main(String[] args) {
             AppSettings appSettings = new AppSettings(true);
@@ -81,15 +72,9 @@ public class Main extends SimpleApplication{
     }
     
     private void initStates(){ 
-        mainMenuState = new MainMenuState(stateManager, this);
-       //gameState = new GameState(stateManager, this);
-       //pauseState = new PauseState(stateManager, this);
+       mainMenuState = new MainMenuState(stateManager, this);
        stateManager.attach(mainMenuState);
-       //stateManager.attach(gameState);
-       //stateManager.attach(pauseState);
        mainMenuState.setEnabled(true);
-       //gameState.setEnabled(false);
-       //pauseState.setEnabled(false);
     }
     
     @Override

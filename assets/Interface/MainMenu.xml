@@ -75,12 +75,12 @@
                     </panel>
                     <panel id="secondEntry" width="40%" height="12%" childLayout="center" align="center" 
                             valign="center">
-                        <image id="loadgame" filename="Images/loadgame_normal.png" width="80%" height="80%"> 
+                        <image id="loadgame" filename="Images/loadgame_gray.png" width="80%" height="80%"> 
                             <interact onClick="onDoNothing()"/>
-                            <effect>
+                            <!--<effect>
                                 <onHover name="changeImage" active="Images/Hover/loadgame_selected.png" 
                                     inactive="Images/loadgame_normal.png"/>
-                            </effect>
+                            </effect>-->
                         </image>
                     </panel>
                     <panel id="thirdEntry" width="40%" height="12%" childLayout="center" align="center" 

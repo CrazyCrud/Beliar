@@ -20,18 +20,30 @@
                             valign="center">      
                         <image id="newgame" filename="Images/backtogame.png" width="80%" height="80%" imageMode="normal"> 
                             <interact onClick="onBackToGame()"/>
+                            <effect>
+                                <onHover name="changeImage" active="Images/Hover/backtogame_selected.png" 
+                                    inactive="Images/backtogame.png"/>
+                            </effect>
                         </image>
                     </panel>
                     <panel id="secondEntry" width="40%" height="12%" childLayout="center" align="center" 
                             valign="center">
                         <image id="loadgame" filename="Images/backtomainmenu.png" width="80%" height="80%"> 
                             <interact onClick="onBackToMainScreen()"/>
+                            <effect>
+                                <onHover name="changeImage" active="Images/Hover/mainmenu_selected.png" 
+                                    inactive="Images/backtomainmenu.png"/>
+                            </effect>
                         </image>
                     </panel>
                     <panel id="thirdEntry" width="40%" height="12%" childLayout="center" align="center" 
                             valign="center">
-                        <image id="options" filename="Images/quitgame.png" width="80%" height="80%"> 
+                        <image id="options" filename="Images/endgame_normal.png" width="80%" height="80%"> 
                             <interact onClick="onExitGame()"/>
+                            <effect>
+                                <onHover name="changeImage" active="Images/Hover/endgame_selected.png" 
+                                    inactive="Images/endgame_normal.png"/>
+                            </effect>
                         </image>
                     </panel>
                     <panel id="fithEntry" width="40%" height="12%" childLayout="center" align="center" 
