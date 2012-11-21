@@ -6,6 +6,7 @@ package beliar;
 
 import com.jme3.asset.AssetManager;
 import com.jme3.audio.AudioNode;
+import com.jme3.audio.AudioNode.Status;
 import com.jme3.scene.Node;
 import java.util.HashMap;
 
@@ -17,8 +18,8 @@ public class SoundManager {
     
     private AssetManager assetManager;
     private Node rootNode; 
+    private AudioNode background;
     
-    private HashMap<String,AudioNode> backgroundMusic = new HashMap<String, AudioNode>();
     private HashMap<String,AudioNode> uiSounds = new HashMap<String, AudioNode>();
     
     public static final int PLACE_BUILDING = 0;
@@ -27,16 +28,16 @@ public class SoundManager {
     public SoundManager(AssetManager assetManager, Node rootNode) {
         this.assetManager = assetManager;
         this.rootNode = rootNode;
+        initBackgroundMusic();
+        initUISound();
+   }
     
-    initBackgroundMusic();
-    initUISound();
-    
-    }
    private void initBackgroundMusic()
    { 
-        backgroundMusic.put("01", new AudioNode(assetManager, "Sounds/music/background_1.ogg",true));
-        //backgroundMusic.put("02", new AudioNode(assetManager, "Sounds/music/background_2.ogg",true));
-        backgroundMusic.put("03", new AudioNode(assetManager, "Sounds/music/background_3.ogg",true));
+        background = new AudioNode(assetManager, "Sounds/music/ingame.ogg", false);
+        background.setVolume(1.5f);
+        background.setLooping(true);
+        this.rootNode.attachChild(background);
    }
    
    private void initUISound()
@@ -54,10 +55,18 @@ public class SoundManager {
         rootNode.attachChild(track);
    }
    
-   public void playMusic(String trackName)
-    {
-
-    }
-    
-    
+   public void playBackgroundMusic()
+   {
+       background.play();
+   }
+   
+   public boolean isMusicPlaying(){
+       Status musicStatus = background.getStatus();
+       if(musicStatus == Status.Playing){
+           return true;
+       }else{
+           System.out.println("SoundManager: isMusicPlaying() not playing");
+           return false;
+       }
+   }
 }

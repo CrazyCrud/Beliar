@@ -48,7 +48,7 @@ public class MainMenuState extends AbstractAppState{
             System.out.println("MainMenuState: setEnabled");
             showInput();
             initAudio();
-          //  playAudio();
+            playAudio();
         }else{
             stopAudio();
             inMainMenuInputs.setEnabled(false);
@@ -74,8 +74,9 @@ public class MainMenuState extends AbstractAppState{
     public void update(float tpf){
         if(isEnabled()){
             Status menuThemeStatus = menuTheme.getStatus();
-            if(menuThemeStatus == AudioNode.Status.Stopped){
-               // menuTheme.play();
+            if(menuThemeStatus == AudioNode.Status.Stopped ||
+                    menuThemeStatus == AudioNode.Status.Paused){
+                menuTheme.play();
                 System.out.println("AudioNode is stopped");
             }
         }else{
@@ -102,7 +103,7 @@ public class MainMenuState extends AbstractAppState{
     
     private void initAudio(){
         click = new AudioNode(app.getAssetManager(), "Sounds/sounds/UI/click.ogg", false);
-        menuTheme = new AudioNode(app.getAssetManager(), "Sounds/music/mainmenu.ogg", true);
+        menuTheme = new AudioNode(app.getAssetManager(), "Sounds/music/mainmenu.ogg", false);
         menuTheme.setVolume(0.35f);
         rootNode.attachChild(click);
     }

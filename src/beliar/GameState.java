@@ -175,10 +175,11 @@ public class GameState extends AbstractAppState {
             setCameraLight();
             computeScrolling();
             ressourceChanged();
+            //playMusic();
             if (selection != null) {
                 selection.setLocalTranslation(mousePositionWorld);
             }
-        } else {
+        }else{
         }
     }
     
@@ -191,6 +192,11 @@ public class GameState extends AbstractAppState {
     
     private void ressourceChanged(){
         inGameInputs.ressourcesChanged();
+    }
+    
+    private void playMusic(){
+        System.out.println("GameState: playMusic()");
+        mSoundManager.playBackgroundMusic();
     }
 
     public void initializeGame() {
@@ -215,6 +221,7 @@ public class GameState extends AbstractAppState {
         initQuests();
         attachGrid(new Vector3f(0, 0, 0), 1024, ColorRGBA.Blue);
         attachCoordinateAxes(new Vector3f(-1, 0, -1));
+        playMusic();
     }
 
     private void attachGrid(Vector3f pos, int size, ColorRGBA color) {
@@ -312,7 +319,7 @@ public class GameState extends AbstractAppState {
 
     private void initSound() {
         mSoundManager = new SoundManager(assetManager, localRootNode);
-        mSoundManager.playMusic("03");
+        //mSoundManager.playMusic("03");
     }
 
     private void initScene() { 
