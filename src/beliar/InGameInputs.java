@@ -186,8 +186,8 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
                 }}.build(nifty, screen, firstRowTop);
         
         new ImageBuilder("adamRoom"){{
-            //filename("Images/adam_room.png");
-            filename("Images/Adam.png");
+            filename("Images/adam_room.png");
+            //filename("Images/Adam.png");
             height("95%");
             width("100%h");
             alignCenter();
@@ -195,8 +195,8 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
                 }}.build(nifty, screen, thirdRowTop);
         
         new ImageBuilder("kythosRoom"){{
-            //filename("Images/kythos_room.png");
-            filename("Images/Kythos.png");
+            filename("Images/kythos_room.png");
+            //filename("Images/Kythos.png");
             height("95%");
             width("100%h");
             alignCenter();
@@ -204,8 +204,8 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
                 }}.build(nifty, screen, thirdRowTop);
         
         new ImageBuilder("maraRoom"){{
-            //filename("Images/mara_room.png");
-            filename("Images/Mara.png");
+            filename("Images/mara_room.png");
+            //filename("Images/Mara.png");
             height("95%");
             width("100%h");
             alignCenter();
@@ -414,7 +414,7 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
     
      public void onBuildRoom(String whichRoom){
         System.out.println("onBuildRoom()");
-        
+        clearSecondRowBottom();
         switch(Integer.parseInt(whichRoom)){
             case ADAM:
                 // Adam-Raum anlegen
@@ -508,11 +508,7 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
     }
     
     private void setUpCosts(int whichRoom, int whichLevel){
-        List<Element> visibleElements = secondRowBottom.getElements();
-        for(Element element : visibleElements){
-            element.markForRemoval();
-        }
-        secondRowBottom.layoutElements();
+        clearSecondRowBottom();
         TextBuilder tb = new TextBuilder("CostBuilder");
         tb.textVAlignCenter();
         tb.textHAlignLeft();
@@ -556,7 +552,7 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
         }
         new ImageBuilder("adamCost"){{
         filename("Images/Adam.png");
-        height("95%");
+        height("80%");
         width("100%h");
         alignCenter();
         interactOnClick("onDoNothing()");   
@@ -566,7 +562,7 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
 
         new ImageBuilder("kythosCost"){{
         filename("Images/Kythos.png");
-        height("95%");
+        height("80%");
         width("100%h");
         alignCenter();
         interactOnClick("onDoNothing()");   
@@ -576,7 +572,7 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
 
         new ImageBuilder("maraCost"){{
         filename("Images/Mara.png");
-        height("95%");
+        height("80%");
         width("100%h");
         alignCenter();
         interactOnClick("onDoNothing()");   
@@ -618,8 +614,7 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
        clearThirdRow();
        clearSecondRow();
        clearFirstRow();
-       
-       PlayerRessources.selectionRoom =0;
+       PlayerRessources.selectionRoom = 0;
     }
     
     private void clearText(){
@@ -685,6 +680,14 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
         
         thirdRowTop.layoutElements();
         thirdRowBottom.layoutElements();
+    }
+    
+    private void clearSecondRowBottom(){
+        List<Element> visibleElements = secondRowBottom.getElements();
+        for(Element element : visibleElements){
+            element.markForRemoval();
+        }
+        secondRowBottom.layoutElements();
     }
     
     private void updateRessources(int whichRessource, int whichLevel){
