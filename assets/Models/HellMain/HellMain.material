@@ -1,0 +1,26 @@
+material HellMain 
+{
+	receive_shadows on
+	technique
+	{
+		pass
+		{
+			cull_hardware none
+			ambient 0.800000011920929 0.800000011920929 0.800000011920929 1.0
+			diffuse 0.6400000190734865 0.6400000190734865 0.6400000190734865 1.0
+			specular 0.22314049303531647 0.13841042904487733 0.10083091229532215 1.0 12.5
+			emissive 0.0 0.0 0.0 1.0
+			scene_blend one zero
+			depth_write off
+			texture_unit
+			{
+				texture Mahlstrom.png
+				tex_address_mode border
+				tex_border_colour 1.0 0.0 1.0
+				scale 1.0 1.0
+				colour_op_ex blend_manual src_current src_texture 0.0
+				alpha_op_ex modulate src_current src_texture
+			}
+		}
+	}
+}
