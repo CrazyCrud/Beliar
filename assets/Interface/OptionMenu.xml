@@ -22,7 +22,7 @@
                             <control id="RadioGroup-1" name="radioButtonGroup" align="left"/>
                             <panel width="70%" height="25%" childLayout="vertical" align="center" valign="center">
                                <control name="label" text="Auflösung"/>
-                               <panel align="center" childLayout="vertical" backgroundColor="#8001" paddingLeft="20px" 
+                               <panel align="center" childLayout="vertical" paddingLeft="20px" 
                                     paddingRight="20px" paddingTop="4px" paddingBottom="4px" width="125px">
                                  <effect>
                                    <onActive name="border" color="#0008" />
@@ -57,7 +57,7 @@
                                  </panel>
                                  <panel childLayout="horizontal">
                                    <control name="label" text="16x" width="60px" />
-                                   <control name="radioButton" id="option-4" group="RadioGroup-2" />
+                                   <control name="radioButton" id="option-5" group="RadioGroup-2" />
                                  </panel>
                                </panel>
                             </panel>
