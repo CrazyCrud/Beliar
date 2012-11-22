@@ -15,7 +15,9 @@ import com.jme3.scene.shape.Box;
 import java.util.HashMap;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.jme3.material.Material;
 import java.io.FileReader;
+import java.util.Random;
 
 /**
  *
@@ -109,12 +111,33 @@ public class MapHandler {
         Box b = new Box(position, 0.5f, 0.5f, 0.5f);
         Geometry geom = new Geometry("MapElement", b);
         geom.move(transformation);
+        Material geoMat = assetManager.loadMaterial("Materials/_standardTerrain.j3m");
         switch (type) {
             case 0:
-                geom.setMaterial(assetManager.loadMaterial("Materials/_standardTerrain.j3m"));
+                 
+                
+                int random = (int) (Math.random()*5+1);
+                switch(random)
+                {
+                    case 1: geoMat.setTexture("DiffuseMap", assetManager.loadTexture("Textures/terrain/redRock.jpg"));
+                        break;
+                    case 2:geoMat.setTexture("DiffuseMap", assetManager.loadTexture("Textures/terrain/redRock_2.jpg"));
+                        break;
+                    case 3:geoMat.setTexture("DiffuseMap", assetManager.loadTexture("Textures/terrain/redRock_3.jpg"));
+                        break;
+                    case 4:geoMat.setTexture("DiffuseMap", assetManager.loadTexture("Textures/terrain/redRock_4.jpg"));
+                        break;
+                   // case 5:geoMat.setTexture("DiffuseMap", assetManager.loadTexture("Textures/terrain/redRock_5.jpg"));
+                   //     break;
+                    default:
+                        geoMat.setTexture("DiffuseMap", assetManager.loadTexture("Textures/terrain/redRock.jpg"));
+                        break;
+                }
+                
+                geom.setMaterial(geoMat);
                 break;
             case -1:
-                geom.setMaterial(assetManager.loadMaterial("Materials/_standardTerrain.j3m"));
+                geoMat.setTexture("DiffuseMap", assetManager.loadTexture("Textures/terrain/redRock_5.jpg"));
                 break;
 
             default:
@@ -254,33 +277,52 @@ public class MapHandler {
                     //output.rotate(0, degree, 0);
                     output.setName(name + "" + x + "" + y);
 
-                } else if ((terrainMap[x - 1][y - 1] == ValuesTerrain.EARTH)
+                }
+                
+                else if ((terrainMap[x - 1][y - 1] != ValuesTerrain.EARTH)
                         && (terrainMap[x - 1][y] != ValuesTerrain.EARTH)
-                        && (terrainMap[x - 1][y + 1] != ValuesTerrain.EARTH)
+                        && ((terrainMap[x - 1][y + 1] == ValuesTerrain.EARTH)||(terrainMap[x][y + 1] != type))
+                        && (terrainMap[x][y - 1] != ValuesTerrain.EARTH)
+                        && (terrainMap[x][y] != ValuesTerrain.EARTH)
+                        && ((terrainMap[x][y + 1] == ValuesTerrain.EARTH)||(terrainMap[x][y + 1] != type))
+                        && (terrainMap[x + 1][y - 1] != ValuesTerrain.EARTH)
+                        && (terrainMap[x + 1][y] != ValuesTerrain.EARTH)
+                        && ((terrainMap[x + 1][y + 1] == ValuesTerrain.EARTH)||(terrainMap[x][y + 1] != type))) {
+                    //System.out.println("SEITE");
+                    output = meshBox.get("side").clone();
+                    //output.rotate(0, degree, 0);
+                    output.setName(name + "" + x + "" + y);
+
+                }
+                else if ((terrainMap[x - 1][y - 1] == ValuesTerrain.EARTH)
+                        && (terrainMap[x - 1][y] != ValuesTerrain.EARTH)
+                        && ((terrainMap[x - 1][y + 1] != ValuesTerrain.EARTH)||(terrainMap[x - 1][y + 1] != type))
                         && (terrainMap[x][y - 1] == ValuesTerrain.EARTH)
                         && (terrainMap[x][y] != ValuesTerrain.EARTH)
-                        && (terrainMap[x][y + 1] != ValuesTerrain.EARTH)
+                        && ((terrainMap[x][y + 1] != ValuesTerrain.EARTH)||(terrainMap[x][y + 1] != type))
                         && (terrainMap[x + 1][y - 1] == ValuesTerrain.EARTH)
                         && (terrainMap[x + 1][y] != ValuesTerrain.EARTH)
-                        && (terrainMap[x + 1][y + 1] != ValuesTerrain.EARTH)) {
+                        && ((terrainMap[x + 1][y + 1] != ValuesTerrain.EARTH)||(terrainMap[x+1][y + 1] != type))) {
                     //System.out.println("SEITE");
                     output = meshBox.get("side").clone();
                     output.rotate(0, degree * 2, 0);
                     output.setName(name + "" + x + "" + y);
-                } else if ((terrainMap[x - 1][y - 1] == ValuesTerrain.EARTH)
+                } 
+                else if ((terrainMap[x - 1][y - 1] == ValuesTerrain.EARTH)
                         && (terrainMap[x - 1][y] == ValuesTerrain.EARTH)
                         && (terrainMap[x - 1][y + 1] == ValuesTerrain.EARTH)
-                        && (terrainMap[x][y - 1] != ValuesTerrain.EARTH)
+                        && ((terrainMap[x][y - 1] != ValuesTerrain.EARTH)||(terrainMap[x][y - 1] != type))
                         && (terrainMap[x][y] != ValuesTerrain.EARTH)
-                        && (terrainMap[x][y + 1] != ValuesTerrain.EARTH)
+                        && ((terrainMap[x][y + 1] != ValuesTerrain.EARTH)||(terrainMap[x][y + 1] != type))
                         && (terrainMap[x + 1][y - 1] != ValuesTerrain.EARTH)
-                        && (terrainMap[x + 1][y] != ValuesTerrain.EARTH)
+                        && ((terrainMap[x + 1][y] != ValuesTerrain.EARTH)||(terrainMap[x + 1][y] != type))
                         && (terrainMap[x + 1][y + 1] != ValuesTerrain.EARTH)) {
                     //System.out.println("SEITE");
                     output = meshBox.get("side").clone();
                     output.rotate(0, degree * 3, 0);
                     output.setName(name + "" + x + "" + y);
-                } else if ((terrainMap[x - 1][y - 1] != ValuesTerrain.EARTH)
+                } 
+                else if ((terrainMap[x - 1][y - 1] != ValuesTerrain.EARTH)
                         && (terrainMap[x - 1][y] != ValuesTerrain.EARTH)
                         && (terrainMap[x - 1][y + 1] != ValuesTerrain.EARTH)
                         && (terrainMap[x][y - 1] != ValuesTerrain.EARTH)
@@ -363,7 +405,8 @@ public class MapHandler {
                     output.setName(name + "" + x + "" + y);
 
                 } //Ende
-                else if ((terrainMap[x - 1][y] == type) && (terrainMap[x][y - 1] != type) && (terrainMap[x + 1][y] != type) && (terrainMap[x][y + 1] != type)) {
+                else if (
+                        (terrainMap[x - 1][y] == type) && (terrainMap[x][y - 1] != type) && (terrainMap[x + 1][y] != type) && (terrainMap[x][y + 1] != type)) {
                     //System.out.println("Ende 0");
                     output = meshBox.get("end").clone();
                     output.rotate(0, degree, 0);

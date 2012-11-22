@@ -42,6 +42,11 @@ import com.jme3.scene.debug.Arrow;
 import com.jme3.scene.debug.Grid;
 import com.jme3.shadow.PssmShadowRenderer;
 import Map.MapController;
+import com.jme3.light.SpotLight;
+import com.jme3.post.filters.BloomFilter;
+import com.jme3.post.filters.DepthOfFieldFilter;
+import com.jme3.post.ssao.SSAOFilter;
+import com.jme3.shadow.BasicShadowRenderer;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -58,6 +63,7 @@ public class GameState extends AbstractAppState {
     private Node localRootNode;
     private AssetManager assetManager;
     //Light&Shadow
+    private SpotLight areaLight;
     private DirectionalLight directionLight;
     private PointLight cameraLight;
     private PssmShadowRenderer shadowMaker;
@@ -85,14 +91,15 @@ public class GameState extends AbstractAppState {
     private AppStateManager stateManager;
     private Camera cam;
     private FlyByCamera flyCam;
-    
+    private BasicShadowRenderer bsr;
     //DIRTY
     private int int_buildingType = 0;
     private int int_sizeBuilding = 0;
     
     //Input
     private ScreenManager screenManager;
-
+    private DepthOfFieldFilter dofFilter;
+    private BloomFilter bloomFilter;
     public GameState(AppStateManager stateManager, SimpleApplication app) {
         System.out.println("GameState");
         this.app = (SimpleApplication) ((SimpleApplication) app);
@@ -273,16 +280,47 @@ public class GameState extends AbstractAppState {
         localRootNode.addLight(cameraLight);
 
         //Shadow
-        shadowMaker = new PssmShadowRenderer(assetManager, 1024, 3);
+        
+        bsr = new BasicShadowRenderer(assetManager, 256);
+        bsr.setDirection(new Vector3f(-.5f,-.5f,-.5f).normalizeLocal()); // light direction
+        viewPort.addProcessor(bsr);
+    
+        /*shadowMaker = new PssmShadowRenderer(assetManager, 1024, 3);
         shadowMaker.setDirection(lightDirection);
         viewPort.addProcessor(shadowMaker);
-
+*/
         //AmbientLight
         AmbientLight al = new AmbientLight();
-        al.setColor(ColorRGBA.White.mult(1.3f));
+        al.setColor(ColorRGBA.White.mult(0.3f));
         localRootNode.addLight(al);
+        
+        initBloom();
+        initDoF();
+        //initScreenSpaceAmbientOcclusion();
+ 
     }
-
+    private void initScreenSpaceAmbientOcclusion()
+    {
+        SSAOFilter ssaoFilter = new SSAOFilter(6.0f, 15.0f, 0.6f, 0.3f);
+        fpp.addFilter(ssaoFilter);
+        viewPort.addProcessor(fpp);
+    }
+    
+    private void initBloom()    
+    {
+        bloomFilter =new BloomFilter();
+        fpp.addFilter(bloomFilter);
+        viewPort.addProcessor(fpp);
+    }
+    
+    private void initDoF()
+{
+        dofFilter = new DepthOfFieldFilter();
+        dofFilter.setFocusDistance(0.1f);
+        dofFilter.setFocusRange(1);
+        dofFilter.setBlurScale(3.0f);
+        fpp.addFilter(dofFilter);
+ }
     private void initMeshLibary() {
         System.out.println("InitMeshLibary");
         mMeshContainer = new MeshContainer(assetManager);
