@@ -99,7 +99,7 @@ public class InOptionInputs extends AbstractAppState implements ScreenController
     private void computeSettings() {
         int itemIndex = dropDown.getSelectedIndex();
         appSettings.setResolution(displayModes[itemIndex].getWidth(), displayModes[itemIndex].getHeight());
-        appSettings.setDepthBits(displayModes[itemIndex].getBitDepth());
+        appSettings.setDepthBits(16);
         appSettings.setFrequency(displayModes[itemIndex].getRefreshRate());
        
         if(radioButton3.isActivated()){
