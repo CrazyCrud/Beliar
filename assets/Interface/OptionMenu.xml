@@ -11,14 +11,18 @@
             </panel>
         </layer>
         <layer id="foreground" backgroundColor="#0000" childLayout="vertical">
-            <panel height="90%" width="100%" childLayout="vertical">
-                   <panel id="options" width="100%" height="30%" childLayout="center" align="center"
-                            valign="center"> 
-                     <panel width="100" height="100%" childLayout="horizontal" align="center">
-                            <control id="RadioGroup-1" name="radioButtonGroup"/>
-                            <panel width="50%" height="50%" childLayout="vertical">
+            <panel height="100%" width="100%" childLayout="vertical">
+                   <panel width="100%" height="20%" childLayout="center">
+                       <image filename="Images/option_text.png" height="70%" width="30%"/>
+                   </panel>
+                   <panel id="options" width="100%" height="80%" childLayout="center" 
+                        align="center" valign="center"> 
+                     <panel id="red" width="50%" height="90%" childLayout="vertical" align="center"
+                        valign="center">
+                            <control id="RadioGroup-1" name="radioButtonGroup" align="left"/>
+                            <panel width="70%" height="25%" childLayout="vertical" align="center" valign="center">
                                <control name="label" text="Auflösung"/>
-                               <panel childLayout="vertical" backgroundColor="#8001" paddingLeft="20px" 
+                               <panel align="center" childLayout="vertical" backgroundColor="#8001" paddingLeft="20px" 
                                     paddingRight="20px" paddingTop="4px" paddingBottom="4px" width="125px">
                                  <effect>
                                    <onActive name="border" color="#0008" />
@@ -34,11 +38,12 @@
                                </panel>
                             </panel>
                             
-                            <control id="RadioGroup-2" name="radioButtonGroup"/>
-                            <panel width="50%" height="50%" childLayout="vertical">
+                            <control id="RadioGroup-2" name="radioButtonGroup" align="left"/>
+                            <panel width="70%" height="30%" childLayout="vertical" 
+                                align="center" valign="center">
                                <control name="label" text="Anti-Aliasing"/>
-                               <panel childLayout="vertical" backgroundColor="#8001" paddingLeft="20px" 
-                                    paddingRight="20px" paddingTop="4px" paddingBottom="4px" width="125px">
+                               <panel childLayout="vertical" paddingLeft="20px" 
+                                    align="center" paddingRight="20px" paddingTop="4px" paddingBottom="4px" width="125px">
                                  <effect>
                                    <onActive name="border" color="#0008" />
                                  </effect>
@@ -56,6 +61,33 @@
                                  </panel>
                                </panel>
                             </panel>
+                            <panel id="checkbox" width="70%" height="15%" childLayout="vertical"
+                                align="center" valign="center">
+                                <control name="label" text="Vsync an" align="center"/>
+                                <control id="simpleCheckBox" name="checkbox" align="center"/>
+                           </panel>
+                           <panel id="buttons" width="100%" height="20%" 
+                                valign="center" align="center" childLayout="center">
+                                <panel width="70%" height="100%" childLayout="horizontal">
+                                    <image id="save" align="right" valign="bottom" filename="Images/save_normal.png" width="45%" 
+                                        height="50%"> 
+                                        <interact onClick="onSave()"/>
+                                        <effect>
+                                            <onHover name="changeImage" active="Images/Hover/save_selected.png" 
+                                                inactive="Images/save_normal.png"/>
+                                        </effect>
+                                    </image>    
+                                    <panel height="100%" width="10%"></panel>
+                                    <image id="abort" align="right" valign="bottom" filename="Images/abort_normal.png" 
+                                        width="45%" height="50%"> 
+                                        <interact onClick="onAbort()"/>
+                                        <effect>
+                                            <onHover name="changeImage" active="Images/Hover/abort_selected.png" 
+                                                inactive="Images/abort_normal.png"/>
+                                        </effect>
+                                    </image> 
+                                </panel>
+                           </panel>
                         </panel>
                    </panel>
                    <panel id="confirmSettings" width="100%" height="20%" childLayout="center" align="center">
