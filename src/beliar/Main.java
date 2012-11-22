@@ -7,11 +7,15 @@ import com.jme3.input.MouseInput;
 import com.jme3.input.controls.MouseButtonTrigger;
 import com.jme3.renderer.RenderManager;
 import com.jme3.system.AppSettings;
+import java.awt.DisplayMode;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.prefs.BackingStoreException;
 import javax.imageio.ImageIO;
 
 
@@ -21,15 +25,14 @@ public class Main extends SimpleApplication{
     private MainMenuState mainMenuState;
     
     public static void main(String[] args) {
+            System.out.println("Main: Start the game");
             AppSettings appSettings = new AppSettings(true);
             appSettings.setSamples(8);
             appSettings.setBitsPerPixel(32);
             appSettings.setVSync(true);
             appSettings.setTitle("Beliar"); 
-            appSettings.setWidth(1280);
-            appSettings.setHeight(720);
             appSettings.setResolution(1280, 720);
-            
+            appSettings.setFullscreen(true);
             try{
                 appSettings.setIcons(new BufferedImage[]{ 
                     ImageIO.read(new File("assets/Images/logo.png"))});
@@ -39,6 +42,8 @@ public class Main extends SimpleApplication{
             }
             Main app = new Main();
             app.setSettings(appSettings);
+            GameContainer.getInstance().setAppSettings(appSettings);
+            app.setShowSettings(false);
             app.start();
     }
 
@@ -58,10 +63,17 @@ public class Main extends SimpleApplication{
     }
     
     private void initScreen(){
+        setGraphicModes();
         setDisplayFps(false);
         setDisplayStatView(false);
         screenManager = ScreenManager.getScreenManager();
         screenManager.initialize(stateManager, this);
+    }
+    
+    private void setGraphicModes(){
+        GraphicsDevice device = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+        DisplayMode [] displayModes = device.getDisplayModes();
+        GameContainer.getInstance().setDisplayModes(displayModes);
     }
     
     private void initCursor(){

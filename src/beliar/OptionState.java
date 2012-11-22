@@ -9,6 +9,7 @@ import com.jme3.app.SimpleApplication;
 import com.jme3.app.state.AbstractAppState;
 import com.jme3.app.state.AppStateManager;
 import com.jme3.scene.Node;
+import com.jme3.system.AppSettings;
 
 /**
  *
@@ -77,5 +78,11 @@ public class OptionState extends AbstractAppState{
     private void showInput() {
         inOptionInputs.setEnabled(true);
         screenManager.switchToOptionMenuScreen(inOptionInputs);
+    }
+    
+    protected void changeSettings(AppSettings appSettings){
+        this.app.setSettings(appSettings);
+        GameContainer.getInstance().setAppSettings(appSettings);
+        this.app.restart();
     }
 }

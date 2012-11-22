@@ -3,7 +3,10 @@ package beliar;
 import com.jme3.app.Application;
 import com.jme3.input.MouseInput;
 import com.jme3.scene.Node;
+import com.jme3.system.AppSettings;
+import java.awt.DisplayMode;
 import java.util.LinkedList;
+import java.util.List;
 
 
 public class GameContainer {
@@ -71,10 +74,14 @@ public class GameContainer {
 	
 	public final static int healthCentreRengeneration = 1;
         
+        // Map
         public static int MAP_SIZE = 64;
         public static int SCROLLING_OFFET = 20;
         public static float ZOOM_FACTOR = 0.01f;
         public static int SCREEN_WIDTH, SCREEN_HEIGHT;
+        
+        // Gamesettings
+        public static final String SETTINGS_KEY = "de.beliar";
         
         public static final int QUEST_1 = 0;
         public static final int QUEST_2 = 1;
@@ -83,6 +90,8 @@ public class GameContainer {
         
         private Node rootNode;
         private Application app;
+        private AppSettings appSettings;
+        private DisplayMode [] displayModes;
         private MouseInput mouseInput;
         private int screenWidth, screenHeight;
         private static GameContainer Instance;
@@ -162,4 +171,20 @@ public class GameContainer {
             }
             return null;
         }
+
+    protected AppSettings getAppSettings() {
+        return appSettings;
+    }
+
+    protected void setAppSettings(AppSettings appSettings) {
+        this.appSettings = appSettings;
+    }
+    
+    protected void setDisplayModes(DisplayMode [] displayModes){
+        this.displayModes = displayModes;
+    }
+    
+    protected DisplayMode [] getDisplayModes(){
+        return displayModes;
+    }
 }

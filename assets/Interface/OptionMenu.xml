@@ -19,23 +19,8 @@
                         align="center" valign="center"> 
                      <panel id="red" width="50%" height="90%" childLayout="vertical" align="center"
                         valign="center">
-                            <control id="RadioGroup-1" name="radioButtonGroup" align="left"/>
                             <panel width="70%" height="25%" childLayout="vertical" align="center" valign="center">
-                               <control name="label" text="Auflösung"/>
-                               <panel align="center" childLayout="vertical" paddingLeft="20px" 
-                                    paddingRight="20px" paddingTop="4px" paddingBottom="4px" width="125px">
-                                 <effect>
-                                   <onActive name="border" color="#0008" />
-                                 </effect>
-                                 <panel childLayout="horizontal">
-                                   <control name="label" text="1280 * 720" width="60px" />
-                                   <control name="radioButton" id="option-1" group="RadioGroup-1" />
-                                 </panel>
-                                 <panel childLayout="horizontal">
-                                   <control name="label" text="1024 * 768" width="60px" />
-                                   <control name="radioButton" id="option-2" group="RadioGroup-1" />
-                                 </panel>
-                               </panel>
+                               <control id="dropDown2" name="dropDown"/>
                             </panel>
                             
                             <control id="RadioGroup-2" name="radioButtonGroup" align="left"/>
@@ -52,11 +37,11 @@
                                    <control name="radioButton" id="option-3" group="RadioGroup-2" />
                                  </panel>
                                  <panel childLayout="horizontal">
-                                   <control name="label" text="8x" width="60px" />
+                                   <control name="label" text="4x" width="60px" />
                                    <control name="radioButton" id="option-4" group="RadioGroup-2" />
                                  </panel>
                                  <panel childLayout="horizontal">
-                                   <control name="label" text="16x" width="60px" />
+                                   <control name="label" text="8x" width="60px" />
                                    <control name="radioButton" id="option-5" group="RadioGroup-2" />
                                  </panel>
                                </panel>

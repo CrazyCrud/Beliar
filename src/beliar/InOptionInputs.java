@@ -8,13 +8,18 @@ import com.jme3.app.Application;
 import com.jme3.app.SimpleApplication;
 import com.jme3.app.state.AbstractAppState;
 import com.jme3.app.state.AppStateManager;
+import com.jme3.system.AppSettings;
 import de.lessvoid.nifty.Nifty;
 import de.lessvoid.nifty.controls.CheckBox;
+import de.lessvoid.nifty.controls.DropDown;
 import de.lessvoid.nifty.controls.RadioButton;
-import de.lessvoid.nifty.controls.RadioButtonGroup;
 import de.lessvoid.nifty.elements.Element;
 import de.lessvoid.nifty.screen.Screen;
 import de.lessvoid.nifty.screen.ScreenController;
+import java.awt.DisplayMode;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.prefs.BackingStoreException;
 
 /**
  *
@@ -24,11 +29,14 @@ public class InOptionInputs extends AbstractAppState implements ScreenController
 
     private AppStateManager stateManager;
     private SimpleApplication app;
+    private AppSettings appSettings;
     private Nifty nifty;
-    Element radioButtonElement1, radioButtonElement2, radioButtonElement3, 
+    private Element dropDownElement, radioButtonElement3, 
             radioButtonElement4, radioButtonElement5, checkBoxElement;
-    RadioButton radioButton1, radioButton2, radioButton3, radioButton4, radioButton5;
-    CheckBox checkBox;
+    private DisplayMode [] displayModes;
+    private DropDown dropDown;
+    private RadioButton radioButton3, radioButton4, radioButton5;
+    private CheckBox checkBox;
     
     public InOptionInputs(AppStateManager stateManager, Application app){
         this.stateManager = stateManager;
@@ -40,6 +48,8 @@ public class InOptionInputs extends AbstractAppState implements ScreenController
         System.out.println("InOptionsInputs: bind()");
         this.nifty = nifty;
         initValues();
+        getControls();
+        initScreenElements();
     }
     
     @Override
@@ -82,36 +92,34 @@ public class InOptionInputs extends AbstractAppState implements ScreenController
     }
     
     public void onSave(){
-        getControls();
         computeSettings();
         backToMainMenu();
     }
-  
-    private void getControls() {
-        radioButton1 = radioButtonElement1.getNiftyControl(RadioButton.class);
-        radioButton2 = radioButtonElement2.getNiftyControl(RadioButton.class);
-        radioButton3 = radioButtonElement3.getNiftyControl(RadioButton.class);
-        radioButton4 = radioButtonElement4.getNiftyControl(RadioButton.class);
-        radioButton5 = radioButtonElement5.getNiftyControl(RadioButton.class);
-        checkBox = checkBoxElement.getNiftyControl(CheckBox.class);
-    }
-
+    
     private void computeSettings() {
-        if(radioButton1.isActivated()){
-            System.out.println("InOptionInputs: onSave() first radiobutton");
-        }else if(radioButton2.isActivated()){
-            System.out.println("InOptionInputs: onSave() second radiobutton");
-        }
+        int itemIndex = dropDown.getSelectedIndex();
+        appSettings.setResolution(displayModes[itemIndex].getWidth(), displayModes[itemIndex].getHeight());
+        appSettings.setDepthBits(displayModes[itemIndex].getBitDepth());
+        appSettings.setFrequency(displayModes[itemIndex].getRefreshRate());
+       
         if(radioButton3.isActivated()){
-            System.out.println("InOptionInputs: onSave() third radiobutton");
+            System.out.println("InOptionInputs: computeSettings() 1x");
+            appSettings.setSamples(0);
         }else if(radioButton4.isActivated()){
-            System.out.println("InOptionInputs: onSave() fourth radiobutton");
+            System.out.println("InOptionInputs: computeSettings() 4x");
+            appSettings.setSamples(4);
         }else if(radioButton5.isActivated()){
-            System.out.println("InOptionInputs: onSave() fifth radiobutton");
+            System.out.println("InOptionInputs: computeSettings() 8x");
+            appSettings.setSamples(8);
         }
         if(checkBox.isChecked()){
-            System.out.println("InOptionInputs: onSave() chekbox is checked");
+            System.out.println("InOptionInputs: computeSettings() vsync on");
+            appSettings.setVSync(true);
+        }else{
+            System.out.println("InOptionInputs: computeSettings() vsync off");
+            appSettings.setVSync(false);
         }
+        this.app.getStateManager().getState(OptionState.class).changeSettings(appSettings);
     }
     
     private void backToMainMenu(){
@@ -121,11 +129,31 @@ public class InOptionInputs extends AbstractAppState implements ScreenController
     }
 
     private void initValues() {
-        radioButtonElement1 = nifty.getScreen("inOptionInputs").findElementByName("option-1");
-        radioButtonElement2 = nifty.getScreen("inOptionInputs").findElementByName("option-2");
+        appSettings = new AppSettings(false);
+        appSettings.copyFrom(GameContainer.getInstance().getAppSettings());
+        displayModes = GameContainer.getInstance().getDisplayModes();
+
+        dropDownElement = nifty.getScreen("inOptionInputs").findElementByName("dropDown2");
         radioButtonElement3 = nifty.getScreen("inOptionInputs").findElementByName("option-3");
         radioButtonElement4 = nifty.getScreen("inOptionInputs").findElementByName("option-4");
         radioButtonElement5 = nifty.getScreen("inOptionInputs").findElementByName("option-5");
         checkBoxElement = nifty.getScreen("inOptionInputs").findElementByName("simpleCheckBox");
+    }
+    
+    private void getControls() {
+        dropDown = dropDownElement.getNiftyControl(DropDown.class);
+        radioButton3 = radioButtonElement3.getNiftyControl(RadioButton.class);
+        radioButton4 = radioButtonElement4.getNiftyControl(RadioButton.class);
+        radioButton5 = radioButtonElement5.getNiftyControl(RadioButton.class);
+        checkBox = checkBoxElement.getNiftyControl(CheckBox.class);
+    }
+    
+    private void initScreenElements(){
+        for(DisplayMode mode: displayModes){
+            int width = mode.getWidth();
+            int height = mode.getHeight();
+            int bitDepth = mode.getBitDepth();
+            dropDown.addItem(width + "*" + height + ", " + bitDepth + "BPP");
+        }
     }
 }
