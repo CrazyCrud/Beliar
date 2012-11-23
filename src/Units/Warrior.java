@@ -38,6 +38,7 @@ public abstract class Warrior extends Unit{
         
         super.addControllers();
         spatial.addControl(new WarriorBehaviourControl());
+        spatial.addControl(new WarriorAnimationControl());
     }
     
     @Override
