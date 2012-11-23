@@ -4,12 +4,16 @@
  */
 package Units;
 
+import com.jme3.math.Vector3f;
+import com.jme3.scene.Node;
+
 /**
  *
  * @author andministrator
  */
 public abstract class Warrior extends Unit{
 
+    protected Node node_warrior;
     protected int int_attackDamage, int_type;
     protected float float_criticalStrike;
     
@@ -42,5 +46,9 @@ public abstract class Warrior extends Unit{
         spatial.getControl(WarriorBehaviourControl.class).setAttackDamage(int_attackDamage);
         spatial.getControl(WarriorBehaviourControl.class).setCriticalStrike(float_criticalStrike);
         spatial.getControl(WarriorBehaviourControl.class).setType(int_type);
+    }
+    
+    protected void positionWarrior(Vector3f spwanLocation) {
+        spatial.getControl(GameObjectControl.class).setLocation(spwanLocation);
     }
 }

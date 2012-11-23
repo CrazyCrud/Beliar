@@ -186,7 +186,7 @@
                                 </image>
                             </panel>
                             <panel width="25%" height="100%" childLayout="center">
-                                <image id="buildIcon2" filename="Images/build_icon.png" valign="center" 
+                                <image id="buildIcon2" filename="Images/army_icon.png" valign="center" 
                                     width="100%h" height="100%">
                                     <interact onClick="onArmy()"/>    
                                 </image>

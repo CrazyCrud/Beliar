@@ -39,6 +39,9 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
     private static final int ADAM = 0;
     private static final int KYTHOS = 1;
     private static final int MARA = 2;
+    private static final int MELEE = 0;
+    private static final int RANGER = 1;
+    private static final int MAGICIAN = 2;
     
     private int menuState;
     private static final int MENU_CLEAR = 0;
@@ -177,7 +180,7 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
         textfirstRow.getRenderer(TextRenderer.class).setText("Gang anlegen");
         
         
-        new ImageBuilder("adamRoom"){{
+        new ImageBuilder("path"){{
             filename("Images/build_path.png");
             height("95%");
             width("100%h");
@@ -218,8 +221,44 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
         menuState = MENU_ARMY;
         
         Element menuText = screen.findElementByName("menuText");
-        menuText.getRenderer(TextRenderer.class).setText("Verfügbarer Einheiten");
-        myGameState.setUpUnit();
+        menuText.getRenderer(TextRenderer.class).setText("Einheiten");
+        Element textSecondRow = screen.findElementByName("textSecondRow");
+        textSecondRow.getRenderer(TextRenderer.class).setText("Krieger");
+        Element textfirstRow = screen.findElementByName("textFirstRow");
+        textfirstRow.getRenderer(TextRenderer.class).setText("Sklaven");
+        
+        
+        new ImageBuilder("slave"){{
+            filename("Images/slave_icon.png");
+            height("95%");
+            width("100%h");
+            alignCenter();
+            interactOnClick("onBuildSlave()");   
+                }}.build(nifty, screen, firstRowTop);
+        
+        new ImageBuilder("melee"){{
+            filename("Images/melee_icon.png");
+            height("95%");
+            width("100%h");
+            alignCenter();
+            interactOnClick("onBuildArmy(0)");   
+                }}.build(nifty, screen, secondRowTop);
+        
+        new ImageBuilder("ranger"){{
+            filename("Images/magician_icon.png");
+            height("95%");
+            width("100%h");
+            alignCenter();
+            interactOnClick("onBuildArmy(1)");   
+                }}.build(nifty, screen, secondRowTop);
+        
+        new ImageBuilder("magician"){{
+            filename("Images/ranger_icon.png");
+            height("95%");
+            width("100%h");
+            alignCenter();
+            interactOnClick("onBuildArmy(2)");   
+                }}.build(nifty, screen, secondRowTop);
     }
     
     private void setupQuests(){
@@ -417,18 +456,12 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
         clearSecondRowBottom();
         switch(Integer.parseInt(whichRoom)){
             case ADAM:
-                // Adam-Raum anlegen
-                System.out.println("Build Adam Room");
                 PlayerRessources.selectionRoom = ValuesTerrain.HALLOFANARCHY;
                 break;
             case KYTHOS:
-                // Kythos-Raum anlegen
-                System.out.println("Build Kythos Room");
                 PlayerRessources.selectionRoom = ValuesTerrain.CAVEOFBEAST;
                 break;
             case MARA:
-                // Mara-Raum anlegen
-                System.out.println("Build Mara Room");
                 PlayerRessources.selectionRoom = ValuesTerrain.TOMBOFMEMORY;
                 break;
         }
@@ -581,6 +614,23 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
             }}.build(nifty, screen, secondRowBottom);
         textCostMara = tb.build(nifty, screen, secondRowBottom);
         textCostMara.getRenderer(TextRenderer.class).setText("" + cost[2]);
+    }
+    
+    public void onBuildSlave(){
+        stateManager.getState(GameState.class).createSlave();
+    }
+    
+    public void onBuildArmy(String whichUnit){
+        System.out.println("InGameInputs: onBuildArmy() " + whichUnit);
+        switch(Integer.parseInt(whichUnit)){
+            case MELEE:
+                stateManager.getState(GameState.class).createMelee();
+                break;
+            case RANGER:
+                break;
+            case MAGICIAN:
+                break;
+        }
     }
     
     private void setUpQuestText(){

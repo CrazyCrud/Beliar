@@ -226,6 +226,7 @@ public class GameState extends AbstractAppState {
         initQuests();
         attachGrid(new Vector3f(0, 0, 0), 1024, ColorRGBA.Blue);
         attachCoordinateAxes(new Vector3f(-1, 0, -1));
+        setUpSlaves();
         playMusic();
     }
 
@@ -367,6 +368,12 @@ public class GameState extends AbstractAppState {
         localRootNode.attachChild(marker);
         localRootNode.attachChild(pickAble);
         localRootNode.attachChild(creatures);
+    }
+    
+    private void setUpSlaves() {
+       System.out.println("GameState: setUpUnit");
+       creatures.attachChild(UnitController.createSlave(5, 8)); 
+       creatures.attachChild(UnitController.createSlave(7, 9));
     }
     
     private void initQuests(){
@@ -672,12 +679,14 @@ public class GameState extends AbstractAppState {
                 break;
         }
     }
-
-    protected void setUpUnit() {
-       System.out.println("GameState: setUpUnit");
-       Node mySlave = UnitController.createSlave(5, 8);
-       creatures.attachChild(mySlave);   
-       //UnitController.moveUnitTo(mySlave, 10, 11);
-       //UnitController.moveUnitTo(mySlave, 5, 20);
+    
+    protected void createSlave(){
+        System.out.println("GameState: createSlave");
+        creatures.attachChild(UnitController.createSlave(5, 8)); 
+    }
+    
+    protected void createMelee(){
+        System.out.println("GameState: createArmy");
+        creatures.attachChild(UnitController.createMelee(5, 6)); 
     }
 }

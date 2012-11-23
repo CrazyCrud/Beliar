@@ -51,7 +51,11 @@ public class UnitModel {
     protected Node createWarrior(int posX, int posZ, int whichWarrior){
         switch(whichWarrior){
             case GameObjectValues.MELEE:
-                break;
+                System.out.println("UnitModel: createWarrior Melee");
+                Melee melee = new Melee(posX, posZ);
+                list_units.add(melee);
+                attachWarriorUnit((Node)melee.getSpatial());
+                return (Node)melee.getSpatial();
             case GameObjectValues.RANGERS:
                 break;
             case GameObjectValues.MAGICIAN:
@@ -61,9 +65,7 @@ public class UnitModel {
     }
     
     private void attachSlaveUnit(Node slave){
-        System.out.println("UnitModel attachSlaveUnit()");
         this.node_slaveUnits.attachChild(slave);
-        System.out.println("UnitModel attachSlaveUnit() : " + node_slaveUnits.getChildren().size());
     }
     
     private void attachWarriorUnit(Node warrior){
@@ -89,7 +91,6 @@ public class UnitModel {
     }
     
     protected int getSlaveNumbers(){
-        //return node_slaveUnits.getChildren().size();
         return list_slaves.size();
     }
     
