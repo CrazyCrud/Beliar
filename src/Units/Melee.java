@@ -16,7 +16,7 @@ public class Melee extends Warrior{
     public Melee(int posX, int posZ){
         super(GameObjectValues.HEALTH_VALUE_SLAVE, posX, posZ, GameObjectValues.SPEED_VALUE_SLAVE, 
                 GameObjectValues.ATTACK_DAMAGE_MELEE, GameObjectValues.MELEE);
-        createMelee(new Vector3f(posX, GameObjectValues.Y_POSITION_UNITS, posZ));
+        createMelee(new Vector3f(posX, GameObjectValues.Y_POSITION_UNITS + 1.0f, posZ));
     }
     
     private void createMelee(Vector3f spwanLocation){

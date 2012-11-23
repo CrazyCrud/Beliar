@@ -439,8 +439,7 @@ public class GameState extends AbstractAppState {
             int zPos = (int) mousePositionWorld.z;
             
             if (name.equals("pick target")) {
-
-                
+                System.out.println("GameState onAnalog() pick target");
                 CollisionResults results = checkColision();
                 clearSelection();
                 if ((results.size() > 0) && (PlayerRessources.selectionRoom > 0)) {
@@ -458,8 +457,6 @@ public class GameState extends AbstractAppState {
                     }
                 } 
                 else if ((results.size() > 0) && (selection != null)) {
-                    System.out.println("GameState onanalog() " + checkFieldType(xPos, zPos));
-                    System.out.println("GameState onanalog() " + gameSimulation.checkCostsBuilding(int_buildingType, int_sizeBuilding));
                     if ((checkFieldType(xPos, zPos) == true) && 
                             (gameSimulation.checkCostsBuilding(int_buildingType, int_sizeBuilding) == true)) {
                         selection = PlayerRessources.selectedBuilding;
@@ -479,9 +476,11 @@ public class GameState extends AbstractAppState {
                 if (results.size() <= 0) {
                     System.out.println("No Selection");
                 } else {
+                    Geometry target = results.getClosestCollision().getGeometry();
+                    System.out.println("GameState: onAnalog() Spatial slected " + target.getName());
                     results.clear();
                 }
-            } else if (name.equals("moveMouse")) {
+            }else if (name.equals("moveMouse")) {
                 setMousePosition(xPos, zPos);
             }
         }
@@ -687,6 +686,6 @@ public class GameState extends AbstractAppState {
     
     protected void createMelee(){
         System.out.println("GameState: createArmy");
-        creatures.attachChild(UnitController.createMelee(5, 6)); 
+        creatures.attachChild(UnitController.createMelee(-1, -1)); 
     }
 }

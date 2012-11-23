@@ -5,6 +5,7 @@
 package Units;
 
 import com.jme3.math.Vector3f;
+import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 
@@ -22,13 +23,13 @@ public class Slave extends Unit{
     }
     
     private void createSlave(Vector3f spwanLocation){
-        setUpSpatial(spwanLocation);
+        setUpSpatial();
         setUpControllers();
         positionSlave(spwanLocation);
     }
     
-    private void setUpSpatial(Vector3f spwanLocation){
-        node_slave = (Node) assetManager.loadModel("Models/slave/slave.mesh.xml");
+    private void setUpSpatial(){
+        node_slave = (Node) assetManager.loadModel("Models/slave/slave.j3o");
         node_slave.setMaterial(assetManager.loadMaterial("Materials/slave.j3m"));
         //node_slave.setLocalTranslation(spwanLocation);
         spatial = (Spatial) node_slave;  

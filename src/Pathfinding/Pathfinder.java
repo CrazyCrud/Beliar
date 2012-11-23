@@ -31,7 +31,6 @@ public class Pathfinder {
         reset();
         
         if(!isAccessible(target)){
-            System.out.println("Pathfinder: search() target not accessible");
             return null;
         }
         
@@ -41,7 +40,6 @@ public class Pathfinder {
             Node found = this.step(target);
             
             if(found != null){
-                System.out.println("Pathfinder: search() Node found " + found.getXPos() + ", " + found.getYPos());
                 return this.getPath(found);
             }
         } 
@@ -49,7 +47,6 @@ public class Pathfinder {
     }
     
     private boolean isAccessible(Node target){
-        System.out.println("Pathfinder: isaccessible() " + target.type);
         return target.type == 1 ? true : false;
     }
     
@@ -58,9 +55,7 @@ public class Pathfinder {
         
         if(head == null){
             return null;
-        }
-        //System.out.println("Pathinder: step() current node: " + head.getXPos() + ", " + head.getYPos());
-        
+        }        
         this.visit(head);
         
         if(head == target){
@@ -73,8 +68,6 @@ public class Pathfinder {
             }
             float last = this.getAccumulatedWeight(edge.destination);
             float current = this.getAccumulatedWeight(head) + edge.weight;
-            //System.out.println("Pathfinder: step() node " + edge.destination.x + ", " + edge.destination.y);
-            //System.out.println("Pathfinder: step() weights: " + current + ", " + last);
 
             if(last != 0.0f && last < current){
                 continue;

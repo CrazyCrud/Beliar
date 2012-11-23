@@ -16,18 +16,24 @@ import com.jme3.scene.control.Control;
  */
 public class ClientBehaviourControl extends AbstractControl{
 
+    public ClientBehaviourControl(){
+        
+    }
+    
     @Override
     protected void controlUpdate(float tpf) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        
     }
 
     @Override
     protected void controlRender(RenderManager rm, ViewPort vp) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        
     }
 
     public Control cloneForSpatial(Spatial spatial) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        ClientBehaviourControl clone = new ClientBehaviourControl();
+        clone.setSpatial(spatial);
+        return clone;
     }
     
 }
