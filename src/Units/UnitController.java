@@ -38,7 +38,16 @@ public class UnitController {
     } 
     
     public static Node getSlave(){
-        return UnitModel.getInstance().getSlave();
+        Slave slave = UnitModel.getInstance().getSlave();
+        if(slave == null){
+            return null;
+        }else{
+            return (Node)UnitModel.getInstance().getSlave().getSpatial();
+        }       
+    }
+    
+    public static Node removeSlave(){
+        return UnitModel.getInstance().removeSlave();
     }
     
     public static void moveUnitTo(Node unit, int xPos, int zPos){

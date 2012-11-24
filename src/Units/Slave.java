@@ -4,8 +4,8 @@
  */
 package Units;
 
+import Map.MapController;
 import com.jme3.math.Vector3f;
-import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 
@@ -31,7 +31,6 @@ public class Slave extends Unit{
     private void setUpSpatial(){
         node_slave = (Node) assetManager.loadModel("Models/slave/slave.j3o");
         node_slave.setMaterial(assetManager.loadMaterial("Materials/slave.j3m"));
-        //node_slave.setLocalTranslation(spwanLocation);
         spatial = (Spatial) node_slave;  
     }
     
@@ -62,5 +61,11 @@ public class Slave extends Unit{
         node_slave.removeFromParent();
         node_slave.removeControl(SlaveAnimationControl.class);
         node_slave.removeControl(SlaveCharacterControl.class);
+    }
+
+    protected void die() {
+        MapController.setNodeTo(spatial.getControl(GameObjectControl.class).getPosX(), 
+                spatial.getControl(GameObjectControl.class).getPosZ(), false);
+        spatial.getControl(GameObjectControl.class).setHealth(0);
     }
 }

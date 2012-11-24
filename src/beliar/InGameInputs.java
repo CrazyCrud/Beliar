@@ -226,7 +226,17 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
         textSecondRow.getRenderer(TextRenderer.class).setText("Krieger");
         Element textfirstRow = screen.findElementByName("textFirstRow");
         textfirstRow.getRenderer(TextRenderer.class).setText("Sklaven");
-        
+        clearFirstRowBottom();
+        TextBuilder tb = new TextBuilder("SoulBuilder");
+        tb.textVAlignCenter();
+        tb.textHAlignLeft();
+        tb.paddingRight("20px");
+        tb.alignLeft();
+        tb.width("100%h");
+        tb.height("100%");
+        tb.font("Interface/Fonts/gill_16.fnt");
+        Element textSouls = tb.build(nifty, screen, firstRowBottom);
+        textSouls.getRenderer(TextRenderer.class).setText("Anzahl der Verdammten: " + PlayerRessources.soulsCount);
         
         new ImageBuilder("slave"){{
             filename("Images/slave_icon.png");
@@ -732,6 +742,14 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
         
         thirdRowTop.layoutElements();
         thirdRowBottom.layoutElements();
+    }
+    
+    private void clearFirstRowBottom(){
+        List<Element> visibleElements = firstRowBottom.getElements();
+        for(Element element : visibleElements){
+            element.markForRemoval();
+        }
+        firstRowBottom.layoutElements();
     }
     
     private void clearSecondRowBottom(){

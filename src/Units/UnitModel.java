@@ -17,11 +17,9 @@ public class UnitModel {
     private static UnitModel unitModel;
     private ArrayList<Unit> list_units;
     private ArrayList<Slave> list_slaves;
-    private Node node_slaveUnits, node_warriorUnits;
     
     private UnitModel(){
         initValues();
-        initUnitNodes();
     }
     
     public static UnitModel getInstance(){
@@ -36,15 +34,9 @@ public class UnitModel {
         list_slaves = new ArrayList<Slave>();
     }
     
-    private void initUnitNodes(){
-        node_slaveUnits = new Node("SlaveUnits");
-        node_warriorUnits = new Node("WarriorUnits");
-    }
-    
     protected Node createSlave(int posX, int posZ){
         Slave slave = new Slave(posX, posZ);
         list_slaves.add(slave);
-        attachSlaveUnit((Node)slave.getSpatial());
         return (Node)slave.getSpatial();
     }
     
@@ -54,7 +46,6 @@ public class UnitModel {
                 System.out.println("UnitModel: createWarrior Melee");
                 Melee melee = new Melee(posX, posZ);
                 list_units.add(melee);
-                attachWarriorUnit((Node)melee.getSpatial());
                 return (Node)melee.getSpatial();
             case GameObjectValues.RANGERS:
                 break;
@@ -64,42 +55,22 @@ public class UnitModel {
         return null;
     }
     
-    private void attachSlaveUnit(Node slave){
-        this.node_slaveUnits.attachChild(slave);
-    }
-    
-    private void attachWarriorUnit(Node warrior){
-        this.node_warriorUnits.attachChild(warrior);
-    }
-    
-    protected List<Spatial> getSlaves(){
-        return node_slaveUnits.getChildren();
-    }
-    
-    protected Node getSlave(){
+    protected Slave getSlave(){
         if(isSlaveAvailable()){
             for(Slave slave: list_slaves){
                 if(slave.getSpatial().getControl(SlaveCharacterControl.class).hasOrder()){
                     continue;
                 }else{
-                    return (Node)slave.getSpatial();
+                    return slave;
                 }
             }
-            return (Node)list_slaves.get(0).getSpatial();
+            return list_slaves.get(0);
         }
         return null;
     }
     
     protected int getSlaveNumbers(){
         return list_slaves.size();
-    }
-    
-    protected List<Spatial> getWarriors(){
-        return node_warriorUnits.getChildren();
-    }
-    
-    protected int getWarriorNumbers(){
-        return node_warriorUnits.getChildren().size();
     }
     
     protected ArrayList<Unit> getUnits(){
@@ -112,5 +83,15 @@ public class UnitModel {
     
     protected void moveUnitTo(Node unit, int xPos, int zPos){
         unit.getControl(WalkControl.class).findPath(xPos, zPos);
+    }
+
+    protected Node removeSlave() {
+        if(list_slaves.isEmpty()){
+            return null;
+        }
+        Slave slave = getSlave();
+        slave.die();
+        list_slaves.remove(slave);
+        return (Node)slave.getSpatial();
     }
 }

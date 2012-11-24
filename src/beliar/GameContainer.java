@@ -28,6 +28,8 @@ public class GameContainer {
         public static final int MARA_MIDDLE_SIZE = 2;
         public static final int MARA_BIG_SIZE = 3;
         
+        public final static int COSTSLAVE = 1;
+        
         public final static int[] COSTADAMBIG       ={250,0,0};
         public final static int[] COSTADAMMIDDLE    ={100,0,0};
         public final static int[] COSTADAMSMALL     ={50,0,0};

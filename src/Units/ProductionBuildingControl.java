@@ -70,15 +70,10 @@ public class ProductionBuildingControl extends AbstractControl{
     
     protected void setActive(boolean isActive) {
         this.bool_isActive = isActive;
-        //notifyAnimationControl();
     }
     
     protected boolean isActive(){
         return bool_isActive;
-    }
-    
-    private void notifyAnimationControl() {
-        spatial.getControl(BuildingAnimationControl.class).setAnimation();
     }
     
     protected int getGoods(){

@@ -681,11 +681,17 @@ public class GameState extends AbstractAppState {
     
     protected void createSlave(){
         System.out.println("GameState: createSlave");
-        creatures.attachChild(UnitController.createSlave(5, 8)); 
+        if(PlayerRessources.soulsCount > 0){
+            creatures.attachChild(UnitController.createSlave(5, 8));
+            stateManager.getState(GameSimulation.class).reduceSouls(GameContainer.COSTSLAVE);
+        }
     }
     
     protected void createMelee(){
         System.out.println("GameState: createArmy");
-        creatures.attachChild(UnitController.createMelee(-1, -1)); 
+        if(UnitController.isSlaveAvailable()){
+            UnitController.removeSlave();
+            creatures.attachChild(UnitController.createMelee(5, 6)); 
+        }
     }
 }

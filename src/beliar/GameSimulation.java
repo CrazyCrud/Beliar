@@ -106,125 +106,125 @@ public class GameSimulation extends AbstractAppState{
         {
             int countSoulAbyss= PlayerRessources.soulAbyssOfPlayer;
             
-            PlayerRessources.soulsCount += countSoulAbyss*(PlayerRessources.darkness*(int)(Math.random()*10));
+            PlayerRessources.soulsCount += countSoulAbyss*(PlayerRessources.darkness*(int)(Math.random()*2));
         }
         
-    public void reduceRessources(int[]bill)
-    {
-        PlayerRessources.adam -= bill[0];
-        PlayerRessources.kythos -= bill[1];
-        PlayerRessources.mara -= bill[2];
-    }  
-    
+        public void reduceRessources(int[]bill)
+        {
+            PlayerRessources.adam -= bill[0];
+            PlayerRessources.kythos -= bill[1];
+            PlayerRessources.mara -= bill[2];
+        }  
 
-    public boolean checkCostsBuilding(int whichBuilding, int size)
-    {
-        int [] cost = {0,0,0};
-        switch(whichBuilding){
-            case GameContainer.ADAM_BUILDING:
-                if(size == GameContainer.ADAM_SMALL_SIZE){
-                    cost = GameContainer.COSTADAMSMALL;
-                }else if(size == GameContainer.ADAM_MIDDLE_SIZE){
-                    cost = GameContainer.COSTADAMMIDDLE;
-                }else{
-                    cost = GameContainer.COSTADAMBIG;
-                }
-                break;
-            case GameContainer.KYTHOS_BUILDING:
-                if(size == GameContainer.KYTHOS_SMALL_SIZE){
-                    cost = GameContainer.COSTKYTHOSSMALL;
-                }else if(size == GameContainer.KYTHOS_MIDDLE_SIZE){
-                    cost = GameContainer.COSTKYTHOSMIDDLE;
-                }else{
-                    cost = GameContainer.COSTKYTHOSBIG;
-                }
-                break;
-            case GameContainer.MARA_BUILDING:
-                if(size == GameContainer.MARA_SMALL_SIZE){
-                    cost = GameContainer.COSTMARASMALL;
-                }else if(size == GameContainer.MARA_MIDDLE_SIZE){
-                    cost = GameContainer.COSTMARAMIDDLE;
-                }else{
-                    cost = GameContainer.COSTMARABIG;
-                }
-                break;
+
+        public boolean checkCostsBuilding(int whichBuilding, int size)
+        {
+            int [] cost = {0,0,0};
+            switch(whichBuilding){
+                case GameContainer.ADAM_BUILDING:
+                    if(size == GameContainer.ADAM_SMALL_SIZE){
+                        cost = GameContainer.COSTADAMSMALL;
+                    }else if(size == GameContainer.ADAM_MIDDLE_SIZE){
+                        cost = GameContainer.COSTADAMMIDDLE;
+                    }else{
+                        cost = GameContainer.COSTADAMBIG;
+                    }
+                    break;
+                case GameContainer.KYTHOS_BUILDING:
+                    if(size == GameContainer.KYTHOS_SMALL_SIZE){
+                        cost = GameContainer.COSTKYTHOSSMALL;
+                    }else if(size == GameContainer.KYTHOS_MIDDLE_SIZE){
+                        cost = GameContainer.COSTKYTHOSMIDDLE;
+                    }else{
+                        cost = GameContainer.COSTKYTHOSBIG;
+                    }
+                    break;
+                case GameContainer.MARA_BUILDING:
+                    if(size == GameContainer.MARA_SMALL_SIZE){
+                        cost = GameContainer.COSTMARASMALL;
+                    }else if(size == GameContainer.MARA_MIDDLE_SIZE){
+                        cost = GameContainer.COSTMARAMIDDLE;
+                    }else{
+                        cost = GameContainer.COSTMARABIG;
+                    }
+                    break;
+            }
+            if((PlayerRessources.adam>=cost[0])  &&(PlayerRessources.kythos>=cost[1])&&(PlayerRessources.mara>=cost[2]))
+                return true;
+            else
+                return false;
         }
-        if((PlayerRessources.adam>=cost[0])  &&(PlayerRessources.kythos>=cost[1])&&(PlayerRessources.mara>=cost[2]))
-            return true;
-        else
-            return false;
-    }
-    
-    private void updateProductionBuildings() {
-        for (ProductionBuilding myBuilding : BuildingController.getProductionBuildings()) {
-            if (myBuilding.hasGoodies()) {
-                int type = myBuilding.getType();
 
-                switch (type) {
-                    case GameContainer.ADAM_BUILDING:
-                        PlayerRessources.adam += myBuilding.getGoods();
-                        break;
-                    case GameContainer.KYTHOS_BUILDING:
-                        PlayerRessources.kythos += myBuilding.getGoods();
-                        break;
-                    case GameContainer.MARA_BUILDING:
-                        PlayerRessources.mara += myBuilding.getGoods();
-                        break;
+        private void updateProductionBuildings() {
+            for (ProductionBuilding myBuilding : BuildingController.getProductionBuildings()) {
+                if (myBuilding.hasGoodies()) {
+                    int type = myBuilding.getType();
+
+                    switch (type) {
+                        case GameContainer.ADAM_BUILDING:
+                            PlayerRessources.adam += myBuilding.getGoods();
+                            break;
+                        case GameContainer.KYTHOS_BUILDING:
+                            PlayerRessources.kythos += myBuilding.getGoods();
+                            break;
+                        case GameContainer.MARA_BUILDING:
+                            PlayerRessources.mara += myBuilding.getGoods();
+                            break;
+                    }
                 }
             }
         }
-    }
-    
-    private void reduceSouls(int count)
-    {
-        PlayerRessources.soulsCount-=count;
-    }
-    
-    private void checkForSalvationOfSouls()
-      {
-        //System.out.println("Freiheit der Seelen?");
-        if(PlayerRessources.soulsCount> GameContainer.freeSouls)
-        {  
-            //System.out.println("Freiheit der Seelen? CHECK");
-            PlayerRessources.chanceForSalvation =+ PlayerRessources.soulsCount/2;
-        }
-        
-        if(PlayerRessources.chanceForSalvation >= GameContainer.soulsRate)
+
+        protected void reduceSouls(int count)
         {
-            //System.out.println("Freiheit der Seelen? JA!");
-            reduceSouls((int)PlayerRessources.chanceForSalvation);
-            if(PlayerRessources.soulsCount <= 0){
-                PlayerRessources.soulsCount = 0; 
-            }  
-            //System.out.println("SoulsCount"+PlayerRessources.soulsCount);
+            PlayerRessources.soulsCount -= count;
         }
-      }
 
-    private boolean checkForQuests() {
-        if(isQuest1Completed() && isQuest2Completed() && isQuest3Completed()){
-            return true;
-        }
-        return false;
-    }
+        private void checkForSalvationOfSouls()
+          {
+            //System.out.println("Freiheit der Seelen?");
+            if(PlayerRessources.soulsCount> GameContainer.freeSouls)
+            {  
+                //System.out.println("Freiheit der Seelen? CHECK");
+                PlayerRessources.chanceForSalvation =+ PlayerRessources.soulsCount/2;
+            }
 
-    protected boolean isQuest1Completed() {
-        if(PlayerRessources.adam > 1000 && PlayerRessources.kythos > 600 && PlayerRessources.mara > 600){
-            return true;
-        }
-        return false;
-    }
+            if(PlayerRessources.chanceForSalvation >= GameContainer.soulsRate)
+            {
+                //System.out.println("Freiheit der Seelen? JA!");
+                reduceSouls((int)PlayerRessources.chanceForSalvation);
+                if(PlayerRessources.soulsCount <= 0){
+                    PlayerRessources.soulsCount = 0; 
+                }  
+                //System.out.println("SoulsCount"+PlayerRessources.soulsCount);
+            }
+          }
 
-    protected boolean isQuest2Completed() {
-        if(UnitController.getUnits().size() > 20){
-            return true;
+        private boolean checkForQuests() {
+            if(isQuest1Completed() && isQuest2Completed() && isQuest3Completed()){
+                return true;
+            }
+            return false;
         }
-        return false;
-    }
 
-    protected boolean isQuest3Completed() {
-        if(PlayerRessources.darkness > 50){
-            return true;
+        protected boolean isQuest1Completed() {
+            if(PlayerRessources.adam > 1000 && PlayerRessources.kythos > 600 && PlayerRessources.mara > 600){
+                return true;
+            }
+            return false;
         }
-        return false;
-    }
+
+        protected boolean isQuest2Completed() {
+            if(UnitController.getUnits().size() > 20){
+                return true;
+            }
+            return false;
+        }
+
+        protected boolean isQuest3Completed() {
+            if(PlayerRessources.darkness > 50){
+                return true;
+            }
+            return false;
+        }
 }
