@@ -23,14 +23,16 @@ public class WalkControl extends AbstractControl{
     private Pathfinder pathFinder;
     private List<Node> list_path;
     private Node node_target, node_start, node_current;
-    private float float_timer;
+    private float float_timer, float_moveTimer;
     private int int_direction;
+    private static final int MOVE_TIMER = 0;
+    private static final int RANDOMMOVE_TIMER = 1;
     private boolean bool_isMoving;
     
     public WalkControl(){
         pathFinder = new Pathfinder();
         bool_isMoving = false;
-        float_timer = 0.0f;
+        float_timer = float_moveTimer = 0.0f;
         int_direction = GameObjectValues.NO_DIRECTION_CHANGE;
     }
     
@@ -86,16 +88,22 @@ public class WalkControl extends AbstractControl{
             return;
         }
         if(isEnabled()){
-            if(isMoving()){
-                setOrientation();
-                walkInsideTile();
-                if(isTimeToMove()){
-                    setPosition();
-                    resetTimer();
+            if(!(spatial.getControl(GameObjectControl.class).isAlive())){
+                return;
+            }else{
+                if(isMoving()){
+                    setOrientation();
+                    walkInsideTile();
+                    if(isTimeToMove()){
+                        setPosition();
+                        resetTimer(MOVE_TIMER);
+                    }else{
+                        updateTimer(MOVE_TIMER, tpf);
+                    }
                 }else{
-                    updateTimer(tpf);
-                }
-            } 
+                    moveRandom(tpf);
+                } 
+            }
         }
     }
     
@@ -103,12 +111,27 @@ public class WalkControl extends AbstractControl{
         return float_timer > GameObjectValues.MOVEMENT_PERIOD ? true : false;
     }
     
-    private void updateTimer(float timeToUpdate){
-        float_timer += (timeToUpdate + getSpeed()); 
+    private void updateTimer(int whichTimer, float timeToUpdate){
+        switch(whichTimer){
+            case MOVE_TIMER:
+                float_timer += (timeToUpdate + getSpeed()); 
+                break;
+            case RANDOMMOVE_TIMER:
+                float_moveTimer += timeToUpdate;
+                break;
+        }
+        
     }
     
-    private void resetTimer(){
-        float_timer = 0.0f;
+    private void resetTimer(int whichTimer){
+        switch(whichTimer){
+            case MOVE_TIMER:
+                float_timer = 0.0f;
+                break;
+            case RANDOMMOVE_TIMER:
+                float_moveTimer = 0.0f;
+        }
+        
     }    
     
     private void setOrientation(){
@@ -167,34 +190,6 @@ public class WalkControl extends AbstractControl{
         list_path.remove(nextNode);
     }
     
-    private void computeDirection(int xPos, int zPos, int newXPos, int newZPos){
-        if(newXPos < xPos){
-            if(newZPos < zPos){
-                setDirection(GameObjectValues.NORTH_WEST);
-            }else if(newZPos > zPos){
-                setDirection(GameObjectValues.SOUTH_WEST);
-            }else{
-                setDirection(GameObjectValues.WEST);
-            }
-        }else if(newXPos > xPos){
-            if(newZPos < zPos){
-                setDirection(GameObjectValues.NORTH_EAST);
-            }else if(newZPos > zPos){
-                setDirection(GameObjectValues.SOUTH_EAST);
-            }else{
-                setDirection(GameObjectValues.EAST);
-            }
-        }else{
-            if(newZPos < zPos){
-                setDirection(GameObjectValues.NORTH);
-            }else if(newZPos > zPos){
-                setDirection(GameObjectValues.SOUTH);
-            }else{
-                setDirection(GameObjectValues.NO_DIRECTION_CHANGE);
-            }
-        }
-    }
-    
     private void clearMovement(){
         clearPath();
         clearNodes();
@@ -206,6 +201,58 @@ public class WalkControl extends AbstractControl{
     
     private void clearNodes(){
         node_start = node_target = null;
+    }
+    
+    private void moveRandom(float updateTimer){
+        if(isMoving()){
+            return;
+        }else if(spatial.getControl(SlaveCharacterControl.class) != null){
+            if(spatial.getControl(SlaveCharacterControl.class).isIsBuilding()){
+                return;
+            }
+        }
+        if(isTimeForRandomMove()){
+            int x = spatial.getControl(GameObjectControl.class).getPosX();
+            int z = spatial.getControl(GameObjectControl.class).getPosZ();
+            int direction = (int)Math.round(Math.random() * 3);
+            switch(direction){
+                case 0:
+                    if(MapController.isNodeCovered(x - 1, z)){
+                        break;
+                    }else{
+                        findPath(x - 1, z);
+                        break;
+                    }
+                case 1:
+                    if(MapController.isNodeCovered(x + 1, z)){
+                        break;
+                    }else{
+                        findPath(x + 1, z);
+                        break;
+                    }
+                case 2:
+                    if(MapController.isNodeCovered(x, z + 1)){
+                        break;
+                    }else{
+                        findPath(x, z + 1);
+                        break;
+                    }
+                case 3:
+                    if(MapController.isNodeCovered(x, z - 1)){
+                        break;
+                    }else{
+                        findPath(x, z - 1);
+                        break;
+                    }
+            }
+            resetTimer(RANDOMMOVE_TIMER);
+        }else{
+            updateTimer(RANDOMMOVE_TIMER, updateTimer);
+        }
+    }
+    
+    private boolean isTimeForRandomMove(){
+        return float_moveTimer > 10.0f? true: false;   
     }
 
     @Override
