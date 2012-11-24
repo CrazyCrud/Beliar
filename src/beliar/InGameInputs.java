@@ -807,6 +807,22 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
         darkness.getRenderer(TextRenderer.class).setText(String.valueOf(PlayerRessources.darkness));
     }
     
+    protected void soulCountChanged(){
+        if(menuState == MENU_ARMY){
+            clearFirstRowBottom();
+            TextBuilder tb = new TextBuilder("SoulBuilder");
+            tb.textVAlignCenter();
+            tb.textHAlignLeft();
+            tb.paddingRight("20px");
+            tb.alignLeft();
+            tb.width("100%h");
+            tb.height("100%");
+            tb.font("Interface/Fonts/gill_16.fnt");
+            Element textSouls = tb.build(nifty, screen, firstRowBottom);
+            textSouls.getRenderer(TextRenderer.class).setText("Anzahl der Verdammten: " + PlayerRessources.soulsCount);
+        }
+    }
+    
     private void createOptionsMenu(){
         optionsMenu = nifty.createPopup("niftyPopupMenu");
         Menu myMenu = optionsMenu.findNiftyControl("#menu", Menu.class);

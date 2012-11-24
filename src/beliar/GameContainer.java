@@ -43,7 +43,7 @@ public class GameContainer {
         public final static int[] COSTMARASMALL     ={225,75,0};
     
         //GAMETICKER in seconds
-    	public final static int UPDATE_PERIOD_SOUL_PRODUCTION = 1;
+    	public final static int UPDATE_PERIOD_SOUL_PRODUCTION = 10;
         public final static int UPDATE_PERIOD_GOODS_PRODUCTION = 10;
         
 	//RessourcesProduction

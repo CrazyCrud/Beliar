@@ -55,7 +55,7 @@ public class GameSimulation extends AbstractAppState{
             float_timerSoulProduction += tpf;
             if(float_timerSoulProduction > GameContainer.UPDATE_PERIOD_SOUL_PRODUCTION){
                 resetTimer(SOUL_PRODUCTION);
-                createDoomed();                
+                createDoomed();         
                 checkForSalvationOfSouls();
             }
         }
@@ -106,7 +106,9 @@ public class GameSimulation extends AbstractAppState{
         {
             int countSoulAbyss= PlayerRessources.soulAbyssOfPlayer;
             
-            PlayerRessources.soulsCount += countSoulAbyss*(PlayerRessources.darkness*(int)(Math.random()*2));
+            PlayerRessources.soulsCount += countSoulAbyss*(PlayerRessources.darkness*(int)Math.round(Math.random()*1));
+            
+            app.getStateManager().getState(InGameInputs.class).soulCountChanged();
         }
         
         public void reduceRessources(int[]bill)
