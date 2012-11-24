@@ -689,7 +689,8 @@ public class GameState extends AbstractAppState {
     
     protected void createMelee(){
         System.out.println("GameState: createArmy");
-        if(UnitController.isSlaveAvailable()){
+        if(UnitController.isSlaveAvailable() && stateManager.getState(GameSimulation.class).checkCostWarrior(0)){
+            stateManager.getState(GameSimulation.class).reduceRessources(GameContainer.COSTMELEE);
             UnitController.removeSlave();
             creatures.attachChild(UnitController.createMelee(5, 6)); 
         }

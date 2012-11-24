@@ -15,7 +15,10 @@ public class GameSimulation extends AbstractAppState{
 	private float float_timerSoulProduction, float_timerGoodsProduction;
         private static final int SOUL_PRODUCTION = 0;
         private static final int GOODS_PRODUCTION = 1;
-       
+        private static final int MELEE = 0;
+        private static final int RANGER = 1;
+        private static final int MAGICIAN = 2;
+        
 	public GameSimulation(AppStateManager stateManager, SimpleApplication app) {
             System.out.println("GameSimulation: Constructor");
             this.app = app;
@@ -151,7 +154,28 @@ public class GameSimulation extends AbstractAppState{
                     }
                     break;
             }
-            if((PlayerRessources.adam>=cost[0])  &&(PlayerRessources.kythos>=cost[1])&&(PlayerRessources.mara>=cost[2]))
+            if((PlayerRessources.adam >= cost[0])  &&(PlayerRessources.kythos >= cost[1])&&
+                    (PlayerRessources.mara >= cost[2]))
+                return true;
+            else
+                return false;
+        }
+        
+        protected boolean checkCostWarrior(int whichWarrior){
+            int [] cost = null;
+            switch(whichWarrior){
+                case MELEE:
+                    cost = GameContainer.COSTMELEE;
+                    break;
+                case RANGER:
+                    cost = GameContainer.COSTRANGER;
+                    break;
+                case MAGICIAN:
+                    cost = GameContainer.COSTMAGICIAN;
+                    break;
+            }
+            if((PlayerRessources.adam >= cost[0])  &&(PlayerRessources.kythos >= cost[1])&&
+                    (PlayerRessources.mara >= cost[2]))
                 return true;
             else
                 return false;
