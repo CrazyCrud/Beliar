@@ -483,19 +483,19 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
         myGameState.clearSelection();
         switch(Integer.parseInt(whichLevel)){
             case BUILDING_LEVEL_ONE:
-                setUpCosts(ADAM, BUILDING_LEVEL_ONE);
+                setUpBuildingCosts(ADAM, BUILDING_LEVEL_ONE);
                 PlayerRessources.selectionRoom = 0;
                 myGameState.handleBuildSelection(GameContainer.ADAM_BUILDING, GameContainer.ADAM_SMALL_SIZE);
                 updateRessources(ADAM, BUILDING_LEVEL_ONE);
                 return;
             case BUILDING_LEVEL_TWO:
-                setUpCosts(ADAM, BUILDING_LEVEL_TWO);
+                setUpBuildingCosts(ADAM, BUILDING_LEVEL_TWO);
                 PlayerRessources.selectionRoom = 0;
                 myGameState.handleBuildSelection(GameContainer.ADAM_BUILDING, GameContainer.ADAM_MIDDLE_SIZE);
                 updateRessources(ADAM, BUILDING_LEVEL_TWO);
                 return;
             case BUILDING_LEVEL_THREE:
-                setUpCosts(ADAM, BUILDING_LEVEL_THREE);
+                setUpBuildingCosts(ADAM, BUILDING_LEVEL_THREE);
                 PlayerRessources.selectionRoom = 0;
                 myGameState.handleBuildSelection(GameContainer.ADAM_BUILDING, GameContainer.ADAM_BIG_SIZE);
                 updateRessources(ADAM, BUILDING_LEVEL_THREE);
@@ -509,19 +509,19 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
         switch(Integer.parseInt(whichLevel)){
             case BUILDING_LEVEL_ONE:
                 PlayerRessources.selectionRoom = 0;
-                setUpCosts(KYTHOS, BUILDING_LEVEL_ONE);
+                setUpBuildingCosts(KYTHOS, BUILDING_LEVEL_ONE);
                 updateRessources(KYTHOS, BUILDING_LEVEL_ONE);
                 myGameState.handleBuildSelection(GameContainer.KYTHOS_BUILDING, GameContainer.KYTHOS_SMALL_SIZE);
                 return;
             case BUILDING_LEVEL_TWO:
                 PlayerRessources.selectionRoom = 0;
-                setUpCosts(KYTHOS, BUILDING_LEVEL_TWO);
+                setUpBuildingCosts(KYTHOS, BUILDING_LEVEL_TWO);
                 updateRessources(KYTHOS, BUILDING_LEVEL_TWO);
                 myGameState.handleBuildSelection(GameContainer.KYTHOS_BUILDING, GameContainer.KYTHOS_MIDDLE_SIZE);
                 return;
             case BUILDING_LEVEL_THREE:
                 PlayerRessources.selectionRoom = 0;
-                setUpCosts(KYTHOS, BUILDING_LEVEL_THREE);
+                setUpBuildingCosts(KYTHOS, BUILDING_LEVEL_THREE);
                 updateRessources(KYTHOS, BUILDING_LEVEL_THREE);
                 myGameState.handleBuildSelection(GameContainer.KYTHOS_BUILDING, GameContainer.KYTHOS_BIG_SIZE);
                 return;
@@ -534,25 +534,25 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
         switch(Integer.parseInt(whichLevel)){
             case BUILDING_LEVEL_ONE:
                 PlayerRessources.selectionRoom = 0;
-                setUpCosts(MARA, BUILDING_LEVEL_ONE);
+                setUpBuildingCosts(MARA, BUILDING_LEVEL_ONE);
                 updateRessources(MARA, BUILDING_LEVEL_ONE);
                 myGameState.handleBuildSelection(GameContainer.MARA_BUILDING, GameContainer.MARA_SMALL_SIZE);
                 return;
             case BUILDING_LEVEL_TWO:
                 PlayerRessources.selectionRoom = 0;
-                setUpCosts(MARA, BUILDING_LEVEL_TWO);
+                setUpBuildingCosts(MARA, BUILDING_LEVEL_TWO);
                 updateRessources(MARA, BUILDING_LEVEL_TWO);
                 myGameState.handleBuildSelection(GameContainer.MARA_BUILDING, GameContainer.MARA_MIDDLE_SIZE);
                 return;
             case BUILDING_LEVEL_THREE:
                 PlayerRessources.selectionRoom = 0;
-                setUpCosts(MARA, BUILDING_LEVEL_THREE);
+                setUpBuildingCosts(MARA, BUILDING_LEVEL_THREE);
                 updateRessources(MARA, BUILDING_LEVEL_THREE);
                 return;
         }
     }
     
-    private void setUpCosts(int whichRoom, int whichLevel){
+    private void setUpBuildingCosts(int whichRoom, int whichLevel){
         clearSecondRowBottom();
         TextBuilder tb = new TextBuilder("CostBuilder");
         tb.textVAlignCenter();
@@ -633,6 +633,101 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
     public void onBuildArmy(String whichUnit){
         System.out.println("InGameInputs: onBuildArmy() " + whichUnit);
         switch(Integer.parseInt(whichUnit)){
+            case MELEE:
+                setUpWarriorCosts(MELEE);
+                break;
+            case RANGER:
+                setUpWarriorCosts(RANGER);
+                break;
+            case MAGICIAN:
+                setUpWarriorCosts(MAGICIAN);
+                break;
+        }
+    }
+    
+    private void setUpWarriorCosts(int whichWarrior){
+        clearSecondRowBottom();
+        TextBuilder tb = new TextBuilder("CostBuilder");
+        tb.textVAlignCenter();
+        tb.textHAlignLeft();
+        tb.paddingRight("20px");
+        tb.alignLeft();
+        tb.width("100%h");
+        tb.height("100%");
+        tb.font("Interface/Fonts/gill_16.fnt");
+        Element textCostAdam;
+        Element textCostKythos;
+        Element textCostMara;
+        int [] cost = null; 
+        switch(whichWarrior){
+            case MELEE:
+                cost = GameContainer.COSTMELEE;
+                new ImageBuilder("adamCost"){{
+                filename("Images/buildwarrior_icon.png");
+                height("80%");
+                paddingRight("10px");
+                width("100%h");
+                alignCenter();
+                interactOnClick("onBuildWarrior(0)");   
+                    }}.build(nifty, screen, secondRowBottom);
+                break;
+            case RANGER:
+                cost = GameContainer.COSTRANGER;
+                new ImageBuilder("adamCost"){{
+                filename("Images/buildwarrior_icon.png");
+                height("80%");
+                width("100%h");
+                paddingRight("10px");
+                alignCenter();
+                interactOnClick("onBuildWarrior(1)");   
+                    }}.build(nifty, screen, secondRowBottom);
+                break;
+            case MAGICIAN:
+                cost = GameContainer.COSTMAGICIAN;
+                new ImageBuilder("adamCost"){{
+                filename("Images/buildwarrior_icon.png");
+                height("80%");
+                width("100%h");
+                paddingRight("10px");
+                alignCenter();
+                interactOnClick("onBuildWarrior(2)");   
+                    }}.build(nifty, screen, secondRowBottom);
+                break;
+        }
+ 
+        new ImageBuilder("adamCost"){{
+        filename("Images/Adam.png");
+        height("80%");
+        width("100%h");
+        alignCenter();
+        interactOnClick("onDoNothing()");   
+            }}.build(nifty, screen, secondRowBottom);
+        textCostAdam = tb.build(nifty, screen, secondRowBottom);
+        textCostAdam.getRenderer(TextRenderer.class).setText("" + cost[0]);
+
+        new ImageBuilder("kythosCost"){{
+        filename("Images/Kythos.png");
+        height("80%");
+        width("100%h");
+        alignCenter();
+        interactOnClick("onDoNothing()");   
+            }}.build(nifty, screen, secondRowBottom);
+        textCostKythos = tb.build(nifty, screen, secondRowBottom);
+        textCostKythos.getRenderer(TextRenderer.class).setText("" + cost[1]);
+
+        new ImageBuilder("maraCost"){{
+        filename("Images/Mara.png");
+        height("80%");
+        width("100%h");
+        alignCenter();
+        interactOnClick("onDoNothing()");   
+            }}.build(nifty, screen, secondRowBottom);
+        textCostMara = tb.build(nifty, screen, secondRowBottom);
+        textCostMara.getRenderer(TextRenderer.class).setText("" + cost[2]);
+    }
+    
+    public void onBuildWarrior(String whichWarrior){
+        switch(Integer.parseInt(whichWarrior)){
             case MELEE:
                 stateManager.getState(GameState.class).createMelee();
                 break;

@@ -41,6 +41,10 @@ public class GameContainer {
         public final static int[] COSTMARABIG       ={750,250,0};
         public final static int[] COSTMARAMIDDLE    ={450,125,0};
         public final static int[] COSTMARASMALL     ={225,75,0};
+        
+        public final static int[] COSTMELEE         ={20,50,10};
+        public final static int[] COSTRANGER        ={10,70,30};
+        public final static int[] COSTMAGICIAN      ={10,90,60};
     
         //GAMETICKER in seconds
     	public final static int UPDATE_PERIOD_SOUL_PRODUCTION = 10;
