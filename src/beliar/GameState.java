@@ -729,6 +729,7 @@ public class GameState extends AbstractAppState {
     }
     
     private void resetUnitMovement(){
+        UnitController.unmarkUnits(int_unitToMove);
         bool_areUnitsMoving = false;
     }
 
@@ -738,12 +739,15 @@ public class GameState extends AbstractAppState {
         switch(whichUnits){
             case InGameInputs.MELEE:
                 int_unitToMove = InGameInputs.MELEE;
+                UnitController.markUnits(InGameInputs.MELEE);
                 break;
             case InGameInputs.RANGER:
                 int_unitToMove = InGameInputs.RANGER;
+                UnitController.markUnits(InGameInputs.RANGER);
                 break;
             case InGameInputs.MAGICIAN:
                 int_unitToMove = InGameInputs.MAGICIAN;
+                UnitController.markUnits(InGameInputs.MAGICIAN);
                 break;
         }
     }

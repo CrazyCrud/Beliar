@@ -4,10 +4,18 @@
  */
 package Units;
 
+import beliar.GameContainer;
+import com.bulletphysics.collision.shapes.BoxShape;
+import com.jme3.asset.AssetManager;
+import com.jme3.material.Material;
+import com.jme3.math.ColorRGBA;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
+import com.jme3.scene.shape.Box;
 import java.util.List;
 import java.util.ArrayList;
+import com.jme3.math.Vector3f;
+import com.jme3.scene.Geometry;
 /**
  *
  * @author andministrator
@@ -15,6 +23,7 @@ import java.util.ArrayList;
 public class UnitModel {
     
     private static UnitModel unitModel;
+
     private ArrayList<Unit> list_melee, list_ranger, list_magician;
     private ArrayList<Slave> list_slaves;
     
@@ -103,5 +112,78 @@ public class UnitModel {
         slave.die();
         list_slaves.remove(slave);
         return (Node)slave.getSpatial();
+    }
+    
+    protected void markUnits(int whichUnit) {
+        Box bosShape = new Box(Vector3f.ZERO, 
+                0.10f, 0.10f, 0.10f);
+        Geometry geo = new Geometry("unitMarker", bosShape);
+        Material mat = new Material(GameContainer.getInstance().getApplication().getAssetManager(), 
+                "MatDefs/Unshaded.j3md");
+        mat.setColor("Color", ColorRGBA.Red);
+        geo.setMaterial(mat);
+        geo.move(0.0f, 0.95f, 0.0f);
+        switch(whichUnit){
+            case GameObjectValues.MELEE:
+                if(list_melee.isEmpty()){
+                    return;
+                }
+                for(Unit unit: list_melee){
+                    System.out.println("UnitModel: markUnits() melee: " + unit);
+                    Node melee = (Node)unit.getSpatial();
+                    melee.attachChild(geo.clone());
+                }
+                break;
+            case GameObjectValues.RANGERS:
+                if(list_ranger.isEmpty()){
+                    return;
+                }
+                for(Unit unit: list_ranger){
+                    Node ranger = (Node)unit.getSpatial();
+                    ranger.attachChild(geo.clone());
+                }
+                break;
+            case GameObjectValues.MAGICIAN:
+                if(list_magician.isEmpty()){
+                    return;
+                }
+                for(Unit unit: list_magician){
+                    Node magician = (Node)unit.getSpatial();
+                    magician.attachChild(geo.clone());
+                }
+                break;
+        }
+    }
+
+    protected void unmarkUnits(int whichUnit) {
+        switch(whichUnit){
+            case GameObjectValues.MELEE:
+                if(list_melee.isEmpty()){
+                    return;
+                }
+                for(Unit unit: list_melee){
+                    Node melee = (Node)unit.getSpatial();
+                    melee.detachChildNamed("unitMarker");
+                }
+                break;
+            case GameObjectValues.RANGERS:
+                if(list_ranger.isEmpty()){
+                    return;
+                }
+                for(Unit unit: list_ranger){
+                    Node ranger = (Node)unit.getSpatial();
+                    ranger.detachChildNamed("unitMarker");
+                }
+                break;
+            case GameObjectValues.MAGICIAN:
+                if(list_magician.isEmpty()){
+                    return;
+                }
+                for(Unit unit: list_magician){
+                    Node magician = (Node)unit.getSpatial();
+                    magician.detachChildNamed("unitMarker");
+                }
+                break;
+        }
     }
 }

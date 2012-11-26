@@ -91,4 +91,12 @@ public class UnitController {
             moveUnitTo((Node)unit.getSpatial(), xPos, zPos);
         }
     }
+
+    public static void markUnits(int whichUnit) {
+        UnitModel.getInstance().markUnits(whichUnit);
+    }
+    
+    public static void unmarkUnits(int whichUnit){
+        UnitModel.getInstance().unmarkUnits(whichUnit);
+    }
 }
