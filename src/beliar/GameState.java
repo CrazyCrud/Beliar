@@ -94,6 +94,7 @@ public class GameState extends AbstractAppState {
     private FlyByCamera flyCam;
     private BasicShadowRenderer bsr;
     //DIRTY
+    private float float_moveTimer = 0.0f;
     private int int_buildingType = 0;
     private int int_sizeBuilding = 0;
     private int int_unitToMove = -1;
@@ -490,7 +491,8 @@ public class GameState extends AbstractAppState {
                 setMousePosition(xPos, zPos);
             }else if(name.equals("move unit")){
                 if(bool_areUnitsMoving){
-                    System.out.println("GameState: onAnalog() move unit");
+                    float helper = float_moveTimer;
+                    System.out.println("GameState: onAnalog() move unit + " + tpf);
                     Geometry target = results.getClosestCollision().getGeometry();
                     Transform transformation = target.getWorldTransform();
                     switch(int_unitToMove){
