@@ -173,7 +173,7 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
         menuState = MENU_BUILD;
         
         Element menuLabel = screen.findElementByName("menuText");
-        menuLabel.getRenderer(TextRenderer.class).setText("Baumenue");
+        menuLabel.getRenderer(TextRenderer.class).setText("Baumenü");
         Element textThirdRow = screen.findElementByName("textThirdRow");
         textThirdRow.getRenderer(TextRenderer.class).setText("Verfügbarer Räume");
         Element textfirstRow = screen.findElementByName("textFirstRow");
@@ -193,6 +193,7 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
             //filename("Images/Adam.png");
             height("95%");
             width("100%h");
+            paddingRight("10px");
             alignCenter();
             interactOnClick("buildAdamMenu()");   
                 }}.build(nifty, screen, thirdRowTop);
@@ -202,6 +203,7 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
             //filename("Images/Kythos.png");
             height("95%");
             width("100%h");
+            paddingRight("10px");
             alignCenter();
             interactOnClick("buildKythosMenu()");   
                 }}.build(nifty, screen, thirdRowTop);
@@ -211,6 +213,7 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
             //filename("Images/Mara.png");
             height("95%");
             width("100%h");
+            paddingRight("10px");
             alignCenter();
             interactOnClick("buildMaraMenu()");   
                 }}.build(nifty, screen, thirdRowTop);
@@ -226,6 +229,8 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
         textSecondRow.getRenderer(TextRenderer.class).setText("Krieger");
         Element textfirstRow = screen.findElementByName("textFirstRow");
         textfirstRow.getRenderer(TextRenderer.class).setText("Sklaven");
+        Element textthirdRow = screen.findElementByName("textThirdRow");
+        textthirdRow.getRenderer(TextRenderer.class).setText("Verfügbarer Einheiten anwählen");
         clearFirstRowBottom();
         TextBuilder tb = new TextBuilder("SoulBuilder");
         tb.textVAlignCenter();
@@ -250,6 +255,7 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
             filename("Images/melee_icon.png");
             height("95%");
             width("100%h");
+            paddingRight("10px");
             alignCenter();
             interactOnClick("onBuildArmy(0)");   
                 }}.build(nifty, screen, secondRowTop);
@@ -258,6 +264,7 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
             filename("Images/magician_icon.png");
             height("95%");
             width("100%h");
+            paddingRight("10px");
             alignCenter();
             interactOnClick("onBuildArmy(1)");   
                 }}.build(nifty, screen, secondRowTop);
@@ -266,6 +273,7 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
             filename("Images/ranger_icon.png");
             height("95%");
             width("100%h");
+            paddingRight("10px");
             alignCenter();
             interactOnClick("onBuildArmy(2)");   
                 }}.build(nifty, screen, secondRowTop);
@@ -274,6 +282,7 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
             filename("Images/melee_icon.png");
             height("95%");
             width("100%h");
+            paddingRight("10px");
             alignCenter();
             interactOnClick("onMoveArmy(0)");   
                 }}.build(nifty, screen, thirdRowTop);
@@ -282,6 +291,7 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
             filename("Images/magician_icon.png");
             height("95%");
             width("100%h");
+            paddingRight("10px");
             alignCenter();
             interactOnClick("onMoveArmy(1)");   
                 }}.build(nifty, screen, thirdRowTop);
@@ -290,6 +300,7 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
             filename("Images/ranger_icon.png");
             height("95%");
             width("100%h");
+            paddingRight("10px");
             alignCenter();
             interactOnClick("onMoveArmy(2)");   
                 }}.build(nifty, screen, thirdRowTop);
@@ -409,6 +420,7 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
             alignCenter();
             height("95%");
             width("100%h");
+            paddingRight("10px");
             interactOnClick("onBuildRoom(" + whichRoom + ")");
         }}.build(nifty, screen, secondRowTop);
         
@@ -418,6 +430,7 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
                     filename("Images/adam_1.png");
                     height("95%");
                     width("100%h");
+                    paddingRight("10px");
                     alignCenter();
                     interactOnClick("buildAdamBuilding(1)");   
                         }}.build(nifty, screen, secondRowTop);
@@ -425,6 +438,7 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
                     filename("Images/adam_2.png");
                     height("95%");
                     width("100%h");
+                    paddingRight("10px");
                     alignCenter();
                     interactOnClick("buildAdamBuilding(2)");   
                         }}.build(nifty, screen, secondRowTop);
@@ -432,6 +446,7 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
                     filename("Images/adam_3.png");
                     height("95%");
                     width("100%h");
+                    paddingRight("10px");
                     alignCenter();
                     interactOnClick("onDoNothing()");   
                         }}.build(nifty, screen, secondRowTop);
@@ -441,6 +456,7 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
                     filename("Images/kythos_1.png");
                     height("95%");
                     width("100%h");
+                    paddingRight("10px");
                     alignCenter();
                     interactOnClick("buildKythosBuilding(1)");   
                         }}.build(nifty, screen, secondRowTop);
@@ -448,6 +464,7 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
                     filename("Images/kythos_2.png");
                     height("95%");
                     width("100%h");
+                    paddingRight("10px");
                     alignCenter();
                     interactOnClick("buildKythosBuilding(2)");   
                         }}.build(nifty, screen, secondRowTop);
@@ -455,6 +472,7 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
                     filename("Images/kythos_3.png");
                     height("95%");
                     width("100%h");
+                    paddingRight("10px");
                     alignCenter();
                     interactOnClick("onDoNothing()");   
                         }}.build(nifty, screen, secondRowTop);
@@ -464,6 +482,7 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
                     filename("Images/mara_1.png");
                     height("95%");
                     width("100%h");
+                    paddingRight("10px");
                     alignCenter();
                     interactOnClick("buildMaraBuilding(1)");   
                         }}.build(nifty, screen, secondRowTop);
@@ -471,6 +490,7 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
                     filename("Images/mara_2.png");
                     height("95%");
                     width("100%h");
+                    paddingRight("10px");
                     alignCenter();
                     interactOnClick("buildMaraBuilding(2)");   
                         }}.build(nifty, screen, secondRowTop);
@@ -478,6 +498,7 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
                     filename("Images/mara_3.png");
                     height("95%");
                     width("100%h");
+                    paddingRight("10px");
                     alignCenter();
                     interactOnClick("onDoNothing()");   
                         }}.build(nifty, screen, secondRowTop);
