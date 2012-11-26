@@ -39,9 +39,9 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
     private static final int ADAM = 0;
     private static final int KYTHOS = 1;
     private static final int MARA = 2;
-    private static final int MELEE = 0;
-    private static final int RANGER = 1;
-    private static final int MAGICIAN = 2;
+    protected static final int MELEE = 0;
+    protected static final int RANGER = 1;
+    protected static final int MAGICIAN = 2;
     
     private int menuState;
     private static final int MENU_CLEAR = 0;
@@ -269,6 +269,30 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
             alignCenter();
             interactOnClick("onBuildArmy(2)");   
                 }}.build(nifty, screen, secondRowTop);
+        
+        new ImageBuilder("melee"){{
+            filename("Images/melee_icon.png");
+            height("95%");
+            width("100%h");
+            alignCenter();
+            interactOnClick("onMoveArmy(0)");   
+                }}.build(nifty, screen, thirdRowTop);
+        
+        new ImageBuilder("ranger"){{
+            filename("Images/magician_icon.png");
+            height("95%");
+            width("100%h");
+            alignCenter();
+            interactOnClick("onMoveArmy(1)");   
+                }}.build(nifty, screen, thirdRowTop);
+        
+        new ImageBuilder("magician"){{
+            filename("Images/ranger_icon.png");
+            height("95%");
+            width("100%h");
+            alignCenter();
+            interactOnClick("onMoveArmy(2)");   
+                }}.build(nifty, screen, thirdRowTop);
     }
     
     private void setupQuests(){
@@ -730,6 +754,18 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
         switch(Integer.parseInt(whichWarrior)){
             case MELEE:
                 stateManager.getState(GameState.class).createMelee();
+                break;
+            case RANGER:
+                break;
+            case MAGICIAN:
+                break;
+        }
+    }
+    
+    public void onMoveArmy(String whichWarrior){
+        switch(Integer.parseInt(whichWarrior)){
+            case MELEE:
+                stateManager.getState(GameState.class).moveUnits(MELEE);
                 break;
             case RANGER:
                 break;

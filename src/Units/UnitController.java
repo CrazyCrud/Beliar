@@ -29,8 +29,16 @@ public class UnitController {
         return UnitModel.getInstance().createWarrior(posX, posZ, GameObjectValues.MAGICIAN);
     }
     
-    public static ArrayList<Unit> getUnits(){
-        return UnitModel.getInstance().getUnits();
+    public static ArrayList<Unit> getMelees(){
+        return UnitModel.getInstance().getMelees();
+    }
+    
+    public static ArrayList<Unit> getRangers(){
+        return UnitModel.getInstance().getRangers();
+    }
+    
+    public static ArrayList<Unit> getMagicians(){
+        return UnitModel.getInstance().getMagicians();
     }
     
     public static boolean isSlaveAvailable(){
@@ -52,5 +60,35 @@ public class UnitController {
     
     public static void moveUnitTo(Node unit, int xPos, int zPos){
         UnitModel.getInstance().moveUnitTo(unit, xPos, zPos);
+    }
+    
+    public static void moveMeleesTo(int xPos, int zPos){
+        ArrayList<Unit> melees = getMelees();
+        if(melees.isEmpty()){
+            return;
+        }
+        for(Unit unit: melees){
+            moveUnitTo((Node)unit.getSpatial(), xPos, zPos);
+        }
+    }
+    
+    public static void moveRangersTo(int xPos, int zPos){
+        ArrayList<Unit> rangers = getRangers();
+        if(rangers.isEmpty()){
+            return;
+        }
+        for(Unit unit: rangers){
+            moveUnitTo((Node)unit.getSpatial(), xPos, zPos);
+        }
+    }
+    
+    public static void moveMagiciansTo(int xPos, int zPos){
+        ArrayList<Unit> magicians = getMagicians();
+        if(magicians.isEmpty()){
+            return;
+        }
+        for(Unit unit: magicians){
+            moveUnitTo((Node)unit.getSpatial(), xPos, zPos);
+        }
     }
 }

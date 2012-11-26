@@ -31,6 +31,7 @@ import com.jme3.math.ColorRGBA;
 import com.jme3.math.Ray;
 import com.jme3.math.Vector2f;
 import com.jme3.math.Vector3f;
+import com.jme3.math.Transform;
 import com.jme3.post.FilterPostProcessor;
 import com.jme3.post.filters.FogFilter;
 import com.jme3.renderer.Camera;
@@ -95,7 +96,8 @@ public class GameState extends AbstractAppState {
     //DIRTY
     private int int_buildingType = 0;
     private int int_sizeBuilding = 0;
-    
+    private int int_unitToMove = -1;
+    private boolean bool_areUnitsMoving = false;
     //Input
     private ScreenManager screenManager;
     private DepthOfFieldFilter dofFilter;
@@ -423,13 +425,16 @@ public class GameState extends AbstractAppState {
     private void initKeys() {
         inputManager.addMapping("pick target",
                 new KeyTrigger(KeyInput.KEY_SPACE),
-                new MouseButtonTrigger(0));
+                new MouseButtonTrigger(MouseInput.BUTTON_LEFT));
+        inputManager.addMapping("move unit", 
+                new MouseButtonTrigger(MouseInput.BUTTON_RIGHT));
 
         inputManager.addMapping("moveMouse",
                 new MouseAxisTrigger(mouseInput.AXIS_X, true),
                 new MouseAxisTrigger(mouseInput.AXIS_Y, true));
 
         inputManager.addListener(actionListener, "pick target");
+        inputManager.addListener(actionListener, "move unit");
         inputManager.addListener(actionListener, "moveMouse");
     }
     
@@ -438,14 +443,15 @@ public class GameState extends AbstractAppState {
             int xPos = (int) mousePositionWorld.x;
             int zPos = (int) mousePositionWorld.z;
             
+            CollisionResults results = checkColision();
             if (name.equals("pick target")) {
                 System.out.println("GameState onAnalog() pick target");
-                CollisionResults results = checkColision();
                 clearSelection();
+                resetUnitMovement();
                 if ((results.size() > 0) && (PlayerRessources.selectionRoom > 0)) {
                     Geometry target = results.getClosestCollision().getGeometry();
 
-                    com.jme3.math.Transform transformation = target.getWorldTransform();
+                    Transform transformation = target.getWorldTransform();
                     
                     System.out.println("GameState: onAnalog() " + PlayerRessources.selectionRoom);
                     mMaphandler.handleBuilding(transformation.getTranslation(), PlayerRessources.selectionRoom);
@@ -482,6 +488,26 @@ public class GameState extends AbstractAppState {
                 }
             }else if (name.equals("moveMouse")) {
                 setMousePosition(xPos, zPos);
+            }else if(name.equals("move unit")){
+                if(bool_areUnitsMoving){
+                    System.out.println("GameState: onAnalog() move unit");
+                    Geometry target = results.getClosestCollision().getGeometry();
+                    Transform transformation = target.getWorldTransform();
+                    switch(int_unitToMove){
+                        case InGameInputs.MELEE:
+                            UnitController.moveMeleesTo((int)transformation.getTranslation().x, 
+                                    (int)transformation.getTranslation().z);
+                            break;
+                        case InGameInputs.RANGER:
+                            UnitController.moveRangersTo((int)transformation.getTranslation().x, 
+                                    (int)transformation.getTranslation().z);
+                            break;
+                        case InGameInputs.MAGICIAN:
+                            UnitController.moveMagiciansTo((int)transformation.getTranslation().x, 
+                                    (int)transformation.getTranslation().z);
+                            break;
+                    }
+                }
             }
         }
     };
@@ -693,6 +719,26 @@ public class GameState extends AbstractAppState {
             stateManager.getState(GameSimulation.class).reduceRessources(GameContainer.COSTMELEE);
             UnitController.removeSlave();
             creatures.attachChild(UnitController.createMelee(5, 6)); 
+        }
+    }
+    
+    private void resetUnitMovement(){
+        bool_areUnitsMoving = false;
+    }
+
+    protected void moveUnits(int whichUnits) {
+        System.out.println("GameState: moveUnits()");
+        bool_areUnitsMoving = true;
+        switch(whichUnits){
+            case InGameInputs.MELEE:
+                int_unitToMove = InGameInputs.MELEE;
+                break;
+            case InGameInputs.RANGER:
+                int_unitToMove = InGameInputs.RANGER;
+                break;
+            case InGameInputs.MAGICIAN:
+                int_unitToMove = InGameInputs.MAGICIAN;
+                break;
         }
     }
 }

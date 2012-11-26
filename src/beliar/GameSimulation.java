@@ -241,7 +241,7 @@ public class GameSimulation extends AbstractAppState{
         }
 
         protected boolean isQuest2Completed() {
-            if(UnitController.getUnits().size() > 20){
+            if(UnitController.getMelees().size() > 20){
                 return true;
             }
             return false;

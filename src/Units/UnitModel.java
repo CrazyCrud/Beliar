@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public class UnitModel {
     
     private static UnitModel unitModel;
-    private ArrayList<Unit> list_units;
+    private ArrayList<Unit> list_melee, list_ranger, list_magician;
     private ArrayList<Slave> list_slaves;
     
     private UnitModel(){
@@ -30,7 +30,9 @@ public class UnitModel {
     }
     
     private void initValues(){
-        list_units = new ArrayList<Unit>();
+        list_melee = new ArrayList<Unit>();
+        list_ranger = new ArrayList<Unit>();
+        list_magician = new ArrayList<Unit>();
         list_slaves = new ArrayList<Slave>();
     }
     
@@ -45,7 +47,7 @@ public class UnitModel {
             case GameObjectValues.MELEE:
                 System.out.println("UnitModel: createWarrior Melee");
                 Melee melee = new Melee(posX, posZ);
-                list_units.add(melee);
+                list_melee.add(melee);
                 return (Node)melee.getSpatial();
             case GameObjectValues.RANGERS:
                 break;
@@ -73,8 +75,16 @@ public class UnitModel {
         return list_slaves.size();
     }
     
-    protected ArrayList<Unit> getUnits(){
-        return list_units;
+    protected ArrayList<Unit> getMelees(){
+        return list_melee;
+    }
+    
+    protected ArrayList<Unit> getRangers(){
+        return list_ranger;
+    }
+    
+    protected ArrayList<Unit> getMagicians(){
+        return list_magician;
     }
     
     protected boolean isSlaveAvailable() {
