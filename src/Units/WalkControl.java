@@ -252,7 +252,7 @@ public class WalkControl extends AbstractControl{
     }
     
     private boolean isTimeForRandomMove(){
-        return float_moveTimer > 50.0f? true: false;   
+        return float_moveTimer > 25.0f? true: false;   
     }
 
     @Override

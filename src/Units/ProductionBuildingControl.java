@@ -24,6 +24,7 @@ import com.jme3.scene.shape.Box;
 public class ProductionBuildingControl extends AbstractControl{
 
     private boolean bool_hasGoodies, bool_isActive;
+    private float float_productionTimer;
     private int int_percentStatus = 0;
     
     @Override
@@ -38,15 +39,30 @@ public class ProductionBuildingControl extends AbstractControl{
                     return;
                 }
             }
-            startProduction();
+            startProduction(tpf);
         }  
     }
     
-    private void startProduction() {
+    private void startProduction(float tpf) {
         if(areSoulsAvailable()) {
             setActive(true);
             setValues();
             consumeSouls();
+        }else{
+            updateTimer(tpf);
+            if(isTimeToSignal()){
+                if(((Node)spatial).getChild("buildingMarker") == null){
+                    Box bosShape = new Box(Vector3f.ZERO, 
+                        0.10f, 0.10f, 0.10f);
+                    Geometry geo = new Geometry("buildingMarker", bosShape);
+                    Material mat = new Material(GameContainer.getInstance().getApplication().getAssetManager(), 
+                    "MatDefs/Unshaded.j3md");
+                    mat.setColor("Color", ColorRGBA.Red);
+                    geo.setMaterial(mat);
+                    geo.move(0.0f, 0.95f, 0.0f);
+                    ((Node)spatial).attachChild(geo.clone());
+                }
+            }
         }
     }
     
@@ -69,17 +85,8 @@ public class ProductionBuildingControl extends AbstractControl{
     
     protected void setActive(boolean isActive) {
         if(isActive){
+            resetTimer();
             ((Node)spatial).detachChildNamed("buildingMarker");
-        }else{
-            Box bosShape = new Box(Vector3f.ZERO, 
-                0.10f, 0.10f, 0.10f);
-            Geometry geo = new Geometry("buildingMarker", bosShape);
-            Material mat = new Material(GameContainer.getInstance().getApplication().getAssetManager(), 
-                "MatDefs/Unshaded.j3md");
-            mat.setColor("Color", ColorRGBA.Red);
-            geo.setMaterial(mat);
-            geo.move(0.0f, 0.95f, 0.0f);
-            ((Node)spatial).attachChild(geo.clone());
         }
         this.bool_isActive = isActive;
     }
@@ -136,5 +143,17 @@ public class ProductionBuildingControl extends AbstractControl{
         ProductionBuildingControl clone = new ProductionBuildingControl();
         clone.setSpatial(spatial);
         return clone;
+    }
+
+    private void resetTimer() {
+        float_productionTimer = 0.0f;
+    }
+
+    private boolean isTimeToSignal() {
+        return float_productionTimer > 1.0f? true: false;
+    }
+
+    private void updateTimer(float value) {
+        float_productionTimer += value;
     }
 }
