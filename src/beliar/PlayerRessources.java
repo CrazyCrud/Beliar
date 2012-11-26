@@ -15,7 +15,7 @@ public class PlayerRessources {
 	public static int kythos = 600; // 100
 	public static int mara = 600; // 10
 	
-	public static int darkness = 10;
+	public static int darkness = 20;
 	public static int healthCentre = 100;
 	
 	//BuildingCount
@@ -36,9 +36,9 @@ public class PlayerRessources {
         
         //Soulabyss
         public static int soulAbyssOfPlayer = 1;
-        public static int soulsCount = 0;
-        public static int chanceForSalvation= 0;
-        
+        private static int soulsCount = 0;
+        public static int chanceForSalvation = 0;
+         
         //Production
         public static int percentAdam = 30;
         public static int percentKythos = 30;
@@ -53,5 +53,15 @@ public class PlayerRessources {
 	
         //BuildingList
         public static ArrayList<ProductionBuilding> buildings = new ArrayList<ProductionBuilding>();
-        
+
+        public static int getSoulsCount() {
+            return soulsCount;
+        }
+
+        public static void setSoulsCount(int value) {
+            soulsCount += value;
+            if(soulsCount < 0){
+                soulsCount = 0;
+            }
+        } 
 }

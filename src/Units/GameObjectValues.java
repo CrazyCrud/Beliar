@@ -39,7 +39,15 @@ public class GameObjectValues {
     //Building
     public static final String BUILDING_TYPE = "TYPE";
     public static final String BUILDING_SIZE = "SIZE";
-    public static final int SOULUSE_PER_PRODUCTION = 2;
+    public static final int ADAM_SMALL_SOULS_PER_PRODUCTION = 2;
+    public static final int ADAM_MIDDLE_SOULS_PER_PRODUCTION = 4;
+    public static final int ADAM_BIG_SOULS_PER_PRODUCTION = 6;
+    public static final int KYTHOS_SMALL_SOULS_PER_PRODUCTION = 4;
+    public static final int KYTHOS_MIDDLE_SOULS_PER_PRODUCTION = 4;
+    public static final int KYTHOS_BIG_SOULS_PER_PRODUCTION = 8;
+    public static final int MARA_SMALL_SOULS_PER_PRODUCTION = 6;
+    public static final int MARA_MIDDLE_SOULS_PER_PRODUCTION = 8;
+    public static final int MARA_BIG_SOULS_PER_PRODUCTION = 10;
     public static final int PROGRESS_PERCENT_PER_TICK = 1;
     public static final float Y_POSITION_BUILDINGS = 0f;
     public static final float Y_POSITION_UNITS = 0f;

@@ -236,7 +236,7 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
         tb.height("100%");
         tb.font("Interface/Fonts/gill_16.fnt");
         Element textSouls = tb.build(nifty, screen, firstRowBottom);
-        textSouls.getRenderer(TextRenderer.class).setText("Anzahl der Verdammten: " + PlayerRessources.soulsCount);
+        textSouls.getRenderer(TextRenderer.class).setText("Anzahl der Verdammten: " + PlayerRessources.getSoulsCount());
         
         new ImageBuilder("slave"){{
             filename("Images/slave_icon.png");
@@ -950,7 +950,7 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
             tb.height("100%");
             tb.font("Interface/Fonts/gill_16.fnt");
             Element textSouls = tb.build(nifty, screen, firstRowBottom);
-            textSouls.getRenderer(TextRenderer.class).setText("Anzahl der Verdammten: " + PlayerRessources.soulsCount);
+            textSouls.getRenderer(TextRenderer.class).setText("Anzahl der Verdammten: " + PlayerRessources.getSoulsCount());
         }
     }
     

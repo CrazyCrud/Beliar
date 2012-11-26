@@ -10,6 +10,9 @@ import com.jme3.app.state.AbstractAppState;
 import com.jme3.app.state.AppStateManager;
 import com.jme3.scene.Node;
 import com.jme3.system.AppSettings;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.prefs.BackingStoreException;
 
 /**
  *
@@ -83,6 +86,11 @@ public class OptionState extends AbstractAppState{
     protected void changeSettings(AppSettings appSettings){
         this.app.setSettings(appSettings);
         GameContainer.getInstance().setAppSettings(appSettings);
+        try {
+            appSettings.save(GameContainer.SETTINGS_KEY);
+        } catch (BackingStoreException ex) {
+            Logger.getLogger(OptionState.class.getName()).log(Level.SEVERE, null, ex);
+        }
         this.app.restart();
     }
 }

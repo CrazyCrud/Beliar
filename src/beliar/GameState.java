@@ -311,21 +311,20 @@ public class GameState extends AbstractAppState {
         viewPort.addProcessor(fpp);
     }
     
-    private void initBloom()    
-    {
-        bloomFilter =new BloomFilter();
+    private void initBloom() {
+        bloomFilter = new BloomFilter();
         fpp.addFilter(bloomFilter);
         viewPort.addProcessor(fpp);
     }
     
-    private void initDoF()
-{
+    private void initDoF() {
         dofFilter = new DepthOfFieldFilter();
         dofFilter.setFocusDistance(0.1f);
         dofFilter.setFocusRange(1);
-        dofFilter.setBlurScale(3.0f);
+        dofFilter.setBlurScale(2.0f);
         fpp.addFilter(dofFilter);
- }
+    
+    }
     private void initMeshLibary() {
         System.out.println("InitMeshLibary");
         mMeshContainer = new MeshContainer(assetManager);
@@ -713,7 +712,7 @@ public class GameState extends AbstractAppState {
     
     protected void createSlave(){
         System.out.println("GameState: createSlave");
-        if(PlayerRessources.soulsCount > 0){
+        if(PlayerRessources.getSoulsCount() > 0){
             creatures.attachChild(UnitController.createSlave(5, 8));
             stateManager.getState(GameSimulation.class).reduceSouls(GameContainer.COSTSLAVE);
         }

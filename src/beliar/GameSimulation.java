@@ -109,7 +109,8 @@ public class GameSimulation extends AbstractAppState{
         {
             int countSoulAbyss= PlayerRessources.soulAbyssOfPlayer;
             
-            PlayerRessources.soulsCount += countSoulAbyss*(PlayerRessources.darkness*(int)Math.round(Math.random()*1));
+            PlayerRessources.setSoulsCount(countSoulAbyss *
+                                                       Math.round(PlayerRessources.darkness * Math.round(Math.random() * 1)));
             
             app.getStateManager().getState(InGameInputs.class).soulCountChanged();
         }
@@ -203,24 +204,24 @@ public class GameSimulation extends AbstractAppState{
 
         protected void reduceSouls(int count)
         {
-            PlayerRessources.soulsCount -= count;
+            PlayerRessources.setSoulsCount(count);
         }
 
         private void checkForSalvationOfSouls()
           {
             //System.out.println("Freiheit der Seelen?");
-            if(PlayerRessources.soulsCount> GameContainer.freeSouls)
+            if(PlayerRessources.getSoulsCount()> GameContainer.freeSouls)
             {  
                 //System.out.println("Freiheit der Seelen? CHECK");
-                PlayerRessources.chanceForSalvation =+ PlayerRessources.soulsCount/2;
+                PlayerRessources.chanceForSalvation =+ PlayerRessources.getSoulsCount()/2;
             }
 
             if(PlayerRessources.chanceForSalvation >= GameContainer.soulsRate)
             {
                 //System.out.println("Freiheit der Seelen? JA!");
                 reduceSouls((int)PlayerRessources.chanceForSalvation);
-                if(PlayerRessources.soulsCount <= 0){
-                    PlayerRessources.soulsCount = 0; 
+                if(PlayerRessources.getSoulsCount() <= 0){
+                    PlayerRessources.setSoulsCount(0); 
                 }  
                 //System.out.println("SoulsCount"+PlayerRessources.soulsCount);
             }
