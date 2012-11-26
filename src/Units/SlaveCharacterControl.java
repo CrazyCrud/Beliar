@@ -39,7 +39,6 @@ public class SlaveCharacterControl extends AbstractControl{
                     if(hasReachedBuilding()){
                         if(!(spatial.getControl(WalkControl.class).isMoving())){
                             buildConstruction(tpf);
-                            moveAwayFromBuilding();
                         }
                     }else{
                         walkToContruction();
@@ -127,6 +126,9 @@ public class SlaveCharacterControl extends AbstractControl{
         if(float_buildTimer > GameObjectValues.CONSTRUCTION_TIME){
             System.out.println("SlaveCharacterControl buildConstruction() finished");
             buildingFinished();
+            if(!anyBuildingLeft()){
+                moveAwayFromBuilding();
+            }
         }
     }
     

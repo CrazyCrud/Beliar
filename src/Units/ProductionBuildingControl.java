@@ -11,6 +11,12 @@ import com.jme3.scene.control.AbstractControl;
 import com.jme3.scene.control.Control;
 import beliar.PlayerRessources;
 import beliar.GameContainer;
+import com.jme3.material.Material;
+import com.jme3.math.ColorRGBA;
+import com.jme3.math.Vector3f;
+import com.jme3.scene.Geometry;
+import com.jme3.scene.Node;
+import com.jme3.scene.shape.Box;
 /**
  *
  * @author andministrator
@@ -24,8 +30,11 @@ public class ProductionBuildingControl extends AbstractControl{
     protected void controlUpdate(float tpf) {
         if(isEnabled()){
             if(bool_isActive) {
-                if(int_percentStatus < 100 && int_percentStatus > 0) {
+                if(int_percentStatus < 500 && int_percentStatus > 0) {
                     progressProduction();
+                    return;
+                }else{
+                    setActive(false);
                     return;
                 }
             }
@@ -34,10 +43,10 @@ public class ProductionBuildingControl extends AbstractControl{
     }
     
     private void startProduction() {
-        setActive(true);
-        setValues();
-        if(checkForRessources()) {
-            getSouslForProduction();
+        if(areSoulsAvailable()) {
+            setActive(true);
+            setValues();
+            consumeSouls();
         }
     }
     
@@ -46,22 +55,12 @@ public class ProductionBuildingControl extends AbstractControl{
         int_percentStatus = 1;
     }
     
-    private boolean checkForRessources() {
-        return false;
-    }
-
-    private void getSouslForProduction() {
-        if (checkForRessources()) {
-            setActive(true);
-            consumeSouls();
-        } else {
-            setActive(false);
-        }
+    private boolean areSoulsAvailable() {
+        return PlayerRessources.soulsCount > GameObjectValues.SOULUSE_PER_PRODUCTION? true: false;
     }
     
     private void consumeSouls(){
         PlayerRessources.soulsCount -= GameObjectValues.SOULUSE_PER_PRODUCTION;
-        int_percentStatus++;
     }
     
     private void progressProduction() {
@@ -69,6 +68,19 @@ public class ProductionBuildingControl extends AbstractControl{
     }
     
     protected void setActive(boolean isActive) {
+        if(isActive){
+            ((Node)spatial).detachChildNamed("buildingMarker");
+        }else{
+            Box bosShape = new Box(Vector3f.ZERO, 
+                0.10f, 0.10f, 0.10f);
+            Geometry geo = new Geometry("buildingMarker", bosShape);
+            Material mat = new Material(GameContainer.getInstance().getApplication().getAssetManager(), 
+                "MatDefs/Unshaded.j3md");
+            mat.setColor("Color", ColorRGBA.Red);
+            geo.setMaterial(mat);
+            geo.move(0.0f, 0.95f, 0.0f);
+            ((Node)spatial).attachChild(geo.clone());
+        }
         this.bool_isActive = isActive;
     }
     

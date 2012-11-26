@@ -100,9 +100,9 @@ public class WalkControl extends AbstractControl{
                     }else{
                         updateTimer(MOVE_TIMER, tpf);
                     }
-                }else{
-                    moveRandom(tpf);
-                } 
+                    return;
+                }
+                moveRandom(tpf);
             }
         }
     }
@@ -252,7 +252,7 @@ public class WalkControl extends AbstractControl{
     }
     
     private boolean isTimeForRandomMove(){
-        return float_moveTimer > 10.0f? true: false;   
+        return float_moveTimer > 50.0f? true: false;   
     }
 
     @Override
