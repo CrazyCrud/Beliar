@@ -13,6 +13,7 @@ import com.jme3.scene.control.AbstractControl;
 import com.jme3.scene.control.Control;
 import beliar.GameContainer;
 import beliar.GameState;
+import beliar.SoundManager;
 import java.util.LinkedList;
 
 /**
@@ -94,6 +95,7 @@ public class SlaveCharacterControl extends AbstractControl{
                 list_buildings.getLast().getSpatial().getControl(GameObjectControl.class).getPosZ())){
                 //TODO
             }else{
+                SoundManager.playSlaveSound(GameContainer.SLAVE_NOT_REACHABLE);
                 list_buildings.removeLast();
             }
         } 
@@ -101,6 +103,7 @@ public class SlaveCharacterControl extends AbstractControl{
     
     private boolean isBuildingAccessible(int x, int z) {
         if(spatial.getControl(WalkControl.class).findPath(x, z)){
+            SoundManager.playSlaveSound(GameContainer.SLAVE_BUILD);
             System.out.println("SlaveCharacterControl : isBuildingReachable() true");
             return true;
         }else{

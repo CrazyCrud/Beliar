@@ -86,6 +86,12 @@ public class GameContainer {
         public static float ZOOM_FACTOR = 0.01f;
         public static int SCREEN_WIDTH, SCREEN_HEIGHT;
         
+        //Sounds
+        public static final int SLAVE_NOT_REACHABLE = 0;
+        public static final int SLAVE_BUILD = 1;
+        public static final int SLAVE_BUILD_2 = 2;
+        public static final int SLAVE_RANDOM = 3;
+        
         // Gamesettings
         public static final String SETTINGS_KEY = "de.beliar";
         

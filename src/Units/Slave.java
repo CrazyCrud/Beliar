@@ -5,6 +5,7 @@
 package Units;
 
 import Map.MapController;
+import com.jme3.audio.AudioNode;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
@@ -15,7 +16,7 @@ import com.jme3.scene.Spatial;
  */
 public class Slave extends Unit{
     private Node node_slave;
-    
+    private AudioNode node_build1, node_build2, node_notReachable;
     public Slave(int posX, int posZ){
         super(GameObjectValues.HEALTH_VALUE_SLAVE, posX, posZ, GameObjectValues.SPEED_VALUE_SLAVE);
         System.out.println("Slave: Constructor at " + posX + ", " + posZ);
@@ -26,6 +27,7 @@ public class Slave extends Unit{
         setUpSpatial();
         setUpControllers();
         positionSlave(spwanLocation);
+        setUpAudio();
     }
     
     private void setUpSpatial(){
@@ -67,5 +69,29 @@ public class Slave extends Unit{
         MapController.setNodeTo(spatial.getControl(GameObjectControl.class).getPosX(), 
                 spatial.getControl(GameObjectControl.class).getPosZ(), false);
         spatial.getControl(GameObjectControl.class).setHealth(0);
+    }
+
+    private void setUpAudio() {
+        node_build1 = new AudioNode(assetManager, "Sounds/sounds/GrabenGrabenGraben.ogg");
+        node_build2 = new AudioNode(assetManager, "Sounds/sounds/WirdErledigt.ogg");
+        node_notReachable = new AudioNode(assetManager, "Sounds/sounds/DortKommeIchNichtHin.ogg");
+        node_slave.attachChild(node_build1);
+        node_slave.attachChild(node_build2);
+        node_slave.attachChild(node_notReachable);
+    }
+    
+    protected void playNotAccessible(){
+        node_notReachable.play();
+    }
+    
+    protected void playBuild(){
+        switch((int)Math.round(Math.random() * 2.0f)){
+            case 0:
+                node_build1.play();
+                break;
+            case 1:
+                node_build2.play();
+                break;
+        }
     }
 }
