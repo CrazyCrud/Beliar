@@ -120,6 +120,7 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
     
     public void onBuild(){
         System.out.println("onBuild: " + menuState);
+        myGameState.playSoundEffect(SoundManager.CLICK_2);
         if(menu.isVisible()){
             if(menuState >= MENU_ARMY){
                 clearMenu();
@@ -136,6 +137,7 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
     
         public void onArmy(){
         System.out.println("onArmy: " + menuState);
+        myGameState.playSoundEffect(SoundManager.CLICK_2);
         if(menu.isVisible()){ 
             if(menuState < MENU_ARMY || menuState >= MENU_QUESTS){
                 System.out.println("onArmy: menuState < MENU_ARMY");
@@ -153,6 +155,7 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
         
     public void onQuest(){
         System.out.println("onQuest");
+        myGameState.playSoundEffect(SoundManager.CLICK_2);
         if(menu.isVisible()){ 
             if(menuState < MENU_QUESTS){
                 System.out.println("onQuest: menuState < MENU_QUEST");
@@ -309,10 +312,10 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
     private void setupQuests(){
         System.out.println("InGameInputs: setupQuests");
         menuState = MENU_QUESTS;
-        
         Element menuText = screen.findElementByName("menuText");
         menuText.getRenderer(TextRenderer.class).setText("Deine Aufgaben");
         setUpQuestText();
+        myGameState.playSoundEffect(SoundManager.CLICK_2);
     }
     
     public void onOptions(){
@@ -508,6 +511,7 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
     
      public void onBuildRoom(String whichRoom){
         System.out.println("onBuildRoom()");
+        myGameState.playSoundEffect(SoundManager.CLICK);
         clearSecondRowBottom();
         switch(Integer.parseInt(whichRoom)){
             case ADAM:
@@ -772,6 +776,7 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
     }
     
     public void onBuildWarrior(String whichWarrior){
+        myGameState.playSoundEffect(SoundManager.CLICK);
         switch(Integer.parseInt(whichWarrior)){
             case MELEE:
                 stateManager.getState(GameState.class).createMelee();

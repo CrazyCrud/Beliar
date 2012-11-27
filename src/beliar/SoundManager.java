@@ -21,11 +21,12 @@ public class SoundManager {
     private AudioNode background;
     private static AudioNode slave1, slave2, slave3, slave4, warrior1, warrior2,
             warrior3, warrior4, souls;
-    private static AudioNode buildRoom;
+    private static AudioNode buildBuilding, buildRoom;
     private HashMap<String,AudioNode> uiSounds = new HashMap<String, AudioNode>();
     
     public static final int PLACE_BUILDING = 0;
     public static final int CLICK = 1;
+    public static final int CLICK_2 = 2;
     
     protected SoundManager(AssetManager assetManager, Node rootNode) {
         this.assetManager = assetManager;
@@ -47,13 +48,15 @@ public class SoundManager {
        slave1 = new AudioNode(assetManager, "Sounds/sounds/DortKommeIchNichtHin.ogg", false);
        slave1.setVolume(0.2f);
        slave2 = new AudioNode(assetManager, "Sounds/sounds/GrabenGrabenGraben.ogg", false);
-       slave2.setVolume(0.1f);
+       slave2.setVolume(0.2f);
        slave3 = new AudioNode(assetManager, "Sounds/sounds/JaMeister.ogg", false);
        slave3.setVolume(0.2f);
        slave4 = new AudioNode(assetManager, "Sounds/sounds/WirdErledigt.ogg", false);
        slave4.setVolume(0.2f);
-       buildRoom = new AudioNode(assetManager, "Sounds/sounds/Build.ogg", false);
-       buildRoom.setVolume(0.050f);
+       buildBuilding = new AudioNode(assetManager, "Sounds/sounds/Build.ogg", false);
+       buildBuilding.setVolume(0.050f);
+       buildRoom = new AudioNode(assetManager, "Sounds/sounds/buildRoom.ogg", false);
+       buildRoom.setVolume(0.2f);
        warrior1 = new AudioNode(assetManager, "Sounds/sounds/SchonGenug.ogg", false);
        warrior2 = new AudioNode(assetManager, "Sounds/sounds/WerIstDerErste.ogg", false);
        warrior3 = new AudioNode(assetManager, "Sounds/sounds/WiewaereEsMitBlut.ogg", false);
@@ -64,7 +67,7 @@ public class SoundManager {
        this.rootNode.attachChild(slave2);
        this.rootNode.attachChild(slave3);
        this.rootNode.attachChild(slave4);
-       this.rootNode.attachChild(buildRoom);
+       this.rootNode.attachChild(buildBuilding);
        this.rootNode.attachChild(warrior1);
        this.rootNode.attachChild(warrior2);
        this.rootNode.attachChild(warrior3);
@@ -74,6 +77,7 @@ public class SoundManager {
    private void initUISound()
    {
        uiSounds.put("click",new AudioNode(assetManager,"Sounds/sounds/UI/click.ogg",false));
+       uiSounds.put("click2",new AudioNode(assetManager,"Sounds/sounds/UI/click2.ogg",false));
        uiSounds.put("createRoom", new AudioNode(assetManager,"Sounds/sounds/UI/createRoom.ogg",false));
        uiSounds.put("placeBuilding", new AudioNode(assetManager,"Sounds/sounds/UI/placeBuilding.ogg",false));
    }
@@ -117,10 +121,10 @@ public class SoundManager {
                slave3.play();
                break;
            case GameContainer.SLAVE_DIGGING:
-               if(buildRoom.getStatus() == Status.Playing){
+               if(buildBuilding.getStatus() == Status.Playing){
                    return;
                }
-               buildRoom.play();
+               buildBuilding.play();
                break;
        }
    }
@@ -145,5 +149,12 @@ public class SoundManager {
    
    protected static void playSouls(){
        souls.play();
+   }
+   
+   protected static void buildRoom(){
+       if(buildRoom.getStatus().equals(Status.Playing)){
+           return;
+       }
+       buildRoom.play();
    }
 }

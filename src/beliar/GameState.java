@@ -457,7 +457,7 @@ public class GameState extends AbstractAppState {
                     System.out.println("GameState: onAnalog() " + PlayerRessources.selectionRoom);
                     mMaphandler.handleBuilding(transformation.getTranslation(), PlayerRessources.selectionRoom);
                     mapNode.detachChild(target);
-                    
+                    SoundManager.buildRoom();
                     if(PlayerRessources.selectedBuilding != null)
                     {
                         resetBuilding();
@@ -513,6 +513,8 @@ public class GameState extends AbstractAppState {
                                     (int)transformation.getTranslation().z);
                             break;
                     }
+                }else{
+                    clearSelection();
                 }
             }
         }
@@ -708,6 +710,8 @@ public class GameState extends AbstractAppState {
             case SoundManager.CLICK:
                 mSoundManager.playUISound("click");
                 break;
+            case SoundManager.CLICK_2:
+                mSoundManager.playUISound("click2");
         }
     }
     
@@ -726,7 +730,7 @@ public class GameState extends AbstractAppState {
             stateManager.getState(GameSimulation.class).reduceRessources(GameContainer.COSTMELEE);
             UnitController.removeSlave();
             creatures.attachChild(UnitController.createMelee(5, 6)); 
-            mSoundManager.playRandomWarriorSound();
+            SoundManager.playRandomWarriorSound();
         }
     }
     
