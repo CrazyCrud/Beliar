@@ -101,28 +101,28 @@
                             <panel width="100%" height="10%"></panel>
                         </panel>
                         <panel width="100%" height="4%"></panel>
-                        <panel id="menuFirstRow" width="100%" height="18%" childLayout="absolute"
+                        <panel id="menuFirstRow" width="100%" height="20%" childLayout="absolute"
                             align="center">
                             <panel childLayout="center" x="0" y="0" width="100%" height="100%">
 
                             </panel>
                             <panel x="10px" y="5px" width="100%" height="100%" childLayout="vertical">
-                                <panel width="100%" height="7%" childLayout="horizontal">
+                                <panel width="100%" height="5%" childLayout="horizontal">
                                     <text id="textFirstRow" text="" font="Interface/Fonts/gill_16.fnt" 
-                                        textHAlign="left" width="20%" height="70%" paddingBottom="15px"/>
+                                        textHAlign="left" width="20%" height="70%"/>
                                 </panel>
-                                <panel width="100%" height="9%"></panel>
-                                <panel id="firstRowTop" width="100%" height="86%"
+                                <panel width="100%" height="11%"></panel>
+                                <panel id="firstRowTop" width="100%" height="80%"
                                     childLayout="horizontal" valign="center">
                                 </panel>
                                 <panel width="100%" height="0%"></panel>
                                 <panel id="firstRowBottom" width="100%" height="0%"
                                     childLayout="horizontal" valign="center">
                                 </panel>
-                                <panel width="100%" height="6%"></panel>
+                                <panel width="100%" height="0%"></panel>
                            </panel>
                         </panel>
-                        <panel width="100%" height="4%"></panel>
+                        <panel width="100%" height="2%"></panel>
                         <panel id="menuSecondRow" width="100%" height="34%" 
                             childLayout="absolute" align="center">
                             <panel childLayout="center" x="0" y="0" width="100%" height="100%">

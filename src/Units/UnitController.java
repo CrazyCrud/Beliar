@@ -4,6 +4,7 @@
  */
 package Units;
 
+import beliar.SoundManager;
 import com.jme3.scene.Node;
 import java.util.ArrayList;
 
@@ -67,6 +68,7 @@ public class UnitController {
         if(melees.isEmpty()){
             return;
         }
+        SoundManager.playRandomWarriorSound();
         for(Unit unit: melees){
             moveUnitTo((Node)unit.getSpatial(), xPos, zPos);
         }

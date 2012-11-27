@@ -498,7 +498,6 @@ public class GameState extends AbstractAppState {
                     float_moveTimerCache = float_moveTimer;
                     Geometry target = results.getClosestCollision().getGeometry();
                     Transform transformation = target.getWorldTransform();
-                    SoundManager.playRandomWarriorSound();
                     switch(int_unitToMove){
                         case InGameInputs.MELEE:
                             UnitController.moveMeleesTo((int)transformation.getTranslation().x, 

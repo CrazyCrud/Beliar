@@ -21,7 +21,7 @@ public class SoundManager {
     private AudioNode background;
     private static AudioNode slave1, slave2, slave3, slave4, warrior1, warrior2,
             warrior3, warrior4, souls;
-    private static AudioNode buildBuilding, buildRoom;
+    private static AudioNode buildBuilding, buildRoom, quest;
     private HashMap<String,AudioNode> uiSounds = new HashMap<String, AudioNode>();
     
     public static final int PLACE_BUILDING = 0;
@@ -54,7 +54,7 @@ public class SoundManager {
        slave4 = new AudioNode(assetManager, "Sounds/sounds/WirdErledigt.ogg", false);
        slave4.setVolume(0.2f);
        buildBuilding = new AudioNode(assetManager, "Sounds/sounds/Build.ogg", false);
-       buildBuilding.setVolume(0.050f);
+       buildBuilding.setVolume(0.040f);
        buildRoom = new AudioNode(assetManager, "Sounds/sounds/buildRoom.ogg", false);
        buildRoom.setVolume(0.2f);
        warrior1 = new AudioNode(assetManager, "Sounds/sounds/SchonGenug.ogg", false);
@@ -63,6 +63,8 @@ public class SoundManager {
        warrior4 = new AudioNode(assetManager, "Sounds/sounds/ZuBefehl.ogg", false);
        souls = new AudioNode(assetManager, "Sounds/sounds/Souls.ogg", false);
        souls.setVolume(0.1f);
+       quest = new AudioNode(assetManager, "Sounds/sounds/Quest.ogg", false);
+       quest.setVolume(0.2f);
        this.rootNode.attachChild(slave1);
        this.rootNode.attachChild(slave2);
        this.rootNode.attachChild(slave3);
@@ -72,6 +74,8 @@ public class SoundManager {
        this.rootNode.attachChild(warrior2);
        this.rootNode.attachChild(warrior3);
        this.rootNode.attachChild(warrior4);
+       this.rootNode.attachChild(souls);
+       this.rootNode.attachChild(quest);
    }
    
    private void initUISound()
@@ -129,7 +133,7 @@ public class SoundManager {
        }
    }
    
-   protected static void playRandomWarriorSound(){
+   public static void playRandomWarriorSound(){
        switch((int)(Math.round(Math.random() * 2.0))){
            case 0:
                warrior1.play();
@@ -143,18 +147,22 @@ public class SoundManager {
        }
    }
    
-   protected static void playWarriorMarkedSound(){
+   public static void playWarriorMarkedSound(){
        warrior4.play();
    }
    
-   protected static void playSouls(){
+   public static void playSouls(){
        souls.play();
    }
    
-   protected static void buildRoom(){
+   public static void buildRoom(){
        if(buildRoom.getStatus().equals(Status.Playing)){
            return;
        }
        buildRoom.play();
+   }
+   
+   public static void playQuestFinished(){
+       quest.play();
    }
 }

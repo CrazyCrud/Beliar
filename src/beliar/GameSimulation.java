@@ -13,6 +13,7 @@ public class GameSimulation extends AbstractAppState{
 	
 	private SimpleApplication app;
 	private float float_timerSoulProduction, float_timerGoodsProduction;
+        private boolean bool_isQuest1Finished, bool_isQuest2Finished, bool_isQuest3Finished;
         private static final int SOUL_PRODUCTION = 0;
         private static final int GOODS_PRODUCTION = 1;
         private static final int MELEE = 0;
@@ -236,23 +237,44 @@ public class GameSimulation extends AbstractAppState{
         }
 
         protected boolean isQuest1Completed() {
-            if(PlayerRessources.adam > 1000 && PlayerRessources.kythos > 600 && PlayerRessources.mara > 600){
+            if(bool_isQuest1Finished){
                 return true;
+            }else{
+                if(PlayerRessources.adam > 1000 && PlayerRessources.kythos > 600 && PlayerRessources.mara > 600){
+                    SoundManager.playQuestFinished();
+                    bool_isQuest1Finished = true;
+                }else{
+                    bool_isQuest1Finished = false;
+                }
+                return bool_isQuest1Finished;
             }
-            return false;
         }
 
         protected boolean isQuest2Completed() {
-            if(UnitController.getMelees().size() > 20){
+            if(bool_isQuest2Finished){
                 return true;
+            }else{
+                if(UnitController.getMelees().size() > 20){
+                    SoundManager.playQuestFinished();
+                    bool_isQuest2Finished = true;
+                }else{
+                    bool_isQuest2Finished = false;
+                }
+                return bool_isQuest2Finished;
             }
-            return false;
         }
 
         protected boolean isQuest3Completed() {
-            if(PlayerRessources.darkness > 50){
+            if(bool_isQuest3Finished){
                 return true;
+            }else{
+                if(PlayerRessources.darkness > 50){
+                    SoundManager.playQuestFinished();
+                    bool_isQuest3Finished = true;
+                }else{
+                    bool_isQuest3Finished = false;
+                }
+                return bool_isQuest3Finished;
             }
-            return false;
         }
 }
