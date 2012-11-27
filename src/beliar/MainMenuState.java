@@ -104,8 +104,9 @@ public class MainMenuState extends AbstractAppState{
     }
     
     private void initAudio(){
-        click = new AudioNode(app.getAssetManager(), "Sounds/sounds/UI/click.ogg", false);
+        click = new AudioNode(app.getAssetManager(), "Sounds/sounds/UI/startgame.ogg", false);
         menuTheme = new AudioNode(app.getAssetManager(), "Sounds/music/mainmenu.ogg", false);
+        click.setVolume(0.275f);
         menuTheme.setVolume(0.35f);
         rootNode.attachChild(click);
     }

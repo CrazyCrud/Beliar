@@ -125,6 +125,7 @@ public class SlaveCharacterControl extends AbstractControl{
 
     private void buildConstruction(float tpf) {
         setIsBuilding(true);
+        SoundManager.playSlaveSound(GameContainer.SLAVE_DIGGING);
         float_buildTimer += tpf;
         if(float_buildTimer > GameObjectValues.CONSTRUCTION_TIME){
             System.out.println("SlaveCharacterControl buildConstruction() finished");

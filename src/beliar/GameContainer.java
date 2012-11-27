@@ -91,6 +91,7 @@ public class GameContainer {
         public static final int SLAVE_BUILD = 1;
         public static final int SLAVE_BUILD_2 = 2;
         public static final int SLAVE_RANDOM = 3;
+        public static final int SLAVE_DIGGING = 4;
         
         // Gamesettings
         public static final String SETTINGS_KEY = "de.beliar";

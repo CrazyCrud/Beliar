@@ -110,7 +110,7 @@ public class GameSimulation extends AbstractAppState{
             int countSoulAbyss= PlayerRessources.soulAbyssOfPlayer;
             
             PlayerRessources.setSoulsCount(countSoulAbyss *
-                                                       Math.round(PlayerRessources.darkness * Math.round(Math.random() * 1)));
+                  Math.round(PlayerRessources.darkness * Math.round(Math.random() * 1)));
             
             app.getStateManager().getState(InGameInputs.class).soulCountChanged();
         }
@@ -220,6 +220,7 @@ public class GameSimulation extends AbstractAppState{
             {
                 //System.out.println("Freiheit der Seelen? JA!");
                 reduceSouls((int)PlayerRessources.chanceForSalvation);
+                SoundManager.playSouls();
                 if(PlayerRessources.getSoulsCount() <= 0){
                     PlayerRessources.setSoulsCount(0); 
                 }  

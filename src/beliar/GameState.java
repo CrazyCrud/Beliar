@@ -498,6 +498,7 @@ public class GameState extends AbstractAppState {
                     float_moveTimerCache = float_moveTimer;
                     Geometry target = results.getClosestCollision().getGeometry();
                     Transform transformation = target.getWorldTransform();
+                    SoundManager.playRandomWarriorSound();
                     switch(int_unitToMove){
                         case InGameInputs.MELEE:
                             UnitController.moveMeleesTo((int)transformation.getTranslation().x, 
@@ -715,7 +716,7 @@ public class GameState extends AbstractAppState {
         if(PlayerRessources.getSoulsCount() > 0){
             creatures.attachChild(UnitController.createSlave(5, 8));
             stateManager.getState(GameSimulation.class).reduceSouls(GameContainer.COSTSLAVE);
-            mSoundManager.playSlaveSound(GameContainer.SLAVE_RANDOM);
+            SoundManager.playSlaveSound(GameContainer.SLAVE_RANDOM);
         }
     }
     
@@ -725,7 +726,7 @@ public class GameState extends AbstractAppState {
             stateManager.getState(GameSimulation.class).reduceRessources(GameContainer.COSTMELEE);
             UnitController.removeSlave();
             creatures.attachChild(UnitController.createMelee(5, 6)); 
-            mSoundManager.playWarriorSound();
+            mSoundManager.playRandomWarriorSound();
         }
     }
     
@@ -737,6 +738,7 @@ public class GameState extends AbstractAppState {
     protected void moveUnits(int whichUnits) {
         System.out.println("GameState: moveUnits()");
         bool_areUnitsMoving = true;
+        SoundManager.playWarriorMarkedSound();
         switch(whichUnits){
             case InGameInputs.MELEE:
                 int_unitToMove = InGameInputs.MELEE;
