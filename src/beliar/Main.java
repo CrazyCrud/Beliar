@@ -91,7 +91,7 @@ public class Main extends SimpleApplication{
     
     @Override
     public void simpleUpdate(float tpf) {
-        inputManager.deleteTrigger("FLYCAM_RotateDrag", new MouseButtonTrigger(MouseInput.BUTTON_LEFT));
+        // inputManager.deleteTrigger("FLYCAM_RotateDrag", new MouseButtonTrigger(MouseInput.BUTTON_LEFT));
     }
 
     @Override

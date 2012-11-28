@@ -34,11 +34,12 @@ public class PauseState extends AbstractAppState{
     public void setEnabled(boolean enabled){
         super.setEnabled(enabled);
         if(enabled){
-            System.out.println("PauseState: setEnabled");
+            System.out.println("PauseState: setEnabled true");
             inPauseInputs.setEnabled(true);
             showInput();
         }else{
-            //inPauseInputs.setEnabled(false);
+            System.out.println("PauseState: setEnabled false");
+            inPauseInputs.setEnabled(false);
         }
     }
         

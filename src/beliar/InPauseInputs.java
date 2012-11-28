@@ -70,6 +70,7 @@ public class InPauseInputs extends AbstractAppState implements ScreenController{
     public void onBackToMainScreen(){
         System.out.println("InPauseInputs: onBackToMainMenu");
         stateManager.detach(stateManager.getState(GameState.class));
+        stateManager.getState(PauseState.class).setEnabled(false);
         stateManager.getState(MainMenuState.class).setEnabled(true);
     }
     
