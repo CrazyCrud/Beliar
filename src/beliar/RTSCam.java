@@ -39,7 +39,8 @@ public final class RTSCam implements Control, ActionListener {
     private float[] maxValue = new float[5];
  
     private Vector3f position = new Vector3f();
-     
+    private Vector3f oldPosition = new Vector3f();
+    
     private Vector3f center = new Vector3f();
     private float tilt = (float)(Math.PI / 3.5);
     private float rot = 45;
@@ -172,7 +173,17 @@ public final class RTSCam implements Control, ActionListener {
         position.x = center.x + (float)(distance * Math.cos(tilt) * Math.sin(rot));
         position.y = center.y + (float)(distance * Math.sin(tilt));
         position.z = center.z + (float)(distance * Math.cos(tilt) * Math.cos(rot));
-        //clampPosition();
+        System.out.println("RTSCam: X:" + position.x + ", Z:" + position.z);
+        /*
+        if(isOuterMap()){
+            return;
+        }else{
+            oldPosition.x = position.x;
+            oldPosition.z = position.z;
+            oldPosition.y = position.y;
+        }
+         * 
+         */
         cam.setLocation(position);
         cam.lookAt(center, new Vector3f(0,1,0));
     }
@@ -188,17 +199,22 @@ public final class RTSCam implements Control, ActionListener {
         }
     }
     
-    private void clampPosition(){
+    private boolean isOuterMap(){
         if(position.x > GameContainer.MAP_SIZE){
-            position.x = center.x + GameContainer.MAP_SIZE;
+            position.x = oldPosition.x;
+            return true;
         }else if(position.x < 0){
-            position.x = center.x;
+            position.x = oldPosition.x;
+            return true;
         }
         if(position.z > GameContainer.MAP_SIZE){
-            position.z = center.z + GameContainer.MAP_SIZE;
+            position.z = oldPosition.z;
+            return true;
         }else if(position.z < 0){
-            position.z = center.z;
+            position.z = oldPosition.z;
+            return true;
         }
+        return false;
     }
      
     public float getMaxSpeed(Degree dg) {
@@ -248,10 +264,139 @@ public final class RTSCam implements Control, ActionListener {
         int press = 1;
         char sign = name.charAt(0);
         Degree deg;
+        System.out.println("RTSCam: moveCamera() " + Math.cos(rot));
         if(sign == '-') {
+            if(name.substring(1).equals("FWD")){
+                if(position.x < 8){
+                    if(Math.sin(rot) > 0.0){
+                        press = 0;
+                        deg = Degree.FWD;
+                        direction[deg.ordinal()] = press;
+                        return;
+                    }
+                }else if(position.x > GameContainer.MAP_SIZE - 8){
+                    if(Math.sin(rot) < 0.0){
+                        press = 0;
+                        deg = Degree.FWD;
+                        direction[deg.ordinal()] = press;
+                        return;
+                    }
+                }
+                if(position.z < 4){
+                    if(Math.cos(rot) > 0.0){
+                        press = 0;
+                        deg = Degree.FWD;
+                        direction[deg.ordinal()] = press;
+                        return;
+                    }
+                }else if(position.z > GameContainer.MAP_SIZE - 4){
+                    if(Math.cos(rot) < 0.0){
+                        press = 0;
+                        deg = Degree.FWD;
+                        direction[deg.ordinal()] = press;
+                        return;
+                    }
+                }
+            }else if(name.substring(1).equals("SIDE")){
+                //System.out.println("RTSCam: moveCamera() SIDE-");
+                if(position.z < 2){
+                        if(Math.sin(rot) < 0.0){
+                            press = 0;
+                            deg = Degree.SIDE;
+                            direction[deg.ordinal()] = press;
+                            return;
+                        }
+                }else if(position.z > GameContainer.MAP_SIZE - 2){
+                    if(Math.sin(rot) > 0.0){
+                        press = 0;
+                        deg = Degree.SIDE;
+                        direction[deg.ordinal()] = press;
+                        return;
+                    }
+                }
+                if(position.x > GameContainer.MAP_SIZE - 2){
+                        if(Math.cos(rot) < 0.0){
+                            press = 0;
+                            deg = Degree.SIDE;
+                            direction[deg.ordinal()] = press;
+                            return;
+                        }
+                }else if(position.x < 2){
+                    if(Math.cos(rot) > 0.0){
+                        press = 0;
+                        deg = Degree.SIDE;
+                        direction[deg.ordinal()] = press;
+                        return;
+                    }
+                }
+            }
             deg = Degree.valueOf(name.substring(1));
             press = -press;
         }else if(sign == '+'){
+            if(name.substring(1).equals("FWD")){
+                if(position.x < 2){
+                    if(Math.sin(rot) < 0.0){
+                        press = 0;
+                        deg = Degree.FWD;
+                        direction[deg.ordinal()] = press;
+                        return;
+                    }
+                }else if(position.x > 2){
+                    if(Math.sin(rot) > 0.0){
+                        press = 0;
+                        deg = Degree.FWD;
+                        direction[deg.ordinal()] = press;
+                        return;
+                    }
+                } 
+                if(position.z > GameContainer.MAP_SIZE - 4){
+                    if(Math.cos(rot) > 0.0){
+                        press = 0;
+                        deg = Degree.FWD;
+                        direction[deg.ordinal()] = press;
+                        return;
+                    }
+                }else if(position.z < 4){
+                    if(Math.cos(rot) < 0.0){
+                        press = 0;
+                        deg = Degree.FWD;
+                        direction[deg.ordinal()] = press;
+                        return;
+                    }
+                }
+            }else if(name.substring(1).equals("SIDE")){
+                    //System.out.println("RTSCam: moveCamera() SIDE+");
+                if(position.z < 2){
+                    if(Math.sin(rot) > 0.0){
+                        press = 0;
+                        deg = Degree.SIDE;
+                        direction[deg.ordinal()] = press;
+                        return;
+                    }
+                }else if(position.z > GameContainer.MAP_SIZE - 2){
+                    if(Math.sin(rot) < 0.0){
+                        press = 0;
+                        deg = Degree.SIDE;
+                        direction[deg.ordinal()] = press;
+                        return;
+                    }
+                }
+                if(position.x < 2){
+                        if(Math.cos(rot) < 0.0){
+                            press = 0;
+                            deg = Degree.SIDE;
+                            direction[deg.ordinal()] = press;
+                            return;
+                        }
+                }else if(position.x > GameContainer.MAP_SIZE - 2){
+                    if(Math.cos(rot) > 0.0){
+                        press = 0;
+                        deg = Degree.SIDE;
+                        direction[deg.ordinal()] = press;
+                        return;
+                    }
+                }
+            }
             deg = Degree.valueOf(name.substring(1));
         }else{
             press = 0;
