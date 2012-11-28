@@ -451,7 +451,7 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
                     width("100%h");
                     paddingRight("10px");
                     alignCenter();
-                    interactOnClick("onDoNothing()");   
+                    interactOnClick("buildAdamBuilding(3)");   
                         }}.build(nifty, screen, secondRowTop);
                 return;
             case KYTHOS:
@@ -477,7 +477,7 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
                     width("100%h");
                     paddingRight("10px");
                     alignCenter();
-                    interactOnClick("onDoNothing()");   
+                    interactOnClick("buildKythosBuilding(3)");   
                         }}.build(nifty, screen, secondRowTop);
                 return;
             case MARA:
@@ -503,7 +503,7 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
                     width("100%h");
                     paddingRight("10px");
                     alignCenter();
-                    interactOnClick("onDoNothing()");   
+                    interactOnClick("buildMaraBuilding(3)");   
                         }}.build(nifty, screen, secondRowTop);
                 return;
         }
@@ -538,16 +538,24 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
                 updateRessources(ADAM, BUILDING_LEVEL_ONE);
                 return;
             case BUILDING_LEVEL_TWO:
+                /*
                 setUpBuildingCosts(ADAM, BUILDING_LEVEL_TWO);
                 PlayerRessources.selectionRoom = 0;
                 myGameState.handleBuildSelection(GameContainer.ADAM_BUILDING, GameContainer.ADAM_MIDDLE_SIZE);
                 updateRessources(ADAM, BUILDING_LEVEL_TWO);
+                 * 
+                 */
+                clearSecondRowBottom();
                 return;
             case BUILDING_LEVEL_THREE:
+                /*
                 setUpBuildingCosts(ADAM, BUILDING_LEVEL_THREE);
                 PlayerRessources.selectionRoom = 0;
                 myGameState.handleBuildSelection(GameContainer.ADAM_BUILDING, GameContainer.ADAM_BIG_SIZE);
                 updateRessources(ADAM, BUILDING_LEVEL_THREE);
+                 * 
+                 */
+                clearSecondRowBottom();
                 return;
         }
     }
@@ -569,10 +577,14 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
                 myGameState.handleBuildSelection(GameContainer.KYTHOS_BUILDING, GameContainer.KYTHOS_MIDDLE_SIZE);
                 return;
             case BUILDING_LEVEL_THREE:
+                /*
                 PlayerRessources.selectionRoom = 0;
                 setUpBuildingCosts(KYTHOS, BUILDING_LEVEL_THREE);
                 updateRessources(KYTHOS, BUILDING_LEVEL_THREE);
                 myGameState.handleBuildSelection(GameContainer.KYTHOS_BUILDING, GameContainer.KYTHOS_BIG_SIZE);
+                 * 
+                 */
+                clearSecondRowBottom();
                 return;
         }
     }
@@ -594,9 +606,13 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
                 myGameState.handleBuildSelection(GameContainer.MARA_BUILDING, GameContainer.MARA_MIDDLE_SIZE);
                 return;
             case BUILDING_LEVEL_THREE:
+                /*
                 PlayerRessources.selectionRoom = 0;
                 setUpBuildingCosts(MARA, BUILDING_LEVEL_THREE);
                 updateRessources(MARA, BUILDING_LEVEL_THREE);
+                 * 
+                 */
+                clearSecondRowBottom();
                 return;
         }
     }
@@ -686,10 +702,10 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
                 setUpWarriorCosts(MELEE);
                 break;
             case RANGER:
-                setUpWarriorCosts(RANGER);
+                clearSecondRowBottom();
                 break;
             case MAGICIAN:
-                setUpWarriorCosts(MAGICIAN);
+                clearSecondRowBottom();
                 break;
         }
     }
@@ -728,7 +744,7 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
                 width("100%h");
                 paddingRight("10px");
                 alignCenter();
-                interactOnClick("onBuildWarrior(1)");   
+                interactOnClick("onDoNothing()");   
                     }}.build(nifty, screen, secondRowBottom);
                 break;
             case MAGICIAN:
@@ -739,7 +755,7 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
                 width("100%h");
                 paddingRight("10px");
                 alignCenter();
-                interactOnClick("onBuildWarrior(2)");   
+                interactOnClick("onDoNothing()");   
                     }}.build(nifty, screen, secondRowBottom);
                 break;
         }

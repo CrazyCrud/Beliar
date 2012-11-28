@@ -173,17 +173,6 @@ public final class RTSCam implements Control, ActionListener {
         position.x = center.x + (float)(distance * Math.cos(tilt) * Math.sin(rot));
         position.y = center.y + (float)(distance * Math.sin(tilt));
         position.z = center.z + (float)(distance * Math.cos(tilt) * Math.cos(rot));
-        System.out.println("RTSCam: X:" + position.x + ", Z:" + position.z);
-        /*
-        if(isOuterMap()){
-            return;
-        }else{
-            oldPosition.x = position.x;
-            oldPosition.z = position.z;
-            oldPosition.y = position.y;
-        }
-         * 
-         */
         cam.setLocation(position);
         cam.lookAt(center, new Vector3f(0,1,0));
     }
@@ -197,24 +186,6 @@ public final class RTSCam implements Control, ActionListener {
         } else {
             return value;
         }
-    }
-    
-    private boolean isOuterMap(){
-        if(position.x > GameContainer.MAP_SIZE){
-            position.x = oldPosition.x;
-            return true;
-        }else if(position.x < 0){
-            position.x = oldPosition.x;
-            return true;
-        }
-        if(position.z > GameContainer.MAP_SIZE){
-            position.z = oldPosition.z;
-            return true;
-        }else if(position.z < 0){
-            position.z = oldPosition.z;
-            return true;
-        }
-        return false;
     }
      
     public float getMaxSpeed(Degree dg) {
