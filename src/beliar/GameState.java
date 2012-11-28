@@ -108,11 +108,8 @@ public class GameState extends AbstractAppState {
         this.app = (SimpleApplication) ((SimpleApplication) app);
         this.rootNode = ((SimpleApplication) app).getRootNode();
         this.viewPort = ((SimpleApplication) app).getViewPort();
-        //this.guiNode = ((SimpleApplication) app).getGuiNode();
         this.assetManager = ((SimpleApplication) app).getAssetManager();
         this.inputManager = ((SimpleApplication) app).getInputManager();
-        //this.audioRenderer = ((SimpleApplication) app).getAudioRenderer();
-        //this.guiViewPort = ((SimpleApplication) app).getGuiViewPort();
         this.cam = ((SimpleApplication) app).getCamera();
         this.flyCam = ((SimpleApplication) app).getFlyByCamera();
         this.stateManager = stateManager;
@@ -447,7 +444,7 @@ public class GameState extends AbstractAppState {
             CollisionResults results = checkColision();
             if (name.equals("pick target")) {
                 System.out.println("GameState onAnalog() pick target");
-                clearSelection();
+                clearMarker();
                 resetUnitMovement();
                 if ((results.size() > 0) && (PlayerRessources.selectionRoom > 0)) {
                     Geometry target = results.getClosestCollision().getGeometry();
@@ -513,7 +510,7 @@ public class GameState extends AbstractAppState {
                             break;
                     }
                 }else{
-                    clearSelection();
+                    clearMarker();
                 }
             }
         }
@@ -689,15 +686,22 @@ public class GameState extends AbstractAppState {
         return isFieldValid;
     }
 
-    public void resetBuilding() {
+    public void resetBuilding(){
+        System.out.println("GameState: resetBuilding()");
+        clearSelection();
         selection = null;
-        PlayerRessources.selectedBuilding = null;
         PlayerRessources.selectionRoom = 0;
+    }
+    
+    protected void clearMarker(){
+        System.out.println("GameState: clearMarker()");
         marker.detachAllChildren();
     }
     
     protected void clearSelection(){
-        marker.detachAllChildren();
+        System.out.println("GameState: clearSelection()");
+        clearMarker();
+        PlayerRessources.selectedBuilding = null;
     }
     
     public void playSoundEffect(int whichSound)
