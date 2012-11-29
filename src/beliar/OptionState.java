@@ -88,9 +88,10 @@ public class OptionState extends AbstractAppState{
         GameContainer.getInstance().setAppSettings(appSettings);
         try {
             appSettings.save(GameContainer.SETTINGS_KEY);
+            stateManager.getState(MainMenuState.class).setEnabled(false);
+            this.app.restart();
         } catch (BackingStoreException ex) {
             Logger.getLogger(OptionState.class.getName()).log(Level.SEVERE, null, ex);
         }
-        this.app.restart();
     }
 }

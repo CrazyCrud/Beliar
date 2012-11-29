@@ -56,9 +56,9 @@ public class ScreenManager {
         
         niftyDisplay = new NiftyJmeDisplay(assetManager, inputManager, audioRenderer, viewPort);
         nifty = niftyDisplay.getNifty();
+        guiViewPort.addProcessor(niftyDisplay);  
         GameContainer.getInstance().setDimensions(nifty.getRenderEngine().getWidth(), 
                 nifty.getRenderEngine().getHeight());
-        guiViewPort.addProcessor(niftyDisplay);  
     }
     
     public Nifty getNifty(){
@@ -74,6 +74,7 @@ public class ScreenManager {
     }
     
     public void switchToMainMenuScreen(ScreenController mainMenuInputs){
+        System.out.println("ScreenManager: switchToMainMenuScreen()");
         nifty.registerScreenController(mainMenuInputs);
         nifty.addXml("Interface/MainMenu.xml");
         nifty.gotoScreen("inMainMenuInputs");
@@ -107,5 +108,13 @@ public class ScreenManager {
         nifty.registerScreenController(endScreenInputs);
         nifty.addXml("Interface/EndScreen.xml");
         nifty.gotoScreen("inEndScreenInputs");
+    }
+
+    protected void removeScreen() {
+        nifty.removeScreen("inMainMenuInputs");
+    }
+    
+    protected void resetNifty(){
+        
     }
 }

@@ -66,7 +66,7 @@ public class Main extends SimpleApplication{
         setDisplayFps(false);
         setDisplayStatView(false);
         screenManager = ScreenManager.getScreenManager();
-        screenManager.initialize(stateManager, this);
+        //screenManager.initialize(stateManager, this);
     }
     
     private void setGraphicModes(){
@@ -76,6 +76,7 @@ public class Main extends SimpleApplication{
     }
     
     private void initCursor(){
+        System.out.println("Main: initCurosr()");
         flyCam.setDragToRotate(true);
         inputManager.addMapping("FLYCAM_RotateDrag", new MouseButtonTrigger(MouseInput.BUTTON_MIDDLE));
         inputManager.addMapping("FLYCAM_RotateDrag", new MouseButtonTrigger(MouseInput.BUTTON_RIGHT));
@@ -83,6 +84,7 @@ public class Main extends SimpleApplication{
     }
     
     private void initStates(){ 
+       System.out.println("Main: initStates()");
        mainMenuState = new MainMenuState(stateManager, this);
        stateManager.attach(mainMenuState);
        mainMenuState.setEnabled(true);

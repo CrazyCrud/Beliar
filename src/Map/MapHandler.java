@@ -250,13 +250,15 @@ public class MapHandler {
             mapNode.detachChildNamed(name + "" + x + "" + y);
             try {
                 //GERADEN
-                if ((terrainMap[x + 1][y] == type) && (terrainMap[x - 1][y] == type) && (terrainMap[x][y + 1] == ValuesTerrain.EARTH) && (terrainMap[x][y - 1] == ValuesTerrain.EARTH)) {
+                if ((terrainMap[x + 1][y] == type) && (terrainMap[x - 1][y] == type) && 
+                        (terrainMap[x][y + 1] == ValuesTerrain.EARTH) && (terrainMap[x][y - 1] == ValuesTerrain.EARTH)) {
 
                     //System.out.println("X-Gerade");
                     output = meshBox.get("straigt").clone();
                     output.setName(name + "" + x + "" + y);
 
-                } else if ((terrainMap[x + 1][y] == ValuesTerrain.EARTH) && (terrainMap[x - 1][y] == ValuesTerrain.EARTH) && (terrainMap[x][y + 1] == type) && (terrainMap[x][y - 1] == type)) {
+                } else if ((terrainMap[x + 1][y] == ValuesTerrain.EARTH) && 
+                        (terrainMap[x - 1][y] == ValuesTerrain.EARTH) && (terrainMap[x][y + 1] == type) && (terrainMap[x][y - 1] == type)) {
                     //System.out.println("Y-Gerade");
                     output = meshBox.get("straigt").clone();
                     output.rotate(0, degree, 0);

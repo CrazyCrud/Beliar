@@ -46,9 +46,9 @@ public class MainMenuState extends AbstractAppState{
         super.setEnabled(enabled);
         if(enabled){
             System.out.println("MainMenuState: setEnabled");
-            showInput();
-            initAudio();
-            playAudio();
+            //showInput();
+            //initAudio();
+            //playAudio();
         }else{
             stopAudio();
             inMainMenuInputs.setEnabled(false);
@@ -61,6 +61,9 @@ public class MainMenuState extends AbstractAppState{
         initValues();
         initStates();
         attachInput();
+        showInput();
+        initAudio();
+        playAudio();
     }
     
     @Override
