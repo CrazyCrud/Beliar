@@ -86,11 +86,11 @@
                     <panel id="thirdEntry" width="40%" height="12%" childLayout="center" align="center" 
                             valign="center">
                         <image id="options" filename="Images/option_normal.png" width="80%" height="80%"> 
-                            <interact onClick="onDoNothing()"/>
-                            <!--<effect>
+                            <interact onClick="onOptions()"/>
+                            <effect>
                                 <onHover name="changeImage" active="Images/Hover/option_selected.png" 
                                     inactive="Images/option_normal.png"/>
-                            </effect>-->
+                            </effect>
                         </image>
                     </panel>
                     <panel id="fourthEntry" width="40%" height="12%" childLayout="center" align="center"
