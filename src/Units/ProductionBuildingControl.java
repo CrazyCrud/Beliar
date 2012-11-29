@@ -24,12 +24,13 @@ import com.jme3.scene.shape.Box;
 public class ProductionBuildingControl extends AbstractControl{
 
     private boolean bool_hasGoodies, bool_isActive;
-    private float float_productionTimer;
+    private float float_productionTimer, float_prodReg;
     private int int_percentStatus = 0;
     
     @Override
     protected void controlUpdate(float tpf) {
         if(isEnabled()){
+            computeProductionRegulation();
             if(bool_isActive) {
                 if(int_percentStatus < 500 && int_percentStatus > 0) {
                     progressProduction();
@@ -66,47 +67,70 @@ public class ProductionBuildingControl extends AbstractControl{
         }
     }
     
+    private void computeProductionRegulation(){
+        switch(GameContainer.PRODUCTION_REG){
+            case 0:
+                float_prodReg = 0f;
+                break;
+            case 1:
+                float_prodReg = 0.5f;
+                break;
+            case 2:
+                float_prodReg = 1.0f;
+                break;
+            case 3:
+                float_prodReg = 1.5f;
+                break;
+            case 4:
+                float_prodReg = 2.0f;
+                break;
+        }
+    }
+    
     private void setValues(){
         bool_hasGoodies = true;
         int_percentStatus = 1;
     }
     
     private boolean areSoulsAvailable() {
-        return PlayerRessources.getSoulsCount() > GameObjectValues.ADAM_SMALL_SOULS_PER_PRODUCTION? true: false;
+        return PlayerRessources.getSoulsCount() > 
+                Math.round(float_prodReg * GameObjectValues.ADAM_SMALL_SOULS_PER_PRODUCTION)? true: false;
     }
     
     private void consumeSouls(){
         int type = spatial.getUserData(GameObjectValues.BUILDING_TYPE);
         int size = spatial.getUserData(GameObjectValues.BUILDING_SIZE);
+        int value = GameContainer.STANDARD_PRODUCTION_REG;
         switch(type){
             case GameContainer.ADAM_BUILDING:
                 if(size == GameContainer.ADAM_SMALL_SIZE){
-                    PlayerRessources.setSoulsCount(-GameObjectValues.ADAM_SMALL_SOULS_PER_PRODUCTION);
+                    value = Math.round(float_prodReg * GameObjectValues.ADAM_SMALL_SOULS_PER_PRODUCTION);
                 }else if(size == GameContainer.ADAM_MIDDLE_SIZE){
-                    PlayerRessources.setSoulsCount(-GameObjectValues.ADAM_MIDDLE_SOULS_PER_PRODUCTION);
+                    value = Math.round(float_prodReg * GameObjectValues.ADAM_MIDDLE_SOULS_PER_PRODUCTION);
                 }else{
-                    PlayerRessources.setSoulsCount(-GameObjectValues.ADAM_BIG_SOULS_PER_PRODUCTION);
+                    value = Math.round(float_prodReg * GameObjectValues.ADAM_BIG_SOULS_PER_PRODUCTION);
                 }
                 break;
             case GameContainer.KYTHOS_BUILDING:
                 if(size == GameContainer.KYTHOS_MIDDLE_SIZE){
-                    PlayerRessources.setSoulsCount(-GameObjectValues.KYTHOS_SMALL_SOULS_PER_PRODUCTION);
+                    value = Math.round(float_prodReg * GameObjectValues.KYTHOS_SMALL_SOULS_PER_PRODUCTION);
                 }else if(size == GameContainer.KYTHOS_MIDDLE_SIZE){
-                    PlayerRessources.setSoulsCount(-GameObjectValues.KYTHOS_MIDDLE_SOULS_PER_PRODUCTION);
+                    value = Math.round(float_prodReg * GameObjectValues.KYTHOS_MIDDLE_SOULS_PER_PRODUCTION);
                 }else{
-                    PlayerRessources.setSoulsCount(-GameObjectValues.KYTHOS_BIG_SOULS_PER_PRODUCTION);
+                    value = Math.round(float_prodReg * GameObjectValues.KYTHOS_BIG_SOULS_PER_PRODUCTION);
                 }
                 break;
             case GameContainer.MARA_BUILDING:
                 if(size == GameContainer.MARA_SMALL_SIZE){
-                    PlayerRessources.setSoulsCount(-GameObjectValues.MARA_SMALL_SOULS_PER_PRODUCTION);
+                    value = Math.round(float_prodReg * GameObjectValues.MARA_SMALL_SOULS_PER_PRODUCTION);
                 }else if(size == GameContainer.MARA_MIDDLE_SIZE){
-                    PlayerRessources.setSoulsCount(-GameObjectValues.MARA_MIDDLE_SOULS_PER_PRODUCTION);
+                    value = Math.round(float_prodReg * GameObjectValues.MARA_MIDDLE_SOULS_PER_PRODUCTION);
                 }else{
-                    PlayerRessources.setSoulsCount(-GameObjectValues.MARA_BIG_SOULS_PER_PRODUCTION);
+                    value = Math.round(float_prodReg * GameObjectValues.MARA_BIG_SOULS_PER_PRODUCTION);
                 }
                 break;
         }
+        PlayerRessources.setSoulsCount(-value);
     }
     
     private void progressProduction() {

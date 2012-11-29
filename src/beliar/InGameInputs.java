@@ -9,12 +9,14 @@ import com.jme3.app.SimpleApplication;
 import com.jme3.app.state.AbstractAppState;
 import com.jme3.app.state.AppStateManager;
 import de.lessvoid.nifty.Nifty;
+import de.lessvoid.nifty.NiftyEventSubscriber;
 import de.lessvoid.nifty.builder.ControlBuilder;
 import de.lessvoid.nifty.builder.ImageBuilder;
 import de.lessvoid.nifty.builder.TextBuilder;
 import de.lessvoid.nifty.controls.Menu;
 import de.lessvoid.nifty.controls.MenuItemActivatedEvent;
 import de.lessvoid.nifty.controls.Slider;
+import de.lessvoid.nifty.controls.SliderChangedEvent;
 import de.lessvoid.nifty.controls.slider.builder.SliderBuilder;
 import de.lessvoid.nifty.elements.Element;
 import de.lessvoid.nifty.screen.Screen;
@@ -57,7 +59,6 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
     private static final int MENU_ARMY = 10;
     private static final int MENU_QUESTS = 20;
     private static final int MENU_PRODUCTION = 30;
-
     
     private static final int BUILDING_LEVEL_ONE = 1;
     private static final int BUILDING_LEVEL_TWO = 2;
@@ -81,9 +82,8 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
     @Override
     public void onStartScreen() {
         System.out.println("onStartScreen");
-        //createOptionsMenu();
         adamRooms = kythosRooms = maraRooms = 0;
-        productionReg = 3;
+        productionReg = GameContainer.STANDARD_PRODUCTION_REG;
         menu = nifty.getScreen("inGameInputs").findElementByName("menu");
         menuFirstRow = nifty.getScreen("inGameInputs").findElementByName("menuFirstRow");
         menuSecondRow = nifty.getScreen("inGameInputs").findElementByName("menuSecondRow");
@@ -878,36 +878,38 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
     
     private void setUpProductionReg(){      
         Element text = screen.findElementByName("textSecondRow");
-        text.getRenderer(TextRenderer.class).setText("Wie viel der Verdammten sollen in der Produktion landen?");
+        text.getRenderer(TextRenderer.class).setText("Wie viele der Verdammten sollen in den Produktionsstätten landen?");
         TextBuilder tb = new TextBuilder("TextBuilder");
-        tb.childLayoutVertical();
+        tb.childLayoutAbsoluteInside();
         tb.textHAlignCenter();
         tb.textVAlignTop();
         tb.wrap(false);
         tb.width("50px");
         tb.height("10px");
-        tb.paddingTop("5px");
+        tb.paddingTop("15px");
         tb.font("Interface/Fonts/gill_16.fnt");
         Element textSliderLeft = tb.build(nifty, screen, secondRowBottom);
         textSliderLeft.getRenderer(TextRenderer.class).setText("Keine");
-        //textSliderLeft.setConstraintX(new SizeValue(0 + "px"));
-        //textSliderLeft.setConstraintY(new SizeValue(0 + "px"));
-        SliderBuilder sb = new SliderBuilder("slider", false);
+        textSliderLeft.setConstraintX(new SizeValue(0 + "px"));
+        textSliderLeft.setConstraintY(new SizeValue(20 + "px"));
+        SliderBuilder sb = new SliderBuilder("SliderBuilder", false);
         sb.alignCenter();
-        sb.valignCenter();
+        sb.valignTop();
         sb.width("270px");
         sb.height("10px");
-        sb.initial(productionReg);
-        sb.max(5.0f);
+        sb.initial(getProductionReg());
+        sb.max(4.0f);
         sb.min(0.0f);
         sb.stepSize(1.0f);
         sb.buttonStepSize(1.0f);
-        ControlBuilder cb = new ControlBuilder("ControlBuilder", "ControlBuilder");
-        Slider slider = (Slider)sb.build(nifty, screen, secondRowBottom);
+        // cb = new ControlBuilder("ControlBuilder", "ControlBuilder");
+        Element slider = sb.build(nifty, screen, secondRowBottom);
+        slider.setId("slider");
+        
         Element textSliderRight = tb.build(nifty, screen, secondRowBottom);
         textSliderRight.getRenderer(TextRenderer.class).setText("Alle");
-        //textSliderRight.setConstraintX(new SizeValue(0 + "px"));
-        //textSliderRight.setConstraintY(new SizeValue(0 + "px"));
+        textSliderRight.setConstraintX(new SizeValue(0 + "px"));
+        textSliderRight.setConstraintY(new SizeValue(20 + "px"));
     }
     
     private void clearMenu(){
@@ -1063,47 +1065,19 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
         }
     }
     
-    private void createOptionsMenu(){
-        optionsMenu = nifty.createPopup("niftyPopupMenu");
-        Menu myMenu = optionsMenu.findNiftyControl("#menu", Menu.class);
-        myMenu.setWidth(new SizeValue("400px"));
-        myMenu.addMenuItem("Click me!", "Images/quit.png", 
-            new menuItem("quit", "Quit")); 
-        nifty.subscribe(
-            nifty.getScreen("inGameInputs"), 
-            myMenu.getId(), 
-            MenuItemActivatedEvent.class, 
-            new MenuItemActivatedEventSubscriber());
-    }
-    
-    public void closePopup(){
-        
+    @NiftyEventSubscriber(id="slider")
+    public void onSliderChange(String id, SliderChangedEvent event) 
+    {
+        System.out.println("InGameInputs: onSliderChange() " + event.getValue());
+        productionReg = ((int)event.getValue());
+        GameContainer.PRODUCTION_REG = productionReg;
     }
     
     public void onDoNothing(){
         
     }
-    
-    private class menuItem {
-        public String id;
-        public String name;
 
-        public menuItem(String id, String name){
-               this.id= id;
-               this.name = name;
-        }
+    public int getProductionReg() {
+        return productionReg;
     }
-    
-    private class MenuItemActivatedEventSubscriber 
-        implements EventTopicSubscriber<MenuItemActivatedEvent> {
- 
-        @Override
-        public void onEvent(final String id, final MenuItemActivatedEvent event) {
-            menuItem item = (menuItem) event.getItem();
-            
-            if ("quit".equals(item.id)) {
-                System.out.println("Quit Game");
-            }
-        }
-  };
 }

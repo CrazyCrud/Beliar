@@ -235,7 +235,7 @@ public final class RTSCam implements Control, ActionListener {
         int press = 1;
         char sign = name.charAt(0);
         Degree deg;
-        System.out.println("RTSCam: moveCamera() " + Math.cos(rot));
+        //System.out.println("RTSCam: moveCamera() " + Math.cos(rot));
         if(sign == '-') {
             if(name.substring(1).equals("FWD")){
                 if(position.x < 8){

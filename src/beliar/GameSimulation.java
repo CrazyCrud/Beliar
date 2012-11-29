@@ -13,6 +13,7 @@ public class GameSimulation extends AbstractAppState{
 	
 	private SimpleApplication app;
 	private float float_timerSoulProduction, float_timerGoodsProduction;
+        private int int_prodValue = GameContainer.STANDARD_PRODUCTION_REG;
         private boolean bool_isQuest1Finished, bool_isQuest2Finished, bool_isQuest3Finished;
         private static final int SOUL_PRODUCTION = 0;
         private static final int GOODS_PRODUCTION = 1;

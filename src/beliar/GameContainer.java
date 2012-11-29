@@ -27,7 +27,8 @@ public class GameContainer {
         public static final int MARA_SMALL_SIZE = 1;
         public static final int MARA_MIDDLE_SIZE = 2;
         public static final int MARA_BIG_SIZE = 3;
-        
+        public static final int STANDARD_PRODUCTION_REG = 2;
+        public static int PRODUCTION_REG = STANDARD_PRODUCTION_REG;
         public final static int COSTSLAVE = 1;
         
         public final static int[] COSTADAMBIG       ={250,0,0};
