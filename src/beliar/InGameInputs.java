@@ -9,10 +9,13 @@ import com.jme3.app.SimpleApplication;
 import com.jme3.app.state.AbstractAppState;
 import com.jme3.app.state.AppStateManager;
 import de.lessvoid.nifty.Nifty;
+import de.lessvoid.nifty.builder.ControlBuilder;
 import de.lessvoid.nifty.builder.ImageBuilder;
 import de.lessvoid.nifty.builder.TextBuilder;
 import de.lessvoid.nifty.controls.Menu;
 import de.lessvoid.nifty.controls.MenuItemActivatedEvent;
+import de.lessvoid.nifty.controls.Slider;
+import de.lessvoid.nifty.controls.slider.builder.SliderBuilder;
 import de.lessvoid.nifty.elements.Element;
 import de.lessvoid.nifty.screen.Screen;
 import de.lessvoid.nifty.screen.ScreenController;
@@ -44,6 +47,7 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
     protected static final int MAGICIAN = 2;
     
     private int menuState;
+    private int productionReg;
     private static final int MENU_CLEAR = 0;
     private static final int MENU_BUILD = 1;
     private static final int BUILD_ROOMS = 3;
@@ -52,6 +56,7 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
     private static final int BUILD_MARA = 6;
     private static final int MENU_ARMY = 10;
     private static final int MENU_QUESTS = 20;
+    private static final int MENU_PRODUCTION = 30;
 
     
     private static final int BUILDING_LEVEL_ONE = 1;
@@ -78,6 +83,7 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
         System.out.println("onStartScreen");
         //createOptionsMenu();
         adamRooms = kythosRooms = maraRooms = 0;
+        productionReg = 3;
         menu = nifty.getScreen("inGameInputs").findElementByName("menu");
         menuFirstRow = nifty.getScreen("inGameInputs").findElementByName("menuFirstRow");
         menuSecondRow = nifty.getScreen("inGameInputs").findElementByName("menuSecondRow");
@@ -135,7 +141,7 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
         }
     }
     
-        public void onArmy(){
+    public void onArmy(){
         System.out.println("onArmy: " + menuState);
         myGameState.playSoundEffect(SoundManager.CLICK_2);
         if(menu.isVisible()){ 
@@ -155,13 +161,27 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
         
     public void onProduction(){
         System.out.println("InGameInputs: onProduction()");
+        myGameState.playSoundEffect(SoundManager.CLICK_2);
+        if(menu.isVisible()){ 
+            if(menuState < MENU_PRODUCTION){
+                System.out.println("onArmy: menuState < MENU_ARMY");
+                clearMenu();
+                setupProductionRegIcons();
+            }else{
+                menu.hide();
+                clearMenu();
+            } 
+        } else{
+            menu.show();
+            setupProductionRegIcons();
+        }
     }
         
     public void onQuest(){
         System.out.println("onQuest");
         myGameState.playSoundEffect(SoundManager.CLICK_2);
         if(menu.isVisible()){ 
-            if(menuState < MENU_QUESTS){
+            if(menuState < MENU_QUESTS || menuState >= MENU_PRODUCTION){
                 System.out.println("onQuest: menuState < MENU_QUEST");
                 clearMenu();
                 setupQuests();
@@ -319,11 +339,20 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
         Element menuText = screen.findElementByName("menuText");
         menuText.getRenderer(TextRenderer.class).setText("Deine Aufgaben");
         setUpQuestText();
-        myGameState.playSoundEffect(SoundManager.CLICK_2);
+        //myGameState.playSoundEffect(SoundManager.CLICK_2);
+    }
+    
+    private void setupProductionRegIcons(){
+        menuState = MENU_PRODUCTION;
+        Element menuText = screen.findElementByName("menuText");
+        menuText.getRenderer(TextRenderer.class).setText("Regulierung der Produktionen");
+        setUpProductionReg();
+        //myGameState.playSoundEffect(SoundManager.CLICK_2);
     }
     
     public void onOptions(){
         System.out.println("InGameInputs: onOptions()");
+        myGameState.playSoundEffect(SoundManager.CLICK_2);
         stateManager.getState(GameState.class).setEnabled(false);
         stateManager.getState(InGameInputs.class).setEnabled(false);
         stateManager.getState(PauseState.class).setEnabled(true);
@@ -825,7 +854,7 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
         tb.childLayoutAbsoluteInside();
         tb.textHAlignLeft();
         tb.textVAlignCenter();
-        tb.wrap(true);
+        tb.wrap(false);
         tb.width("100px");
         tb.height("5px");
         tb.font("Interface/Fonts/gill_16.fnt");
@@ -845,6 +874,40 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
                 textQuest3.getRenderer(TextRenderer.class).setText(GameContainer.getInstance().getQuests(GameContainer.QUEST_3));
             }
         }
+    }
+    
+    private void setUpProductionReg(){      
+        Element text = screen.findElementByName("textSecondRow");
+        text.getRenderer(TextRenderer.class).setText("Wie viel der Verdammten sollen in der Produktion landen?");
+        TextBuilder tb = new TextBuilder("TextBuilder");
+        tb.childLayoutVertical();
+        tb.textHAlignCenter();
+        tb.textVAlignTop();
+        tb.wrap(false);
+        tb.width("50px");
+        tb.height("10px");
+        tb.paddingTop("5px");
+        tb.font("Interface/Fonts/gill_16.fnt");
+        Element textSliderLeft = tb.build(nifty, screen, secondRowBottom);
+        textSliderLeft.getRenderer(TextRenderer.class).setText("Keine");
+        //textSliderLeft.setConstraintX(new SizeValue(0 + "px"));
+        //textSliderLeft.setConstraintY(new SizeValue(0 + "px"));
+        SliderBuilder sb = new SliderBuilder("slider", false);
+        sb.alignCenter();
+        sb.valignCenter();
+        sb.width("270px");
+        sb.height("10px");
+        sb.initial(productionReg);
+        sb.max(5.0f);
+        sb.min(0.0f);
+        sb.stepSize(1.0f);
+        sb.buttonStepSize(1.0f);
+        ControlBuilder cb = new ControlBuilder("ControlBuilder", "ControlBuilder");
+        Slider slider = (Slider)sb.build(nifty, screen, secondRowBottom);
+        Element textSliderRight = tb.build(nifty, screen, secondRowBottom);
+        textSliderRight.getRenderer(TextRenderer.class).setText("Alle");
+        //textSliderRight.setConstraintX(new SizeValue(0 + "px"));
+        //textSliderRight.setConstraintY(new SizeValue(0 + "px"));
     }
     
     private void clearMenu(){
