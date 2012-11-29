@@ -46,7 +46,7 @@ public class MainMenuState extends AbstractAppState{
         super.setEnabled(enabled);
         if(enabled){
             System.out.println("MainMenuState: setEnabled");
-            //showInput();
+            showInput();
             //initAudio();
             //playAudio();
         }else{
@@ -61,7 +61,7 @@ public class MainMenuState extends AbstractAppState{
         initValues();
         initStates();
         attachInput();
-        showInput();
+        //showInput();
         initAudio();
         playAudio();
     }
@@ -117,6 +117,7 @@ public class MainMenuState extends AbstractAppState{
     }
 
     private void showInput() {
+        ScreenManager.getScreenManager().configureNifty();
         inMainMenuInputs.setEnabled(true);
         screenManager.switchToMainMenuScreen(inMainMenuInputs);
     }

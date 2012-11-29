@@ -197,8 +197,6 @@ public class InMainMenuInputs extends AbstractAppState implements ScreenControll
     @Override
     public void perform() {
         System.out.println("FadeOutEnd");
-        //blendLogo.hide();
-        //blendLogo();
     }
   }
   

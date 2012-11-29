@@ -114,7 +114,17 @@ public class ScreenManager {
         nifty.removeScreen("inMainMenuInputs");
     }
     
-    protected void resetNifty(){
-        
+    protected void configureNifty(){
+        if(niftyDisplay == null){
+            niftyDisplay = new NiftyJmeDisplay(app.getAssetManager(), app.getInputManager(), 
+                    app.getAudioRenderer(), app.getViewPort());
+            nifty = niftyDisplay.getNifty();
+            app.getViewPort().addProcessor(niftyDisplay);
+        }else if(!niftyDisplay.isInitialized()){
+            niftyDisplay = new NiftyJmeDisplay(app.getAssetManager(), app.getInputManager(), 
+                    app.getAudioRenderer(), app.getViewPort());
+            nifty = niftyDisplay.getNifty();
+            app.getViewPort().addProcessor(niftyDisplay);
+        }
     }
 }
