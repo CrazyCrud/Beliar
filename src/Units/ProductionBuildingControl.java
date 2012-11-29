@@ -67,7 +67,7 @@ public class ProductionBuildingControl extends AbstractControl{
                     Node marker = (Node)GameContainer.getInstance().getApplication().getAssetManager().
                             loadModel("Models/sleepingZ/sleepingZ.j3o");
                     marker.setName("buildingMarker");
-                    marker.move(0.0f, 1.5f, 0.0f);
+                    marker.move(0.0f, 1.0f, 0.0f);
                     ((Node)spatial).attachChild(marker.clone());
                 }
             }
