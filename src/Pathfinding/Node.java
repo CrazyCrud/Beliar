@@ -88,4 +88,8 @@ public class Node {
     public int getNumberOfEdges(){
         return edges == null? 0 : edges.size();
     }
+    
+    public int getType(){
+        return type;
+    }
 }

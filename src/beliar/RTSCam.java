@@ -238,14 +238,14 @@ public final class RTSCam implements Control, ActionListener {
         //System.out.println("RTSCam: moveCamera() " + Math.cos(rot));
         if(sign == '-') {
             if(name.substring(1).equals("FWD")){
-                if(position.x < 8){
+                if(position.x < 4){
                     if(Math.sin(rot) > 0.0){
                         press = 0;
                         deg = Degree.FWD;
                         direction[deg.ordinal()] = press;
                         return;
                     }
-                }else if(position.x > GameContainer.MAP_SIZE - 8){
+                }else if(position.x > GameContainer.MAP_SIZE - 4){
                     if(Math.sin(rot) < 0.0){
                         press = 0;
                         deg = Degree.FWD;

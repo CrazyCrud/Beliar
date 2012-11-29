@@ -65,28 +65,28 @@ public class MapNodes {
             for(z = 0; z < mapLength; z++){
                 Node node = node_mapNodes[x][z];
                 if((x - 1) > -1){
-                    if(int_map[x - 1][z] != 1){
+                    if(int_map[x - 1][z] != 1 || int_map[x - 1][z] != 11){
                         node.setEdge(node_mapNodes[x - 1][z], MAX_WEIGHT);
                     }else{
                         node.setEdge(node_mapNodes[x - 1][z], int_map[x - 1][z]);
                     }
                 }
                 if((x + 1) < mapLength){
-                    if(int_map[x + 1][z] != 1){
+                    if(int_map[x + 1][z] != 1 || int_map[x - 1][z] != 11){
                         node.setEdge(node_mapNodes[x + 1][z], MAX_WEIGHT);
                     }else{
                         node.setEdge(node_mapNodes[x + 1][z], int_map[x + 1][z]);
                     }          
                 }
                 if((z - 1) > -1){
-                    if(int_map[x][z - 1] != 1){
+                    if(int_map[x][z - 1] != 1 || int_map[x - 1][z] != 11){
                         node.setEdge(node_mapNodes[x][z - 1], MAX_WEIGHT);
                     }else{
                         node.setEdge(node_mapNodes[x][z - 1], int_map[x][z - 1]);
                     } 
                 }
                 if((z + 1) < mapLength){
-                    if(int_map[x][z + 1] != 1){
+                    if(int_map[x][z + 1] != 1 || int_map[x - 1][z] != 11){
                         node.setEdge(node_mapNodes[x][z + 1], MAX_WEIGHT);
                     }else{
                         node.setEdge(node_mapNodes[x][z + 1], int_map[x][z + 1]);

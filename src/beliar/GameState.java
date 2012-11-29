@@ -226,8 +226,8 @@ public class GameState extends AbstractAppState {
         initScene();
         initSound();
         initQuests();
-        attachGrid(new Vector3f(0, 0, 0), 1024, ColorRGBA.Blue);
-        attachCoordinateAxes(new Vector3f(-1, 0, -1));
+        //attachGrid(new Vector3f(0, 0, 0), 1024, ColorRGBA.Blue);
+        //attachCoordinateAxes(new Vector3f(-1, 0, -1));
         setUpSlaves();
         playMusic();
     }
@@ -400,15 +400,15 @@ public class GameState extends AbstractAppState {
     private void attachCoordinateAxes(Vector3f pos) {
         Arrow arrow = new Arrow(Vector3f.UNIT_X);
         arrow.setLineWidth(4); // make arrow thicker
-        putShape(arrow, ColorRGBA.Red).setLocalTranslation(pos);
+        //putShape(arrow, ColorRGBA.Red).setLocalTranslation(pos);
 
         arrow = new Arrow(Vector3f.UNIT_Y);
         arrow.setLineWidth(4); // make arrow thicker
-        putShape(arrow, ColorRGBA.Green).setLocalTranslation(pos);
+        //putShape(arrow, ColorRGBA.Green).setLocalTranslation(pos);
 
         arrow = new Arrow(Vector3f.UNIT_Z);
         arrow.setLineWidth(4); // make arrow thicker
-        putShape(arrow, ColorRGBA.Blue).setLocalTranslation(pos);
+        //putShape(arrow, ColorRGBA.Blue).setLocalTranslation(pos);
     }
 
     private Geometry putShape(Mesh shape, ColorRGBA color) {

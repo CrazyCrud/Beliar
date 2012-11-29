@@ -78,9 +78,11 @@ public class WarriorBehaviourControl extends AbstractControl{
     private void checkForRise() {
         int x = spatial.getControl(GameObjectControl.class).getPosX();
         int z = spatial.getControl(GameObjectControl.class).getPosZ();
-        int xSoulAbyss = (int)MapController.getSoulAbyssPosition().x;
-        int zSoulAbyss = (int)MapController.getSoulAbyssPosition().z;
-        if(x == xSoulAbyss && z == zSoulAbyss){
+        //int xSoulAbyss = (int)MapController.getSoulAbyssPosition().x;
+        //int zSoulAbyss = (int)MapController.getSoulAbyssPosition().z;
+        Pathfinding.Node position = MapController.getNode(x, z);
+        
+        if(position.getType() == 11){
             notifyWarriorRise();
             removeWarrior();
         }

@@ -47,7 +47,10 @@ public class Pathfinder {
     }
     
     private boolean isAccessible(Node target){
-        return target.type == 1 ? true : false;
+        if(target.type == 1 || target.type == 11){
+            return true;
+        }
+        return false;
     }
     
     private Node step(Node target){
