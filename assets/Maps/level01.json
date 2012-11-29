@@ -1,7 +1,7 @@
 {
     // Status Game
     "name":"level01",
-    "id":"BLA",
+    "id":"Tutorial_1",
 
     //ressources
     "adam":1500,
@@ -11,7 +11,7 @@
 
     //MAP
     //Position Buildings
-    "hellceter":[40,28],
+    "hellceter":[28,40],
 
     "soulAbyss":[
         [20,20],
