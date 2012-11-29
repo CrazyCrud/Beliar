@@ -74,7 +74,7 @@
                     
                     <panel childLayout="vertical" width="7%" height="100%"> 
                         <panel width="100%" height="6%"></panel>
-                        <image id="soulsIcon" filename="Images/mara_icon.png" valign="top" 
+                        <image id="soulsIcon" filename="Images/souls.png" valign="top" 
                                align="center" width="100%h" height="60%">
                                <interact onClick="onDoNothing()"/> 
                         </image>
