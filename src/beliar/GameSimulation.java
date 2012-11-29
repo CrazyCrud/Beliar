@@ -113,7 +113,7 @@ public class GameSimulation extends AbstractAppState{
             int countSoulAbyss= PlayerRessources.soulAbyssOfPlayer;
             
             PlayerRessources.setSoulsCount(countSoulAbyss *
-                  Math.round(PlayerRessources.darkness * Math.round(Math.random() * 2)));
+                  Math.round(PlayerRessources.darkness * Math.round(Math.random() * 1.5f)));
             
             app.getStateManager().getState(InGameInputs.class).soulCountChanged();
         }

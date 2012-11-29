@@ -259,17 +259,7 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
         Element textthirdRow = screen.findElementByName("textThirdRow");
         textthirdRow.getRenderer(TextRenderer.class).setText("Verfügbarer Einheiten anwählen");
         clearFirstRowBottom();
-        TextBuilder tb = new TextBuilder("SoulBuilder");
-        tb.textVAlignCenter();
-        tb.textHAlignLeft();
-        tb.paddingRight("20px");
-        tb.alignLeft();
-        tb.width("100%h");
-        tb.height("100%");
-        tb.font("Interface/Fonts/gill_16.fnt");
-        Element textSouls = tb.build(nifty, screen, firstRowBottom);
-        textSouls.getRenderer(TextRenderer.class).setText("Anzahl der Verdammten: " + PlayerRessources.getSoulsCount());
-        
+  
         new ImageBuilder("slave"){{
             filename("Images/workerIcon.png");
             height("95%");
@@ -1044,26 +1034,17 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
         Element kythos = nifty.getScreen("inGameInputs").findElementByName("kythosLabel");
         Element mara = nifty.getScreen("inGameInputs").findElementByName("maraLabel");
         Element darkness = nifty.getScreen("inGameInputs").findElementByName("darknessLabel");
+        Element souls = nifty.getScreen("inGameInputs").findElementByName("soulsLabel"); 
         adam.getRenderer(TextRenderer.class).setText(String.valueOf(PlayerRessources.adam));
         kythos.getRenderer(TextRenderer.class).setText(String.valueOf(PlayerRessources.kythos));
         mara.getRenderer(TextRenderer.class).setText(String.valueOf(PlayerRessources.mara));
         darkness.getRenderer(TextRenderer.class).setText(String.valueOf(PlayerRessources.darkness));
+        souls.getRenderer(TextRenderer.class).setText(String.valueOf(PlayerRessources.getSoulsCount()));
     }
     
     protected void soulCountChanged(){
-        if(menuState == MENU_ARMY){
-            clearFirstRowBottom();
-            TextBuilder tb = new TextBuilder("SoulBuilder");
-            tb.textVAlignCenter();
-            tb.textHAlignLeft();
-            tb.paddingRight("20px");
-            tb.alignLeft();
-            tb.width("100%h");
-            tb.height("100%");
-            tb.font("Interface/Fonts/gill_16.fnt");
-            Element textSouls = tb.build(nifty, screen, firstRowBottom);
-            textSouls.getRenderer(TextRenderer.class).setText("Anzahl der Verdammten: " + PlayerRessources.getSoulsCount());
-        }
+        Element souls = nifty.getScreen("inGameInputs").findElementByName("soulsLabel");
+        souls.getRenderer(TextRenderer.class).setText(String.valueOf(PlayerRessources.getSoulsCount()));
     }
     
     @NiftyEventSubscriber(id="slider")

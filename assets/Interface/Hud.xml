@@ -9,7 +9,7 @@
         <layer id="foreground" backgroundColor="#0000" childLayout="vertical">
             <panel id="top_panel" width="100%" height="12%" childLayout="absolute" > 
                 <image filename="Images/leiste.png" x="28px" y="25px" 
-                    height="27%" width="20%"/>
+                    height="27%" width="25%"/>
                 <panel x="0" y="10px" childLayout="horizontal" width="85%" height="90%" align="left">
                     <panel childLayout="vertical" width="8%" height="100%">
                         <image id="darknessIcon" filename="Images/darkness_icon.png" valign="top" 
@@ -68,6 +68,22 @@
                                <interact onClick="onDoNothing()"/> 
                             </image>
                             <control x="0" y="0" name="label" id="maraLabel" color="#A0522D" 
+                                valign="bottom" align="center" text="0" width="100%" height="100%" />
+                        </panel>
+                    </panel>
+                    
+                    <panel childLayout="vertical" width="7%" height="100%"> 
+                        <panel width="100%" height="6%"></panel>
+                        <image id="soulsIcon" filename="Images/mara_icon.png" valign="top" 
+                               align="center" width="100%h" height="60%">
+                               <interact onClick="onDoNothing()"/> 
+                        </image>
+                        <panel width="70%" height="30%" align="center" childLayout="absolute">
+                            <image filename="Images/top_background.png"  
+                               x="0" y="0" align="center" width="100%" height="100%">
+                               <interact onClick="onDoNothing()"/> 
+                            </image>
+                            <control x="0" y="0" name="label" id="soulsLabel" color="#A0522D" 
                                 valign="bottom" align="center" text="0" width="100%" height="100%" />
                         </panel>
                     </panel>

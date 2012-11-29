@@ -7,6 +7,7 @@ package beliar;
 import com.jme3.app.SimpleApplication;
 import com.jme3.app.state.AbstractAppState;
 import com.jme3.app.state.AppStateManager;
+import com.jme3.audio.AudioNode;
 import de.lessvoid.nifty.Nifty;
 import de.lessvoid.nifty.screen.Screen;
 import de.lessvoid.nifty.screen.ScreenController;
@@ -18,6 +19,7 @@ import de.lessvoid.nifty.screen.ScreenController;
 public class EndScreenState extends AbstractAppState implements ScreenController{
     AppStateManager stateManager; 
     SimpleApplication app;
+    AudioNode sound;
     
     public EndScreenState(AppStateManager stateManager, SimpleApplication app){
         this.stateManager = stateManager;
@@ -42,6 +44,7 @@ public class EndScreenState extends AbstractAppState implements ScreenController
         if(enabled){
             System.out.println("OptionState: setEnabled");
             showInput();
+            playAudio();
         }else{
             System.out.println("OptionState: setEnabled(false)");
             
@@ -73,5 +76,12 @@ public class EndScreenState extends AbstractAppState implements ScreenController
 
     private void showInput() {
         ScreenManager.getScreenManager().switchToEndScreen(this);
+    }
+
+    private void playAudio() {
+        sound = new AudioNode(app.getAssetManager(), "Sounds/sounds/endscreen.ogg");
+        app.getRootNode().attachChild(sound);
+        sound.setVolume(0.4f);
+        sound.play();
     }
 }
