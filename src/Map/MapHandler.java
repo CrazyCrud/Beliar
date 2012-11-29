@@ -152,7 +152,8 @@ public class MapHandler {
         System.out.println("SIZE" + sizeX);
         setHellCenterAt((int) positionHellCenter.x, (int) positionHellCenter.z);
         
-        setSoulAbyss(2, 2);
+        setSoulAbyss(26, 20);
+        //setSoulAbyss
         for (int x = 0; x < sizeX; x++) {
             for (int y = 0; y < sizeY; y++) {
                 if (terrainMap[x][y] <= ValuesTerrain.EARTH) {
@@ -176,7 +177,7 @@ public class MapHandler {
         
         for (int i = -1; i <= 1; i++) {
             for (int j = -1; j <= 1; j++) {
-                terrainMap[x + i][y + j] = ValuesTerrain.HELLCENTER;
+                terrainMap[x + i][y + j] = ValuesTerrain.SOULABYSS;
             }
         }
         
