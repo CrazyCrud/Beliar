@@ -1,0 +1,20 @@
+Material Fire : Common/MatDefs/Misc/Particle.j3md {
+    MaterialParameters {
+        Texture : Textures/Particles/smoketrail.png
+        Softness : 1.0
+        GlowColor : 1.0 0.2 0.4 1.0
+        Quadratic : 1.0
+        PointSprite : true
+    }
+    AdditionalRenderState {
+      Wireframe Off
+      DepthWrite Off
+      PolyOffset 0.0 0.0
+      AlphaTestFalloff 0.0
+      PointSprite On
+      ColorWrite On
+      DepthTest On
+      Blend Additive
+      FaceCull Off
+    }
+}
