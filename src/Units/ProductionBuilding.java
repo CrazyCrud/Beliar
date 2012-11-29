@@ -14,6 +14,7 @@ import com.jme3.math.Vector3f;
  */
 public class ProductionBuilding extends Building {
 
+    private Node node_marker;
     public ProductionBuilding(int posX, int posZ, int type, int buildingSize){
         super(GameObjectValues.HEALTH_VALUE_PRODUCTIONBUILDING, posX, posZ);
         
@@ -45,7 +46,10 @@ public class ProductionBuilding extends Building {
                         "/maraBuilding_" + int_size + ".mesh.j3o");
                 break;
         }
+        node_marker = (Node) assetManager.loadModel("Models/sleepingZ/sleepingZ.j3o");
+        node_marker.setName("marker");
         node_building.setLocalTranslation(new Vector3f(int_posX, GameObjectValues.Y_POSITION_BUILDINGS, int_posZ));
+        //node_building.attachChild(node_marker);
         spatial = (Spatial) node_building;  
     }
     
@@ -79,5 +83,9 @@ public class ProductionBuilding extends Building {
     public int getSize()
     {
         return spatial.getUserData(GameObjectValues.BUILDING_SIZE);
+    }
+    
+    protected Node getMarker(){
+        return node_marker;
     }
 }

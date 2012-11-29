@@ -53,6 +53,7 @@ public class ProductionBuildingControl extends AbstractControl{
             updateTimer(tpf);
             if(isTimeToSignal()){
                 if(((Node)spatial).getChild("buildingMarker") == null){
+                    /*
                     Box bosShape = new Box(Vector3f.ZERO, 
                         0.10f, 0.10f, 0.10f);
                     Geometry geo = new Geometry("buildingMarker", bosShape);
@@ -61,7 +62,13 @@ public class ProductionBuildingControl extends AbstractControl{
                     mat.setColor("Color", ColorRGBA.Red);
                     geo.setMaterial(mat);
                     geo.move(0.0f, 0.95f, 0.0f);
-                    ((Node)spatial).attachChild(geo.clone());
+                     * 
+                     */
+                    Node marker = (Node)GameContainer.getInstance().getApplication().getAssetManager().
+                            loadModel("Models/sleepingZ/sleepingZ.j3o");
+                    marker.setName("buildingMarker");
+                    marker.move(0.0f, 1.5f, 0.0f);
+                    ((Node)spatial).attachChild(marker.clone());
                 }
             }
         }
