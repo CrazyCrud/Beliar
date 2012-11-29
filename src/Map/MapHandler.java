@@ -17,7 +17,6 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.jme3.material.Material;
 import java.io.FileReader;
-import java.util.Random;
 
 /**
  *
@@ -39,6 +38,7 @@ public class MapHandler {
     private int positionEnter[][];
     private int positionArtefacts[][];
     private Vector3f positionHellCenter = new Vector3f(Vector3f.ZERO);
+    private Vector3f positionSoulAbyssVector = new Vector3f(Vector3f.ZERO);
     private Spatial output = null;
     private HashMap<Integer[], Spatial> mapMeshes = new HashMap<Integer[], Spatial>();
 
@@ -85,7 +85,6 @@ public class MapHandler {
             JsonArray hellcenter = jsonObject.get("hellceter").getAsJsonArray();
             positionHellCenter.x = hellcenter.get(0).getAsInt();
             positionHellCenter.z = hellcenter.get(1).getAsInt();
-
             //SoulGrounds
             JsonArray positionSouls = jsonObject.get("soulAbyss").getAsJsonArray();
 

@@ -15,7 +15,6 @@ import java.util.HashMap;
  * @author Martin
  */
 public class SoundManager {
-    
     private AssetManager assetManager;
     private Node rootNode; 
     private AudioNode background;

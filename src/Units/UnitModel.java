@@ -5,14 +5,10 @@
 package Units;
 
 import beliar.GameContainer;
-import com.bulletphysics.collision.shapes.BoxShape;
-import com.jme3.asset.AssetManager;
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
 import com.jme3.scene.Node;
-import com.jme3.scene.Spatial;
 import com.jme3.scene.shape.Box;
-import java.util.List;
 import java.util.ArrayList;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
@@ -115,7 +111,8 @@ public class UnitModel {
     }
     
     protected void markUnits(int whichUnit) {
-        Box bosShape = new Box(Vector3f.ZERO, 
+        /*
+         * Box bosShape = new Box(Vector3f.ZERO, 
                 0.10f, 0.10f, 0.10f);
         Geometry geo = new Geometry("unitMarker", bosShape);
         Material mat = new Material(GameContainer.getInstance().getApplication().getAssetManager(), 
@@ -123,6 +120,13 @@ public class UnitModel {
         mat.setColor("Color", ColorRGBA.Red);
         geo.setMaterial(mat);
         geo.move(0.0f, 0.95f, 0.0f);
+         * 
+         */
+        Node marker = (Node)GameContainer.getInstance().getApplication().getAssetManager().
+                loadModel("Models/banner/banner.j3o");
+        marker.setName("unitMarker");
+        marker.move(0.0f, 2.0f, 0.0f);
+        marker.scale(0.5f);
         switch(whichUnit){
             case GameObjectValues.MELEE:
                 if(list_melee.isEmpty()){
@@ -131,7 +135,7 @@ public class UnitModel {
                 for(Unit unit: list_melee){
                     System.out.println("UnitModel: markUnits() melee: " + unit);
                     Node melee = (Node)unit.getSpatial();
-                    melee.attachChild(geo.clone());
+                    melee.attachChild(marker.clone());
                 }
                 break;
             case GameObjectValues.RANGERS:
@@ -140,7 +144,7 @@ public class UnitModel {
                 }
                 for(Unit unit: list_ranger){
                     Node ranger = (Node)unit.getSpatial();
-                    ranger.attachChild(geo.clone());
+                    ranger.attachChild(marker.clone());
                 }
                 break;
             case GameObjectValues.MAGICIAN:
@@ -149,7 +153,7 @@ public class UnitModel {
                 }
                 for(Unit unit: list_magician){
                     Node magician = (Node)unit.getSpatial();
-                    magician.attachChild(geo.clone());
+                    magician.attachChild(marker.clone());
                 }
                 break;
         }

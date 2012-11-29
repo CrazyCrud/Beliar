@@ -1,0 +1,24 @@
+material banner 
+{
+	receive_shadows on
+	technique
+	{
+		pass
+		{
+			cull_hardware none
+			ambient 0.19017396867275238 0.19017396867275238 0.19017396867275238 1.0
+			diffuse 0.15213917720525227 0.15213917720525227 0.15213917720525227 1.0
+			specular 0.040659595280885696 0.01668640412390232 0.0 1.0 12.5
+			emissive 0.0 0.0 0.0 1.0
+			scene_blend one zero
+			texture_unit
+			{
+				texture banner.png
+				tex_address_mode border
+				tex_border_colour 1.0 0.0 1.0
+				scale 1.0 1.0
+				colour_op_ex blend_manual src_current src_texture 0.0
+			}
+		}
+	}
+}
