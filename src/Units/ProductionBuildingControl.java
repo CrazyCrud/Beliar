@@ -71,6 +71,7 @@ public class ProductionBuildingControl extends AbstractControl{
         switch(GameContainer.PRODUCTION_REG){
             case 0:
                 float_prodReg = 0f;
+                setActive(false);
                 break;
             case 1:
                 float_prodReg = 0.5f;
@@ -93,14 +94,19 @@ public class ProductionBuildingControl extends AbstractControl{
     }
     
     private boolean areSoulsAvailable() {
-        return PlayerRessources.getSoulsCount() > 
+        if(float_prodReg == 0.0f){
+            return false;
+        }else{
+            return PlayerRessources.getSoulsCount() > 
                 Math.round(float_prodReg * GameObjectValues.ADAM_SMALL_SOULS_PER_PRODUCTION)? true: false;
+        }
     }
     
     private void consumeSouls(){
         int type = spatial.getUserData(GameObjectValues.BUILDING_TYPE);
         int size = spatial.getUserData(GameObjectValues.BUILDING_SIZE);
         int value = GameContainer.STANDARD_PRODUCTION_REG;
+        System.out.println("ProductionBuildingControl: consumeSouls() " + float_prodReg);
         switch(type){
             case GameContainer.ADAM_BUILDING:
                 if(size == GameContainer.ADAM_SMALL_SIZE){

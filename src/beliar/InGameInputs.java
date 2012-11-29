@@ -877,6 +877,7 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
     }
     
     private void setUpProductionReg(){      
+        System.out.println("InGameInputs: setUpProductionReg() " + productionReg);
         Element text = screen.findElementByName("textSecondRow");
         text.getRenderer(TextRenderer.class).setText("Wie viele der Verdammten sollen in den Produktionsstätten landen?");
         TextBuilder tb = new TextBuilder("TextBuilder");
@@ -897,7 +898,7 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
         sb.valignTop();
         sb.width("270px");
         sb.height("10px");
-        sb.initial(getProductionReg());
+        sb.initial(productionReg);
         sb.max(4.0f);
         sb.min(0.0f);
         sb.stepSize(1.0f);
@@ -1075,9 +1076,5 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
     
     public void onDoNothing(){
         
-    }
-
-    public int getProductionReg() {
-        return productionReg;
     }
 }
