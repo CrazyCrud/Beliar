@@ -35,17 +35,14 @@ public class ProductionBuilding extends Building {
             case GameContainer.ADAM_BUILDING:
                 node_building = (Node) assetManager.loadModel("Models/AdamHall/adamBuilding_" + int_size + 
                         "/adamBuilding_" + int_size + ".j3o");
-                node_building.setMaterial(assetManager.loadMaterial("Materials/adamBuilding_" + int_size + ".j3m"));
                 break;
             case GameContainer.KYTHOS_BUILDING:
                 node_building = (Node) assetManager.loadModel("Models/kythosBuilding_" + int_size + 
                         "/kythosBuilding_" + int_size + ".j3o");
-                node_building.setMaterial(assetManager.loadMaterial("Materials/kythosBuilding_" + int_size + ".j3m"));
                 break;
             case GameContainer.MARA_BUILDING:
                 node_building = (Node) assetManager.loadModel("Models/maraBuilding_" + int_size + 
                         "/maraBuilding_" + int_size + ".mesh.j3o");
-                node_building.setMaterial(assetManager.loadMaterial("Materials/maraBuilding_" + int_size + ".j3m"));
                 break;
         }
         node_building.setLocalTranslation(new Vector3f(int_posX, GameObjectValues.Y_POSITION_BUILDINGS, int_posZ));
