@@ -102,4 +102,10 @@ public class ScreenManager {
         nifty.addXml("Interface/PauseMenu.xml");
         nifty.gotoScreen("inPauseInputs");
     }
+    
+    public void switchToEndScreen(ScreenController endScreenInputs){
+        nifty.registerScreenController(endScreenInputs);
+        nifty.addXml("Interface/EndScreen.xml");
+        nifty.gotoScreen("inEndScreenInputs");
+    }
 }

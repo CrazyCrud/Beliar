@@ -21,6 +21,7 @@ public class LoadingGameState extends AbstractAppState{
     private SimpleApplication app;
     private GameState gameState;
     private PauseState pauseState;
+    private EndScreenState endScreenState;
     private ScreenManager screenManager;
     private InLoadingInputs inLoadingInputs;
     
@@ -78,6 +79,7 @@ public class LoadingGameState extends AbstractAppState{
                     System.out.println("LoadingGameState: update(2)");
                     setProgressBar(0.6f);
                     pauseState = new PauseState(stateManager, app);
+                    endScreenState = new EndScreenState(stateManager, app);
                 }else if(frameCount == 3){
                     setProgressBar(1.0f);
                     gameState.initializeGame();
@@ -155,6 +157,7 @@ public class LoadingGameState extends AbstractAppState{
       stateManager.detach(stateManager.getState(LoadingGameState.class));
       stateManager.attach(gameState);
       stateManager.attach(pauseState);
+      stateManager.attach(endScreenState);
       stateManager.getState(GameState.class).setEnabled(true);
     }
 }

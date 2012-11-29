@@ -4,6 +4,7 @@
  */
 package Units;
 
+import Map.MapController;
 import com.jme3.renderer.RenderManager;
 import com.jme3.renderer.ViewPort;
 import com.jme3.scene.Spatial;
@@ -47,7 +48,7 @@ public class WarriorBehaviourControl extends AbstractControl{
         }
         
         if(isEnabled()){
-            
+            checkForRise();
         }
     }
     
@@ -73,5 +74,30 @@ public class WarriorBehaviourControl extends AbstractControl{
         clone.setSpatial(spatial);
         return clone;
     }
+
+    private void checkForRise() {
+        int x = spatial.getControl(GameObjectControl.class).getPosX();
+        int z = spatial.getControl(GameObjectControl.class).getPosZ();
+        int xSoulAbyss = (int)MapController.getSoulAbyssPosition().x;
+        int zSoulAbyss = (int)MapController.getSoulAbyssPosition().z;
+        if(x == xSoulAbyss && z == zSoulAbyss){
+            notifyWarriorRise();
+            removeWarrior();
+        }
+    }
     
+    private void removeWarrior(){
+        spatial.getControl(WarriorAnimationControl.class).setEnabled(false);
+        spatial.getControl(WalkControl.class).setEnabled(false);
+        spatial.getControl(GameObjectControl.class).setEnabled(false);
+        spatial.removeFromParent();
+        spatial.removeControl(GameObjectControl.class);
+        spatial.removeControl(WalkControl.class);
+        spatial.removeControl(WarriorAnimationControl.class);
+        spatial.removeControl(this);
+    }
+    
+    private void notifyWarriorRise(){
+        UnitModel.getInstance().notiftyWarriorRise();
+    }
 }

@@ -162,6 +162,6 @@ public class SoundManager {
    }
    
    public static void playQuestFinished(){
-       quest.play();
+       quest.playInstance();
    }
 }

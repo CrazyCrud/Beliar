@@ -5,13 +5,9 @@
 package Units;
 
 import beliar.GameContainer;
-import com.jme3.material.Material;
-import com.jme3.math.ColorRGBA;
+import beliar.SoundManager;
 import com.jme3.scene.Node;
-import com.jme3.scene.shape.Box;
 import java.util.ArrayList;
-import com.jme3.math.Vector3f;
-import com.jme3.scene.Geometry;
 /**
  *
  * @author andministrator
@@ -22,6 +18,7 @@ public class UnitModel {
 
     private ArrayList<Unit> list_melee, list_ranger, list_magician;
     private ArrayList<Slave> list_slaves;
+    private int int_warriorsRisedUp;
     
     private UnitModel(){
         initValues();
@@ -39,6 +36,7 @@ public class UnitModel {
         list_ranger = new ArrayList<Unit>();
         list_magician = new ArrayList<Unit>();
         list_slaves = new ArrayList<Slave>();
+        int_warriorsRisedUp = 0;
     }
     
     protected Node createSlave(int posX, int posZ){
@@ -97,6 +95,9 @@ public class UnitModel {
     }
     
     protected void moveUnitTo(Node unit, int xPos, int zPos){
+        if(unit == null || unit.getControl(WalkControl.class) == null){
+            return;
+        }
         unit.getControl(WalkControl.class).findPath(xPos, zPos);
     }
 
@@ -111,17 +112,6 @@ public class UnitModel {
     }
     
     protected void markUnits(int whichUnit) {
-        /*
-         * Box bosShape = new Box(Vector3f.ZERO, 
-                0.10f, 0.10f, 0.10f);
-        Geometry geo = new Geometry("unitMarker", bosShape);
-        Material mat = new Material(GameContainer.getInstance().getApplication().getAssetManager(), 
-                "MatDefs/Unshaded.j3md");
-        mat.setColor("Color", ColorRGBA.Red);
-        geo.setMaterial(mat);
-        geo.move(0.0f, 0.95f, 0.0f);
-         * 
-         */
         Node marker = (Node)GameContainer.getInstance().getApplication().getAssetManager().
                 loadModel("Models/banner/banner.j3o");
         marker.setName("unitMarker");
@@ -132,10 +122,18 @@ public class UnitModel {
                 if(list_melee.isEmpty()){
                     return;
                 }
+                boolean areWarriorsOnField = false;
                 for(Unit unit: list_melee){
                     System.out.println("UnitModel: markUnits() melee: " + unit);
                     Node melee = (Node)unit.getSpatial();
+                    if(melee.getControl(WarriorBehaviourControl.class) == null){
+                        continue;
+                    }
+                    areWarriorsOnField = true;
                     melee.attachChild(marker.clone());
+                }
+                if(areWarriorsOnField){
+                    SoundManager.playWarriorMarkedSound();
                 }
                 break;
             case GameObjectValues.RANGERS:
@@ -189,5 +187,13 @@ public class UnitModel {
                 }
                 break;
         }
+    }
+
+    protected void notiftyWarriorRise() {
+        int_warriorsRisedUp++;
+    }
+    
+    protected int getWarriorsRisedUp() {
+        return int_warriorsRisedUp;
     }
 }

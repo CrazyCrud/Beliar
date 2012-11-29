@@ -4,6 +4,8 @@
  */
 package Map;
 import Pathfinding.Node;
+import com.jme3.math.Vector2f;
+import com.jme3.math.Vector3f;
 /**
  *
  * @author andministrator
@@ -47,5 +49,9 @@ public final class MapController {
     public static void setBuilding(int xPos, int zPos){
         MapNodes.getInstance().changeEdge(xPos, zPos, 10000.0f);
         MapNodes.getInstance().changeType(xPos, zPos, 0);
+    }
+    
+    public static Vector3f getSoulAbyssPosition(){
+        return new Vector3f(5.0f, 0.0f ,20.0f);
     }
 }

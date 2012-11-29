@@ -12,7 +12,7 @@ import com.jme3.app.state.AppStateManager;
 public class GameSimulation extends AbstractAppState{
 	
 	private SimpleApplication app;
-	private float float_timerSoulProduction, float_timerGoodsProduction;
+	private float float_timerSoulProduction, float_timerGoodsProduction, float_timerDarkness;
         private int int_prodValue = GameContainer.STANDARD_PRODUCTION_REG;
         private boolean bool_isQuest1Finished, bool_isQuest2Finished, bool_isQuest3Finished;
         private static final int SOUL_PRODUCTION = 0;
@@ -50,6 +50,7 @@ public class GameSimulation extends AbstractAppState{
                 updateDisplay();
                 updateTimerSoulProduction(tpf);
                 updateTimerGoodsProduction(tpf);
+                updateDarkness(tpf);
                 checkForQuests();
             }else{
                 
@@ -112,7 +113,7 @@ public class GameSimulation extends AbstractAppState{
             int countSoulAbyss= PlayerRessources.soulAbyssOfPlayer;
             
             PlayerRessources.setSoulsCount(countSoulAbyss *
-                  Math.round(PlayerRessources.darkness * Math.round(Math.random() * 1)));
+                  Math.round(PlayerRessources.darkness * Math.round(Math.random() * 2)));
             
             app.getStateManager().getState(InGameInputs.class).soulCountChanged();
         }
@@ -221,7 +222,7 @@ public class GameSimulation extends AbstractAppState{
             if(PlayerRessources.chanceForSalvation >= GameContainer.soulsRate)
             {
                 //System.out.println("Freiheit der Seelen? JA!");
-                reduceSouls((int)PlayerRessources.chanceForSalvation);
+                reduceSouls(-(int)PlayerRessources.chanceForSalvation);
                 SoundManager.playSouls();
                 if(PlayerRessources.getSoulsCount() <= 0){
                     PlayerRessources.setSoulsCount(0); 
@@ -241,7 +242,7 @@ public class GameSimulation extends AbstractAppState{
             if(bool_isQuest1Finished){
                 return true;
             }else{
-                if(PlayerRessources.adam > 1000 && PlayerRessources.kythos > 600 && PlayerRessources.mara > 600){
+                if(PlayerRessources.adam > 500 && PlayerRessources.kythos > 400 && PlayerRessources.mara > 400){
                     SoundManager.playQuestFinished();
                     bool_isQuest1Finished = true;
                 }else{
@@ -255,7 +256,7 @@ public class GameSimulation extends AbstractAppState{
             if(bool_isQuest2Finished){
                 return true;
             }else{
-                if(UnitController.getMelees().size() > 20){
+                if(UnitController.getMelees().size() > 10){
                     SoundManager.playQuestFinished();
                     bool_isQuest2Finished = true;
                 }else{
@@ -269,7 +270,7 @@ public class GameSimulation extends AbstractAppState{
             if(bool_isQuest3Finished){
                 return true;
             }else{
-                if(PlayerRessources.darkness > 50){
+                if(PlayerRessources.darkness > 40){
                     SoundManager.playQuestFinished();
                     bool_isQuest3Finished = true;
                 }else{
@@ -278,4 +279,30 @@ public class GameSimulation extends AbstractAppState{
                 return bool_isQuest3Finished;
             }
         }
+
+    private void updateDarkness(float value) {
+        updateDarknessTimer(value);
+        if(isTimeForDarkness()){
+            int warriorRisedUp = UnitController.getWarriorsRisedUp();
+            System.out.println("GameSimulation: updateDarkness " + warriorRisedUp);
+            if(warriorRisedUp == 0){
+                return;
+            }else{
+                PlayerRessources.darkness += Math.round((warriorRisedUp + 1) * Math.random());
+            }
+            resetDarknessTimer();
+        }
+    }
+    
+    private void updateDarknessTimer(float value){
+        float_timerDarkness += value;
+    }
+    
+    private boolean isTimeForDarkness(){
+        return float_timerDarkness > 50.0f? true: false;
+    }
+    
+    private void resetDarknessTimer(){
+        float_timerDarkness = 0.0f;
+    }
 }

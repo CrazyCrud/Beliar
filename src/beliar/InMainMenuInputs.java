@@ -123,7 +123,7 @@ public class InMainMenuInputs extends AbstractAppState implements ScreenControll
   
   public void onStartGame(){
       System.out.println("InMainMenuInputs: onStartGame()");
-      myState.playUISound("click");
+      myState.playUISound("startGame");
       stateManager.getState(MainMenuState.class).loadGame();
   }
 

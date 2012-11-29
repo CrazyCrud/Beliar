@@ -68,9 +68,16 @@ public class UnitController {
         if(melees.isEmpty()){
             return;
         }
-        SoundManager.playRandomWarriorSound();
+        boolean areWarriorOnField = false;
         for(Unit unit: melees){
+            if(((Node)unit.getSpatial()).getControl(WarriorBehaviourControl.class) == null){
+                continue;
+            }
+            areWarriorOnField = true;
             moveUnitTo((Node)unit.getSpatial(), xPos, zPos);
+        }
+        if(areWarriorOnField){
+            SoundManager.playRandomWarriorSound();
         }
     }
     
@@ -100,5 +107,9 @@ public class UnitController {
     
     public static void unmarkUnits(int whichUnit){
         UnitModel.getInstance().unmarkUnits(whichUnit);
+    }
+
+    public static int getWarriorsRisedUp() {
+        return UnitModel.getInstance().getWarriorsRisedUp();
     }
 }

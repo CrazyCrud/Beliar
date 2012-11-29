@@ -185,6 +185,7 @@ public class GameState extends AbstractAppState {
             if (selection != null) {
                 selection.setLocalTranslation(mousePositionWorld);
             }
+            checkForGameFinished();
         }else{
         }
     }
@@ -722,7 +723,7 @@ public class GameState extends AbstractAppState {
         System.out.println("GameState: createSlave");
         if(PlayerRessources.getSoulsCount() > 0){
             creatures.attachChild(UnitController.createSlave(5, 8));
-            stateManager.getState(GameSimulation.class).reduceSouls(GameContainer.COSTSLAVE);
+            stateManager.getState(GameSimulation.class).reduceSouls(-GameContainer.COSTSLAVE);
             SoundManager.playSlaveSound(GameContainer.SLAVE_RANDOM);
         }
     }
@@ -745,7 +746,7 @@ public class GameState extends AbstractAppState {
     protected void moveUnits(int whichUnits) {
         System.out.println("GameState: moveUnits()");
         bool_areUnitsMoving = true;
-        SoundManager.playWarriorMarkedSound();
+        //SoundManager.playWarriorMarkedSound();
         switch(whichUnits){
             case InGameInputs.MELEE:
                 int_unitToMove = InGameInputs.MELEE;
@@ -759,6 +760,14 @@ public class GameState extends AbstractAppState {
                 int_unitToMove = InGameInputs.MAGICIAN;
                 UnitController.markUnits(InGameInputs.MAGICIAN);
                 break;
+        }
+    }
+
+    private void checkForGameFinished() {
+        if(stateManager.getState(GameSimulation.class).isQuest3Completed()){
+            stateManager.getState(GameState.class).setEnabled(false);
+            stateManager.getState(InGameInputs.class).setEnabled(false);
+            stateManager.getState(EndScreenState.class).setEnabled(true);
         }
     }
 }
