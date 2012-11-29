@@ -1,0 +1,10 @@
+Material My Material : Common/MatDefs/Light/Lighting.j3md {
+     MaterialParameters {
+        DiffuseMap : Models/SoulAbyss/Soulground.png
+        UseAlpha : true
+     }
+    AdditionalRenderState {
+      Blend Off
+      AlphaTestFalloff 0.9
+    }
+}

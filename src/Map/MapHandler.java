@@ -54,6 +54,7 @@ public class MapHandler {
     }
 
     private void readMapFile(String levelName) {
+        
         try {
             Object file = parser.parse(new FileReader("assets/Maps/" + levelName + ".json"));
             JsonObject jsonObject = (JsonObject) file;
@@ -151,6 +152,7 @@ public class MapHandler {
         System.out.println("SIZE" + sizeX);
         setHellCenterAt((int) positionHellCenter.x, (int) positionHellCenter.z);
         
+        setSoulAbyss(2, 2);
         for (int x = 0; x < sizeX; x++) {
             for (int y = 0; y < sizeY; y++) {
                 if (terrainMap[x][y] <= ValuesTerrain.EARTH) {
@@ -169,6 +171,21 @@ public class MapHandler {
         }
     }
 
+    
+    private void setSoulAbyss(int x, int y) {
+        
+        for (int i = -1; i <= 1; i++) {
+            for (int j = -1; j <= 1; j++) {
+                terrainMap[x + i][y + j] = ValuesTerrain.HELLCENTER;
+            }
+        }
+        
+        Spatial abyss = assetManager.loadModel(("Models/SoulAbyss/soulground.j3o"));
+        Vector3f position = new Vector3f(x, 0, y);
+        abyss.move(position);
+        mapNode.attachChild(abyss);
+            
+    }
     private void setHellCenterAt(int x, int y) {
 
         for (int i = -1; i <= 1; i++) {
