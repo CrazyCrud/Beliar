@@ -178,28 +178,34 @@
                     </panel>
                     <panel id="details_panel" width="100%" height="90%"
                          childLayout="horizontal">
-                        <panel width="50%" height="100%">
+                        <panel width="40%" height="100%">
                         </panel>
-                        <panel width="50%" height="100%" childLayout="horizontal">
-                            <panel width="25%" height="100%" childLayout="center">
+                        <panel width="60%" height="100%" childLayout="horizontal">
+                            <panel width="20%" height="100%" childLayout="center">
                                 <image id="buildIcon" filename="Images/build_icon.png" valign="center" 
                                     width="100%h" height="100%">
                                     <interact onClick="onBuild()"/>
                                 </image>
                             </panel>
-                            <panel width="25%" height="100%" childLayout="center">
+                            <panel width="20%" height="100%" childLayout="center">
                                 <image id="buildIcon2" filename="Images/army_icon.png" valign="center" 
                                     width="100%h" height="100%">
                                     <interact onClick="onArmy()"/>    
                                 </image>
                             </panel>
-                            <panel width="25%" height="100%" childLayout="center">
+                            <panel width="20%" height="100%" childLayout="center">
                                 <image id="buildIcon3" filename="Images/options_icon.png" valign="center" 
                                     width="100%h" height="100%">
                                     <interact onClick="onOptions()"/>    
                                 </image>
                             </panel>
-                            <panel width="20%" height="80%" childLayout="center">
+                            <panel width="15%" height="80%" childLayout="center">
+                                <image id="questIcon" filename="Images/productionIcon.png" valign="bottom" 
+                                    width="100%h" height="100%">
+                                    <interact onClick="onProduction()"/>    
+                                </image>
+                            </panel>
+                            <panel width="15%" height="80%" childLayout="center">
                                 <image id="questIcon" filename="Images/quest_placeholder.png" valign="bottom" 
                                     width="100%h" height="100%">
                                     <interact onClick="onQuest()"/>    

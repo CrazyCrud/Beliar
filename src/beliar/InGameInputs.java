@@ -153,6 +153,10 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
         }
     }
         
+    public void onProduction(){
+        System.out.println("InGameInputs: onProduction()");
+    }
+        
     public void onQuest(){
         System.out.println("onQuest");
         myGameState.playSoundEffect(SoundManager.CLICK_2);
@@ -247,7 +251,7 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
         textSouls.getRenderer(TextRenderer.class).setText("Anzahl der Verdammten: " + PlayerRessources.getSoulsCount());
         
         new ImageBuilder("slave"){{
-            filename("Images/slave_icon.png");
+            filename("Images/workerIcon.png");
             height("95%");
             width("100%h");
             alignCenter();
@@ -255,7 +259,7 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
                 }}.build(nifty, screen, firstRowTop);
         
         new ImageBuilder("melee"){{
-            filename("Images/melee_icon.png");
+            filename("Images/warriorIcon.png");
             height("95%");
             width("100%h");
             paddingRight("10px");
@@ -264,7 +268,7 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
                 }}.build(nifty, screen, secondRowTop);
         
         new ImageBuilder("ranger"){{
-            filename("Images/magician_icon.png");
+            filename("Images/arrowIcon.png");
             height("95%");
             width("100%h");
             paddingRight("10px");
@@ -273,7 +277,7 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
                 }}.build(nifty, screen, secondRowTop);
         
         new ImageBuilder("magician"){{
-            filename("Images/ranger_icon.png");
+            filename("Images/necromancerIcon.png");
             height("95%");
             width("100%h");
             paddingRight("10px");
@@ -282,7 +286,7 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
                 }}.build(nifty, screen, secondRowTop);
         
         new ImageBuilder("melee"){{
-            filename("Images/melee_icon.png");
+            filename("Images/warriorIcon.png");
             height("95%");
             width("100%h");
             paddingRight("10px");
@@ -291,7 +295,7 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
                 }}.build(nifty, screen, thirdRowTop);
         
         new ImageBuilder("ranger"){{
-            filename("Images/magician_icon.png");
+            filename("Images/arrowIcon.png");
             height("95%");
             width("100%h");
             paddingRight("10px");
@@ -300,7 +304,7 @@ public class InGameInputs extends AbstractAppState implements ScreenController{
                 }}.build(nifty, screen, thirdRowTop);
         
         new ImageBuilder("magician"){{
-            filename("Images/ranger_icon.png");
+            filename("Images/necromancerIcon.png");
             height("95%");
             width("100%h");
             paddingRight("10px");

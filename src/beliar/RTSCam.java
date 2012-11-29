@@ -312,7 +312,7 @@ public final class RTSCam implements Control, ActionListener {
                         direction[deg.ordinal()] = press;
                         return;
                     }
-                }else if(position.x > 2){
+                }else if(position.x > GameContainer.MAP_SIZE - 4){
                     if(Math.sin(rot) > 0.0){
                         press = 0;
                         deg = Degree.FWD;
