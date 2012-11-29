@@ -36,10 +36,14 @@ public class BuildingModel {
     
     protected Node buildProductionBuilding(Node slave, int posX, int posZ, int type, 
             int buildingSize){
-        ProductionBuilding prodBuilding  = new ProductionBuilding(posX, posZ, 
+        if(slave.getControl(SlaveCharacterControl.class).handOutCosts(posX, posZ)){
+            ProductionBuilding prodBuilding  = new ProductionBuilding(posX, posZ, 
             type, buildingSize);
-        slave.getControl(SlaveCharacterControl.class).build(prodBuilding);
-        return (Node) prodBuilding.getSpatial();
+            slave.getControl(SlaveCharacterControl.class).build(prodBuilding);
+            return (Node) prodBuilding.getSpatial();
+        }else{
+            return null;
+        }
     }
     
     protected void addProductionBuilding(ProductionBuilding building){

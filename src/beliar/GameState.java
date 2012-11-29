@@ -470,9 +470,11 @@ public class GameState extends AbstractAppState {
                             return;
                         }
                         
-                        BuildingController.buildProductionBuilding(xPos, zPos, 
+                        Node myBuilding = BuildingController.buildProductionBuilding(xPos, zPos, 
                                 int_buildingType, int_sizeBuilding);
-                       
+                        if(myBuilding != null){
+                            updateRessources(int_buildingType, int_sizeBuilding);
+                        }
                         resetBuilding();                        
                     } else {
                         System.out.println("GameState: onAnalog() Bauen verweigert");
@@ -523,7 +525,7 @@ public class GameState extends AbstractAppState {
         }
         computeBuilding(myBuilding);
         playSoundEffect(SoundManager.PLACE_BUILDING);
-        updateRessources(); 
+        //updateRessources(); 
     }
     
     private void computeBuilding(Node myBuilding){
@@ -534,30 +536,30 @@ public class GameState extends AbstractAppState {
                 myBuilding.getControl(GameObjectControl.class).getPosZ());
     }
     
-    private void updateRessources(){
-        switch(int_buildingType){
+    private void updateRessources(int sizeBuilding, int typeBuilding){
+        switch(typeBuilding){
             case GameContainer.ADAM_BUILDING:
-                if(int_sizeBuilding == GameContainer.ADAM_SMALL_SIZE){
+                if(sizeBuilding == GameContainer.ADAM_SMALL_SIZE){
                     gameSimulation.reduceRessources(GameContainer.COSTADAMSMALL);
-                }else if(int_sizeBuilding == GameContainer.ADAM_MIDDLE_SIZE){
+                }else if(sizeBuilding == GameContainer.ADAM_MIDDLE_SIZE){
                     gameSimulation.reduceRessources(GameContainer.COSTADAMMIDDLE);
                 }else{
                     gameSimulation.reduceRessources(GameContainer.COSTADAMBIG);
                 }
                 break;
             case GameContainer.KYTHOS_BUILDING:
-                if(int_sizeBuilding == GameContainer.KYTHOS_SMALL_SIZE){
+                if(sizeBuilding == GameContainer.KYTHOS_SMALL_SIZE){
                     gameSimulation.reduceRessources(GameContainer.COSTKYTHOSSMALL);
-                }else if(int_sizeBuilding == GameContainer.KYTHOS_MIDDLE_SIZE){
+                }else if(sizeBuilding == GameContainer.KYTHOS_MIDDLE_SIZE){
                     gameSimulation.reduceRessources(GameContainer.COSTKYTHOSMIDDLE);
                 }else{
                     gameSimulation.reduceRessources(GameContainer.COSTKYTHOSBIG);
                 }
                 break;
             case GameContainer.MARA_BUILDING:
-                if(int_sizeBuilding == GameContainer.MARA_SMALL_SIZE){
+                if(sizeBuilding == GameContainer.MARA_SMALL_SIZE){
                     gameSimulation.reduceRessources(GameContainer.COSTMARASMALL);
-                }else if(int_sizeBuilding == GameContainer.MARA_MIDDLE_SIZE){
+                }else if(sizeBuilding == GameContainer.MARA_MIDDLE_SIZE){
                     gameSimulation.reduceRessources(GameContainer.COSTMARAMIDDLE);
                 }else{
                     gameSimulation.reduceRessources(GameContainer.COSTMARABIG);

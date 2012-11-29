@@ -66,7 +66,7 @@ public class Main extends SimpleApplication{
         setDisplayFps(false);
         setDisplayStatView(false);
         screenManager = ScreenManager.getScreenManager();
-        //screenManager.initialize(stateManager, this);
+        screenManager.initialize(stateManager, this);
     }
     
     private void setGraphicModes(){

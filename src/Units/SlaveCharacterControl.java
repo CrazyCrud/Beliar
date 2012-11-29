@@ -112,6 +112,14 @@ public class SlaveCharacterControl extends AbstractControl{
         }
     }
     
+    protected boolean handOutCosts(int x, int z){
+        if(spatial.getControl(WalkControl.class).findPath(x, z)){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    
     private boolean hasReachedBuilding(){
         if(spatial.getControl(GameObjectControl.class).getPosX() == list_buildings.getLast().getSpatial().
                 getControl(GameObjectControl.class).getPosX()){
